@@ -7,7 +7,7 @@ rescue LoadError
 end
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'convert_themes'
+require 'convert_theme'
 
 # When running specs in TextMate, provide an rputs method to cleanly print objects into HTML display
 # From http://talklikeaduck.denhaven2.com/2009/09/23/rspec-textmate-pro-tip

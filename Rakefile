@@ -1,13 +1,13 @@
 require 'rubygems'
 require 'hoe'
 require 'fileutils'
-require './lib/convert_themes'
+require './lib/convert_theme'
 
 Hoe.plugin :newgem
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.spec 'convert_themes' do
+$hoe = Hoe.spec 'convert_theme' do
   self.developer 'Dr Nic Williams', 'drnicwilliams@gmail.com'
   # self.extra_deps         = [['activesupport','>= 2.0.2']]
 end
