@@ -1,4 +1,4 @@
-= convert_themes
+= convert_theme
 
 * http://github.com/#{github_username}/#{project_name}
 

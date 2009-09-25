@@ -1,11 +1,15 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
-# Time to add your specs!
-# http://rspec.info/
 describe ConvertTheme do
-  
-  it "find this spec in spec directory" do
-    # violated "Be sure to write your specs"
+  context "bloganje theme" do
+    before do
+      FileUtils.rm_rf(tmp_path)
+      FileUtils.mkdir_p(tmp_path)
+      FileUtils.chdir(tmp_path) do
+      end
+    end
+    it "becomes a Rails app" do
+      
+    end
   end
-  
 end
