@@ -1,0 +1,121 @@
+body{
+	background:#f7f6f0 url(../img/bg.jpg) repeat-x top;
+	color: #202020;
+}
+a, a:visited{
+	color:#993300;
+}
+input{
+	border:1px solid #e8e7e1;
+}
+select{
+	border:1px solid #e8e7e1;
+}
+#header h2{
+	color:#FFF;
+}
+#content{
+	background:#FFF;
+}
+#sidebar{
+	background:#FFF;
+}
+#sidebar h3{
+	background:#f7f6f0;
+	border-bottom:1px solid #e8e7e1;
+}
+#topmenu a,#topmenu a:visited{
+	color:#f7f6f0;
+	background:#cc3300;
+}
+#topmenu a:hover{
+	color: #FFF;
+}
+#topmenu .current a, #topmenu .current a:hover, #topmenu .current a:visited{
+	color:#993400;
+	background: #FFF url(../img/bg_menu_red.jpg) repeat-x top;
+	border-left: #FFF 1px solid;
+	border-right: #FFF 1px solid;
+}
+#top-panel{
+	background:#FFF;
+}
+table{
+	background:none;
+}
+td, th{
+	border:1px solid #e8e7e1;
+} 
+thead{
+	background:#f7f6f0;
+}
+#styleswitcher{
+	background:#FFFFFF;
+}
+#footer{
+	background:#FFF;
+}
+#box{
+	border:1px solid #e8e7e1;
+}
+#box h3{
+	background:#f7f6f0;
+	border-bottom:1px solid #e8e7e1;
+	color:#993300;
+}
+/***************
+	  Forms
+***************/
+form#form fieldset {
+	border:1px solid #e8e7e1;
+}
+form#form legend {
+	border:1px solid #e8e7e1;
+	background:#fff url(../img/form_red.gif) repeat-x center left;
+	color:#993300;
+}
+form#form input {
+	border:1px solid #e8e7e1;
+	background:#fff url(../img/form_red.gif) repeat-x top left;
+}
+form#form textarea {
+	border:1px solid #e8e7e1;
+	background:#fff url(../img/form_red.gif) repeat-x bottom left;
+}
+form#form option {
+	background:#FFF;
+}
+form#form optgroup {
+	background:#e8e7e1;
+}
+form#form optgroup option {
+
+}
+form#form #button1, form#form #button2 {
+	color:#c00;
+}
+form#form #button1:hover, form#form #button2:hover {
+	color:#000;
+}
+/***************
+	Home
+***************/
+#infobox{
+	border:1px solid #e8e7e1;
+}
+#infobox h3{
+	background:#f7f6f0;
+	border-bottom:1px solid #e8e7e1;
+	color:#993300;
+}
+#rightnow {
+	border:1px solid #e8e7e1;
+}
+#rightnow .reallynow {
+	background:#f7f6f0;
+	color:#993300;
+}
+#rightnow h3{
+	background:#f7f6f0;
+	border-bottom:1px solid #e8e7e1;
+}
