@@ -8,7 +8,8 @@ Hoe.plugin :newgem
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
 $hoe = Hoe.spec 'convert_theme' do
-  self.developer 'Dr Nic Williams', 'drnicwilliams@gmail.com'
+  developer 'Dr Nic Williams', 'drnicwilliams@gmail.com'
+  self.rubyforge_name = "drnicutilities"
   self.extra_deps << ['hpricot','>= 0.8.1']
   self.extra_dev_deps << ['rails', '2.3.4']
   self.extra_dev_deps << ['haml']
