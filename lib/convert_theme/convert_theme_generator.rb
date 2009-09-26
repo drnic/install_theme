@@ -11,7 +11,7 @@ class ConvertTheme::ConvertThemeGenerator < RubiGen::Base
         m.directory dir
       end
       files.sort.each do |f|
-        next if File.directory?(File.join(destination_path, f))
+        next if File.directory?(File.join(source_root, f))
         m.file f, f
       end
     end
