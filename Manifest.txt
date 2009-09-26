@@ -6,6 +6,7 @@ Rakefile
 bin/convert_theme
 lib/convert_theme.rb
 lib/convert_theme/cli.rb
+lib/convert_theme/convert_theme_generator.rb
 script/console
 script/destroy
 script/generate
