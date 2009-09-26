@@ -1,5 +1,9 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
+def clean_file(file)
+  file
+end
+
 def setup_base_rails(options = {})
   tmp_path = File.dirname(__FILE__) + "/tmp"
   FileUtils.rm_rf(tmp_path)
@@ -22,7 +26,8 @@ describe ConvertTheme do
     describe "becomes a Rails app" do
       %w[app/views/layouts/application.html.erb].each do |matching_file|
         it do
-          diff = `diff #{File.join(@target_application, matching_file)} #{File.join(@expected_application, matching_file)}`
+          expected = clean_file(File.join(@expected_application, matching_file))
+          diff = `diff #{expected} #{File.join(@target_application, matching_file)}`
           rputs diff unless diff.strip.empty?
           diff.strip.should == ""
         end
