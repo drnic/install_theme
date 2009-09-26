@@ -33,6 +33,10 @@ class ConvertTheme
       contents.gsub!(%r{(["'])/?#{stylesheet_dir}}, '\1/stylesheets')
       file << contents
     end
+    
+    template_stylesheets.each do |file|
+      FileUtils.cp(file, File.join(rails_path, 'public/stylesheets'))
+    end
   end
   
   def haml?
@@ -68,8 +72,7 @@ class ConvertTheme
   end
   
   def detect_stylesheet_dir
-    paths = File.join(template_root, '**/*.css')
-    if path = File.dirname(Dir[paths].first)
+    if path = File.dirname(Dir[File.join(template_root, '**/*.css')].first)
       path.gsub(template_root, '').gsub(%r{^/}, '')
     else
       'stylesheets'
@@ -82,5 +85,13 @@ class ConvertTheme
     else
       'images'
     end
+  end
+  
+  def template_stylesheets
+    Dir[File.join(template_root, stylesheet_dir, '*')]
+  end
+  
+  def template_images
+    Dir[File.join(template_root, image_dir, '*')]
   end
 end

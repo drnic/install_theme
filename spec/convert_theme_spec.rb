@@ -13,6 +13,8 @@ describe ConvertTheme do
     it { @theme.image_dir.should == "img" }
     describe "becomes a Rails app with html templates" do
       %w[app/views/layouts/application.html.erb].each do |matching_file|
+        it { File.should be_exist(File.join(@target_application, matching_file)) }
+        it { File.should be_exist(File.join(@expected_application, matching_file)) }
         it do
           expected = clean_file(File.join(@expected_application, matching_file))
           actual   = File.join(@target_application, matching_file)
@@ -24,6 +26,8 @@ describe ConvertTheme do
       
       %w[public/stylesheets/style.css
         public/stylesheets/theme.css].each do |matching_file|
+          it { File.should be_exist(File.join(@target_application, matching_file)) }
+          it { File.should be_exist(File.join(@expected_application, matching_file)) }
           it do
             expected = File.join(@expected_application, matching_file)
             actual   = File.join(@target_application, matching_file)
@@ -56,6 +60,17 @@ describe ConvertTheme do
         end
       end
       
+      %w[public/stylesheets/all.css].each do |matching_file|
+          it { File.should be_exist(File.join(@target_application, matching_file)) }
+          it { File.should be_exist(File.join(@expected_application, matching_file)) }
+          it do
+            expected = File.join(@expected_application, matching_file)
+            actual   = File.join(@target_application, matching_file)
+            diff = `diff #{expected} #{actual}`
+            rputs diff unless diff.strip.empty?
+            diff.strip.should == ""
+          end
+        end
     end
   end
 end
