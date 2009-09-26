@@ -22,3 +22,23 @@ module Kernel
     alias_method :rputs, :puts
   end
 end
+
+def clean_file(orig_file)
+  tmp_dir = ENV['TMPDIR'] || '/tmp'
+  file = File.join(tmp_dir, 'clean_file.html')
+  File.open(file, "w") do |f|
+    f << Hpricot(open(orig_file)).to_html
+  end
+  file
+end
+
+def setup_base_rails(options = {})
+  tmp_path = File.dirname(__FILE__) + "/tmp"
+  FileUtils.rm_rf(tmp_path)
+  FileUtils.mkdir_p(tmp_path  )
+  @target_application = File.join(tmp_path, "my_app")
+  FileUtils.cp_r(File.dirname(__FILE__) + "/expected/rails/base_app", @target_application)
+  `haml --rails #{@target_application}` if options[:haml]
+  @target_application
+end
+
