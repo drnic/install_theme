@@ -1,4 +1,18 @@
-=== 0.0.1 2009-09-26
+=== 0.2.0 / 2009-09-26
+
+Major:
+* Using Rubigen to install files, which means you get
+  prompted about conflicts.
+
+Commits:
+* Running specs no longer spews out the rubigen create/exists logs
+* Better checking for file vs directory?
+* using rubigen run install modified template files into target rails app
+* wired in more options to CLI
+* adding hoe-git plugin
+* Added README content
+
+=== 0.1.0 2009-09-26
 
 * 1 major enhancement:
   * Initial release
