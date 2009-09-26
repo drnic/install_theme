@@ -1,5 +1,5 @@
 body{
-	background:#d9eaed url(../img/bg_mix.jpg) repeat-x top;
+	background:#d9eaed url(/images/bg_mix.jpg) repeat-x top;
 	color: #202020;
 }
 a, a:visited{
@@ -34,7 +34,7 @@ select{
 }
 #topmenu .current a, #topmenu .current a:hover, #topmenu .current a:visited{
 	color:#294145;
-	background: #FFF url(../img/bg_menu_mix.jpg) repeat-x top;
+	background: #FFF url(/images/bg_menu_mix.jpg) repeat-x top;
 	border-left: #FFF 1px solid;
 	border-right: #FFF 1px solid;
 }
@@ -72,16 +72,16 @@ form#form fieldset {
 }
 form#form legend {
 	border:1px solid #c3d7db;
-	background:#fff url(../img/form_mix.gif) repeat-x center left;
+	background:#fff url(/images/form_mix.gif) repeat-x center left;
 	color:#294145;
 }
 form#form input {
 	border:1px solid #c3d7db;
-	background:#fff url(../img/form_mix.gif) repeat-x top left;
+	background:#fff url(/images/form_mix.gif) repeat-x top left;
 }
 form#form textarea {
 	border:1px solid #c3d7db;
-	background:#fff url(../img/form_mix.gif) repeat-x bottom left;
+	background:#fff url(/images/form_mix.gif) repeat-x bottom left;
 }
 form#form option {
 	background:#FFF;

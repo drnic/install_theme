@@ -1,5 +1,5 @@
 body{
-	background:#f0f7e8 url(../img/bg_light_green.jpg) repeat-x top;
+	background:#f0f7e8 url(/images/bg_light_green.jpg) repeat-x top;
 	color: #202020;
 }
 a, a:visited{
@@ -33,7 +33,7 @@ select{
 }
 #topmenu .current a, #topmenu .current a:hover, #topmenu .current a:visited{
 	color:#93ad7e;
-	background: #FFF url(../img/bg_menu_green.jpg) repeat-x top;
+	background: #FFF url(/images/bg_menu_green.jpg) repeat-x top;
 	border-left: #FFF 1px solid;
 	border-right: #FFF 1px solid;
 }
@@ -71,16 +71,16 @@ form#form fieldset {
 }
 form#form legend {
 	border:1px solid #e7eedf;
-	background:#fff url(../img/form_green.gif) repeat-x center left;
+	background:#fff url(/images/form_green.gif) repeat-x center left;
 	color:#93ad7e;
 }
 form#form input {
 	border:1px solid #e7eedf;
-	background:#fff url(../img/form_green.gif) repeat-x top left;
+	background:#fff url(/images/form_green.gif) repeat-x top left;
 }
 form#form textarea {
 	border:1px solid #e7eedf;
-	background:#fff url(../img/form_green.gif) repeat-x bottom left;
+	background:#fff url(/images/form_green.gif) repeat-x bottom left;
 }
 form#form option {
 	background:#FFF;

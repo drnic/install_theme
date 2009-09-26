@@ -44,7 +44,7 @@ input.text {
 	position:relative;
 	width:992px;
 	height:106px;
-	background:url(../img/bg-header.gif) no-repeat left bottom;
+	background:url(/images/bg-header.gif) no-repeat left bottom;
 	}
 /* site logo */
 a.logo {
@@ -66,7 +66,7 @@ a.logo {
 	float:left;
 	margin:0 3px 0 0;
 	height:34px;
-	background:url(../img/tab.gif) repeat-x top;
+	background:url(/images/tab.gif) repeat-x top;
 	}
 #top-navigation li a {
 	float:left;
@@ -78,24 +78,24 @@ a.logo {
 	}
 #top-navigation li span {
 	float:left;
-	background:url(../img/tab-left.gif) no-repeat left top;
+	background:url(/images/tab-left.gif) no-repeat left top;
 	}
 #top-navigation li span span {
-	background:url(../img/tab-right.gif) no-repeat right top;
+	background:url(/images/tab-right.gif) no-repeat right top;
 	padding:7px 10px 0 10px;
 	}
 #top-navigation li.active {
 	padding:0;
 	height:34px;
-	background:url(../img/tab-active.gif) repeat-x top;
+	background:url(/images/tab-active.gif) repeat-x top;
 	margin-right:2px;
 	}
 #top-navigation li.active span {
-	background:url(../img/tab-active-left.gif) no-repeat left top;
+	background:url(/images/tab-active-left.gif) no-repeat left top;
 	height:34px;
 	}
 #top-navigation li.active span span {
-	background:url(../img/tab-active-right.gif) no-repeat right top;
+	background:url(/images/tab-active-right.gif) no-repeat right top;
 	height:23px;
 	padding:11px 10px 0 10px;
 	line-height:19px;
@@ -106,7 +106,7 @@ a.logo {
 #middle {
 	float:left;
 	width:967px;
-	background:url(../img/bg-middle.gif) repeat-y left;
+	background:url(/images/bg-middle.gif) repeat-y left;
 	padding:0 13px 0 12px;
 	}
 /* left column */
@@ -125,7 +125,7 @@ a.logo {
 #center-column {
 	float:left;
 	width:614px;
-	background:url(../img/bg-center-column.jpg) no-repeat left top;
+	background:url(/images/bg-center-column.jpg) no-repeat left top;
 	min-height:584px;
 	padding:12px 16px 0 13px;
 	}	
@@ -135,7 +135,7 @@ a.logo {
 #footer {
 	float:left;
 	width:100%;
-	background:url(../img/bg-footer.gif) no-repeat;
+	background:url(/images/bg-footer.gif) no-repeat;
 	height:15px;
 	}
 	
@@ -145,7 +145,7 @@ a.logo {
 	font-size:11px;
 	margin:0;
 	color:#fff;
-	background:url(../img/bg-left-header.gif) no-repeat left top;
+	background:url(/images/bg-left-header.gif) no-repeat left top;
 	height:25px;
 	line-height:23px;
 	padding:0 0 0 9px;
@@ -159,11 +159,11 @@ ul.nav {
 	}
 ul.nav li {
 	padding:4px 4px 6px 5px;
-	background:url(../img/bg-dotted.gif) repeat-x bottom;
+	background:url(/images/bg-dotted.gif) repeat-x bottom;
 	}
 ul.nav a {
 	padding:0 0 0 12px;
-	background:url(../img/arrow.gif) no-repeat 0 4px;
+	background:url(/images/arrow.gif) no-repeat 0 4px;
 	}
 ul.nav a:hover {
 	font-weight:bold;
@@ -174,7 +174,7 @@ ul.nav li.last {background:none;}
 	display:block;
 	width:142px;
 	height:25px;
-	background:url(../img/bg-left-link.gif);
+	background:url(/images/bg-left-link.gif);
 	margin:0 0 4px 0;
 	font-weight:bold;
 	padding:0 0 0 9px;
@@ -207,7 +207,7 @@ ul.nav li.last {background:none;}
 	text-transform:uppercase;
 	font-weight:bold;
 	line-height:27px;
-	background:url(../img/bg-orange-button.gif) no-repeat;
+	background:url(/images/bg-orange-button.gif) no-repeat;
 	}
 	
 /* bar with select */
@@ -273,8 +273,8 @@ table.listing .white td {
 table.listing .first {border-left:0px solid #9097A9;text-align:left;}
 table.listing .last {border-right:0px solid #9097A9;}
 
-table.listing th.first {background:#9097A9 url(../img/bg-th-left.gif) no-repeat left top;border-left:0;}
-table.listing th.last {background:#9097A9 url(../img/bg-th-right.gif) no-repeat right top;border-right:0;}
+table.listing th.first {background:#9097A9 url(/images/bg-th-left.gif) no-repeat left top;border-left:0;}
+table.listing th.last {background:#9097A9 url(/images/bg-th-right.gif) no-repeat right top;border-right:0;}
 
 table.listing .style1 {font-weight:bold;color:#FF7A00;}
 table.listing .style2 {font-weight:bold;padding-left:16px;}
@@ -291,7 +291,7 @@ div.table .select {
 	margin:2px 1px 0 0;
 	width:176px;
 	height:25px;
-	background:#9097A9 url(../img/bg-select.gif);
+	background:#9097A9 url(/images/bg-select.gif);
 	color:#fff;
 	}
 div.table .select strong {

@@ -37,7 +37,11 @@ class ConvertTheme
     end
     
     template_stylesheets.each do |file|
-      FileUtils.cp_r(file, File.join(rails_path, 'public/stylesheets'))
+      File.open(File.join(rails_path, 'public/stylesheets', File.basename(file)), "w") do |f|
+        contents = File.read(file)
+        contents.gsub!(%r{url\((["']?)[./]*#{image_dir}}, 'url(\1/images')
+        f << contents
+      end
     end
     template_javascripts.each do |file|
       FileUtils.cp_r(file, File.join(rails_path, 'public/javascripts'))
