@@ -6,7 +6,7 @@ require "rubigen"
 require 'rubigen/scripts/generate'
 
 class ConvertTheme
-  VERSION = "0.1.0"
+  VERSION = "0.2.0"
   
   attr_reader :template_root, :index_path, :rails_path, :template_type
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
