@@ -1,32 +1,31 @@
 = convert_theme
 
-* http://github.com/#{github_username}/#{project_name}
+* http://github.com/drnic/convert_theme
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Use any HTML template as a theme generator for your Rails app.
 
-== FEATURES/PROBLEMS:
+Installs an HTML template, and its CSS, JavaScript and image assets into
+your Rails app, ready to go in an instant.
 
-* FIX (list of features or problems)
+You just tell it which DOM elements are special, e.g. where to 
+put the <%= yield %>, load your app in the browser and see the theme
+in action.
 
-== SYNOPSIS:
+== USAGE:
 
-  FIX (code sample of usage)
-
-== REQUIREMENTS:
-
-* FIX (list of requirements)
+    convert_theme path/to/template path/to/rails_app --content_id=content
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* sudo gem install convert_theme
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009 FIXME full name
+Copyright (c) 2009 Dr Nic Williams, Mocra http://mocra.com
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
