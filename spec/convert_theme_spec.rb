@@ -1,6 +1,11 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
-def clean_file(file)
+def clean_file(orig_file)
+  tmp_dir = ENV['TMPDIR'] || '/tmp'
+  file = File.join(tmp_dir, 'clean_file.html')
+  File.open(file, "w") do |f|
+    f << Hpricot(open(orig_file)).to_html
+  end
   file
 end
 
@@ -27,7 +32,8 @@ describe ConvertTheme do
       %w[app/views/layouts/application.html.erb].each do |matching_file|
         it do
           expected = clean_file(File.join(@expected_application, matching_file))
-          diff = `diff #{expected} #{File.join(@target_application, matching_file)}`
+          actual   = File.join(@target_application, matching_file)
+          diff = `diff #{expected} #{actual}`
           rputs diff unless diff.strip.empty?
           diff.strip.should == ""
         end
