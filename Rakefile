@@ -4,6 +4,7 @@ require 'fileutils'
 require './lib/convert_theme'
 
 Hoe.plugin :newgem
+Hoe.plugin :git
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
