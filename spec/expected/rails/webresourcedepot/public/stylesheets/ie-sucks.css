@@ -1,0 +1,21 @@
+#content{
+	width:740px;
+}
+#topmenu{
+	margin-top:26px;
+}
+#sidebar{
+	width:160px;
+}
+#sidebar ul{
+	width:150px;
+}
+#sidebar ul li ul{
+	width:140px;
+}
+#sidebar h3{
+	margin-bottom:5px;
+}
+#rightnow .reallynow a {
+	padding:0 0 0 10px;
+}

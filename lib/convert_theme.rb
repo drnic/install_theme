@@ -7,12 +7,15 @@ class ConvertTheme
   VERSION = "0.0.1"
   
   attr_reader :template_root, :index_path, :rails_path, :template_type
+  attr_reader :stylesheet_dir, :image_dir
   attr_reader :content_id
   
   def initialize(options = {})
-    @template_root = File.expand_path(options[:template_root] || File.dirname('.'))
-    @index_path    = options[:index_path] || "index.html"
-    @content_id    = options[:content_id] || "content"
+    @template_root  = File.expand_path(options[:template_root] || File.dirname('.'))
+    @index_path     = options[:index_path] || "index.html"
+    @content_id     = options[:content_id] || "content"
+    @stylesheet_dir = options[:stylesheet_dir] || detect_stylesheet_dir
+    @image_dir      = options[:image_dir] || detect_image_dir
   end
   
   def apply_to(rails_path, options = {})
@@ -25,7 +28,10 @@ class ConvertTheme
       doc.search("##{content_id}").each do |div|
         div.inner_html = "<%= yield %>"
       end
-      file << doc.to_html
+      contents = doc.to_html
+      contents.gsub!(%r{(["'])/?#{image_dir}}, '\1/images')
+      contents.gsub!(%r{(["'])/?#{stylesheet_dir}}, '\1/stylesheets')
+      file << contents
     end
   end
   
@@ -38,6 +44,14 @@ class ConvertTheme
   end
   
   protected
+  def in_template_root(&block)
+    FileUtils.chdir(template_root, &block)
+  end
+  
+  def in_rails_path(&block)
+    FileUtils.chdir(rails_path, &block)
+  end
+
   def detect_template
     if detect_template_haml
       'haml'
@@ -47,9 +61,26 @@ class ConvertTheme
   end
   
   def detect_template_haml
-    FileUtils.chdir(rails_path) do
+    in_rails_path do
       return true if File.exist?('vendor/plugins/haml')
       return true if File.exist?('config/environment.rb') && File.read('config/environment.rb') =~ /haml/
+    end
+  end
+  
+  def detect_stylesheet_dir
+    paths = File.join(template_root, '**/*.css')
+    if path = File.dirname(Dir[paths].first)
+      path.gsub(template_root, '').gsub(%r{^/}, '')
+    else
+      'stylesheets'
+    end
+  end
+  
+  def detect_image_dir
+    if path = File.dirname(Dir[File.join(template_root, '**/*.{jpg,png,gif}')].first)
+      path.gsub(template_root, '').gsub(%r{^/}, '')
+    else
+      'images'
     end
   end
 end

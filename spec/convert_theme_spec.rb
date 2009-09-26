@@ -9,7 +9,9 @@ describe ConvertTheme do
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
     end
     it { @theme.should be_erb }
-    describe "becomes a Rails app" do
+    it { @theme.stylesheet_dir.should == "css" }
+    it { @theme.image_dir.should == "img" }
+    describe "becomes a Rails app with html templates" do
       %w[app/views/layouts/application.html.erb].each do |matching_file|
         it do
           expected = clean_file(File.join(@expected_application, matching_file))
@@ -20,6 +22,16 @@ describe ConvertTheme do
         end
       end
       
+      %w[public/stylesheets/style.css
+        public/stylesheets/theme.css].each do |matching_file|
+          it do
+            expected = File.join(@expected_application, matching_file)
+            actual   = File.join(@target_application, matching_file)
+            diff = `diff #{expected} #{actual}`
+            rputs diff unless diff.strip.empty?
+            diff.strip.should == ""
+          end
+        end
     end
   end
 
