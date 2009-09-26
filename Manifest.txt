@@ -1,6 +1,5 @@
 History.txt
 Manifest.txt
-PostInstall.txt
 README.rdoc
 Rakefile
 bin/convert_theme
