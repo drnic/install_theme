@@ -13,8 +13,7 @@ describe ConvertTheme::CLI, "execute" do
       and_return(theme)
     theme.should_receive(:apply_to).with(".")
     @stdout = stdout do |stdout_io|
-      ConvertTheme::CLI.execute(stdout_io, %w[path/to/app .
-        --content_id=content_box
+      ConvertTheme::CLI.execute(stdout_io, %w[path/to/app . content_box
         --index_path=root.html
         --haml
       ])

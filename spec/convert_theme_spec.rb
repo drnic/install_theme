@@ -5,7 +5,8 @@ describe ConvertTheme do
     before do
       setup_base_rails
       stdout do |stdout|
-        @theme = ConvertTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", :stdout => stdout)
+        @theme = ConvertTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
+          :content_id => "content", :stdout => stdout)
         @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"

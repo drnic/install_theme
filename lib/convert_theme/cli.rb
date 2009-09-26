@@ -5,19 +5,17 @@ class ConvertTheme
     def self.execute(stdout, arguments=[])
       options = {}
       options[:template_root] = arguments.shift
-      path_to_rails_app = arguments.shift
+      path_to_rails_app       = arguments.shift
+      options[:content_id]    = arguments.shift
       parser = OptionParser.new do |opts|
         opts.banner = <<-BANNER.gsub(/^          /,'')
           Use any HTML template as a theme generator for your Rails app.
 
-          Usage: #{File.basename($0)} path/to/template path/to/rails_app [options]
+          Usage: #{File.basename($0)} path/to/template path/to/rails_app content_id [options]
 
           Options are:
         BANNER
         opts.separator ""
-        opts.on("--content_id=CONTENT_ID", String,
-                "DOM id for the main DOM element for the <%= yield %>.",
-                "Default: content") { |arg| options[:content_id] = arg }
         opts.on("--haml",
                 "Generate HAML templates.") { |arg| options[:template_type] = 'haml' }
         opts.on("--index_path=index.html", String,
