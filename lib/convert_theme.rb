@@ -7,7 +7,7 @@ class ConvertTheme
   VERSION = "0.0.1"
   
   attr_reader :template_root, :index_path, :rails_path, :template_type
-  attr_reader :stylesheet_dir, :image_dir
+  attr_reader :stylesheet_dir, :javascript_dir, :image_dir
   attr_reader :content_id
   
   def initialize(options = {})
@@ -15,6 +15,7 @@ class ConvertTheme
     @index_path     = options[:index_path] || "index.html"
     @content_id     = options[:content_id] || "content"
     @stylesheet_dir = options[:stylesheet_dir] || detect_stylesheet_dir
+    @javascript_dir = options[:javascript_dir] || detect_javascript_dir
     @image_dir      = options[:image_dir] || detect_image_dir
   end
   
@@ -31,11 +32,18 @@ class ConvertTheme
       contents = doc.to_html
       contents.gsub!(%r{(["'])/?#{image_dir}}, '\1/images')
       contents.gsub!(%r{(["'])/?#{stylesheet_dir}}, '\1/stylesheets')
+      contents.gsub!(%r{(["'])/?#{javascript_dir}}, '\1/javascripts')
       file << contents
     end
     
     template_stylesheets.each do |file|
-      FileUtils.cp(file, File.join(rails_path, 'public/stylesheets'))
+      FileUtils.cp_r(file, File.join(rails_path, 'public/stylesheets'))
+    end
+    template_javascripts.each do |file|
+      FileUtils.cp_r(file, File.join(rails_path, 'public/javascripts'))
+    end
+    template_images.each do |file|
+      FileUtils.cp_r(file, File.join(rails_path, 'public/images'))
     end
   end
   
@@ -72,16 +80,24 @@ class ConvertTheme
   end
   
   def detect_stylesheet_dir
-    if path = File.dirname(Dir[File.join(template_root, '**/*.css')].first)
-      path.gsub(template_root, '').gsub(%r{^/}, '')
+    if path = Dir[File.join(template_root, '**/*.css')].first
+      File.dirname(path).gsub(template_root, '').gsub(%r{^/}, '')
     else
-      'stylesheets'
+      'stylescheets'
+    end
+  end
+  
+  def detect_javascript_dir
+    if path = Dir[File.join(template_root, '**/*.js')].first
+      File.dirname(path).gsub(template_root, '').gsub(%r{^/}, '')
+    else
+      'javascripts'
     end
   end
   
   def detect_image_dir
-    if path = File.dirname(Dir[File.join(template_root, '**/*.{jpg,png,gif}')].first)
-      path.gsub(template_root, '').gsub(%r{^/}, '')
+    if path = Dir[File.join(template_root, '**/*.{jpg,png,gif}')].first
+      File.dirname(path).gsub(template_root, '').gsub(%r{^/}, '')
     else
       'images'
     end
@@ -91,6 +107,10 @@ class ConvertTheme
     Dir[File.join(template_root, stylesheet_dir, '*')]
   end
   
+  def template_javascripts
+    Dir[File.join(template_root, javascript_dir, '*')]
+  end
+
   def template_images
     Dir[File.join(template_root, image_dir, '*')]
   end
