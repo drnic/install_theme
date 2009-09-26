@@ -7,6 +7,7 @@ def setup_base_rails(options = {})
   @target_application = File.join(tmp_path, "my_app")
   FileUtils.cp_r(File.dirname(__FILE__) + "/expected/rails/base_app", @target_application)
   `haml --rails #{@target_application}` if options[:haml]
+  @target_application
 end
 
 describe ConvertTheme do
@@ -15,10 +16,18 @@ describe ConvertTheme do
       setup_base_rails
       @theme = ConvertTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje")
       @theme.apply_to(@target_application)
+      @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
     end
     it { @theme.should be_erb }
     describe "becomes a Rails app" do
-      it { File.should be_exist("#{@target_application}/app/views/layouts/application.html.erb") }
+      %w[app/views/layouts/application.html.erb].each do |matching_file|
+        it do
+          diff = `diff #{File.join(@target_application, matching_file)} #{File.join(@expected_application, matching_file)}`
+          rputs diff unless diff.strip.empty?
+          diff.strip.should == ""
+        end
+      end
+      
     end
   end
 
