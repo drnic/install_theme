@@ -11,10 +11,10 @@ Hoe.plugin :git
 $hoe = Hoe.spec 'convert_theme' do
   developer 'Dr Nic Williams', 'drnicwilliams@gmail.com'
   self.rubyforge_name = "drnicutilities"
-  self.extra_deps << ['hpricot','>= 0.8.1']
-  self.extra_deps << ['rubigen','>= 1.5.2']
-  self.extra_dev_deps << ['rails', '2.3.4']
-  self.extra_dev_deps << ['haml']
+  extra_deps << ['hpricot','>= 0.8.1']
+  extra_deps << ['rubigen','>= 1.5.2']
+  extra_dev_deps << ['rails', '2.3.4']
+  extra_dev_deps << ['haml']
 end
 
 require 'newgem/tasks'

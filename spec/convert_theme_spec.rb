@@ -6,7 +6,7 @@ describe ConvertTheme do
       setup_base_rails
       stdout do |stdout|
         @theme = ConvertTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", :stdout => stdout)
-        @theme.apply_to(@target_application, :generator => {:collision => :force})
+        @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
     end
@@ -48,7 +48,7 @@ describe ConvertTheme do
           @theme = ConvertTheme.new(
             :template_root => File.dirname(__FILE__) + "/fixtures/webresourcedepot",
             :content_id => "center-column", :stdout => $stdout)
-          @theme.apply_to(@target_application, :generator => {:collision => :force})
+          @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true})
         end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/webresourcedepot"
     end
