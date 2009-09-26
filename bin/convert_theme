@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+#
+#  Created on 2009-9-26.
+#  Copyright (c) 2009. All rights reserved.
+
+require 'rubygems'
+require File.expand_path(File.dirname(__FILE__) + "/../lib/convert_theme")
+require "convert_theme/cli"
+
+ConvertTheme::CLI.execute(STDOUT, ARGV)
