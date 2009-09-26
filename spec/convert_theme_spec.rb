@@ -35,16 +35,4 @@ describe ConvertTheme do
       
     end
   end
-
-  context "bloganje theme to HAML" do
-    before do
-      setup_base_rails(:haml => true)
-      @theme = ConvertTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje")
-      @theme.apply_to(@target_application)
-    end
-    it { @theme.should be_haml }
-    describe "becomes a Rails app" do
-      it { File.should be_exist("#{@target_application}/app/views/layouts/application.html.haml") }
-    end
-  end
 end
