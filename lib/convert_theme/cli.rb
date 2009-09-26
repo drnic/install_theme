@@ -18,6 +18,11 @@ class ConvertTheme
         opts.on("--content_id=CONTENT_ID", String,
                 "DOM id for the main DOM element for the <%= yield %>.",
                 "Default: content") { |arg| options[:content_id] = arg }
+        opts.on("--haml",
+                "Generate HAML templates.") { |arg| options[:template_type] = 'haml' }
+        opts.on("--index_path=index.html", String,
+                "HTML page to use for application layout.",
+                "Default: index.html") { |arg| options[:index_path] = arg }
         opts.on("-h", "--help",
                 "Show this help message.") { stdout.puts opts; exit }
         opts.parse!(arguments)
