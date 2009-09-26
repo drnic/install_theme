@@ -1,0 +1,1 @@
+Using rails version 2.3.4 to generate the base of these expected apps

@@ -10,6 +10,8 @@ Hoe.plugin :newgem
 $hoe = Hoe.spec 'convert_theme' do
   self.developer 'Dr Nic Williams', 'drnicwilliams@gmail.com'
   # self.extra_deps         = [['activesupport','>= 2.0.2']]
+  self.extra_development_deps << ['rails', '2.3.4']
+  self.extra_development_deps << ['haml']
 end
 
 require 'newgem/tasks'
