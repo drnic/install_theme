@@ -2,6 +2,8 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 require "hpricot"
+require "rubigen"
+require 'rubigen/scripts/generate'
 
 class ConvertTheme
   VERSION = "0.1.0"
@@ -17,13 +19,16 @@ class ConvertTheme
     @stylesheet_dir = options[:stylesheet_dir] || detect_stylesheet_dir
     @javascript_dir = options[:javascript_dir] || detect_javascript_dir
     @image_dir      = options[:image_dir] || detect_image_dir
+    @stdout         = options[:stdout] || $stdout
+    
+    setup_template_temp_path
   end
   
   def apply_to(rails_path, options = {})
     @rails_path = rails_path
     @template_type = (options[:template_type] || detect_template).to_s
 
-    File.open(File.join(rails_path, 'app/views/layouts/application.html.erb'), "w") do |file|
+    File.open(File.join(template_temp_path, 'app/views/layouts/application.html.erb'), "w") do |file|
       index_file = File.read(File.join(template_root, index_path)).gsub(/\r/, '')
       doc = Hpricot(index_file)
       doc.search("##{content_id}").each do |div|
@@ -37,17 +42,43 @@ class ConvertTheme
     end
     
     template_stylesheets.each do |file|
-      File.open(File.join(rails_path, 'public/stylesheets', File.basename(file)), "w") do |f|
+      File.open(File.join(template_temp_path, 'public/stylesheets', File.basename(file)), "w") do |f|
         contents = File.read(file)
         contents.gsub!(%r{url\((["']?)[./]*#{image_dir}}, 'url(\1/images')
         f << contents
       end
     end
     template_javascripts.each do |file|
-      FileUtils.cp_r(file, File.join(rails_path, 'public/javascripts'))
+      FileUtils.cp_r(file, File.join(template_temp_path, 'public/javascripts'))
     end
     template_images.each do |file|
-      FileUtils.cp_r(file, File.join(rails_path, 'public/images'))
+      FileUtils.cp_r(file, File.join(template_temp_path, 'public/images'))
+    end
+    
+    # now use rubigen to install the files into the rails app
+    # so users can get conflict resolution options from command line
+    RubiGen::Base.reset_sources
+    RubiGen::Base.prepend_sources(RubiGen::PathSource.new(:internal, File.dirname(__FILE__)))
+    generator_options = options[:generator] || {}
+    generator_options.merge!(:stdout => @stdout, :no_exit => true,
+      :source => template_temp_path, :destination => rails_path)
+    RubiGen::Scripts::Generate.new.run(["convert_theme"], generator_options)
+  end
+  
+  # This generator's templates folder is temporary
+  # and is accessed via source_root within the generator.
+  def template_temp_path
+    @template_temp_path ||= begin
+      tmp_dir = ENV['TMPDIR'] || '/tmp'
+      template_path = File.join(tmp_dir, "convert_theme", "templates")
+    end
+  end
+  
+  def setup_template_temp_path
+    FileUtils.rm_rf(template_temp_path)
+    FileUtils.mkdir_p(template_temp_path)
+    %w[app/views/layouts public/images public/javascripts public/stylesheets].each do |app_path|
+      FileUtils.mkdir_p(File.join(template_temp_path, app_path))
     end
   end
   

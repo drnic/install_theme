@@ -1,13 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require 'convert_theme/cli'
 
-def stdout(&block)
-  stdout_io = StringIO.new
-  yield stdout_io
-  stdout_io.rewind
-  stdout_io.read
-end
-
 describe ConvertTheme::CLI, "execute" do
   before(:each) do
     theme = stub

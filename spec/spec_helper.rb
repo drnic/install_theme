@@ -37,3 +37,10 @@ def setup_base_rails(options = {})
   @target_application
 end
 
+def stdout(&block)
+  stdout_io = StringIO.new
+  yield stdout_io
+  stdout_io.rewind
+  stdout_io.read
+end
+
