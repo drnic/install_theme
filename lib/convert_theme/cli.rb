@@ -21,6 +21,13 @@ class ConvertTheme
         opts.on("--index_path=index.html", String,
                 "HTML page to use for application layout.",
                 "Default: index.html") { |arg| options[:index_path] = arg }
+        opts.on("--inside_yield=KEY_AND_CSS_PATH", String,
+                "Replace the inner HTML of an element with <%= yield :key %>",
+                "Default: nil") do |arg|
+                  options[:inside_yields] ||= {}
+                  key, css_path = arg.split(/\s*=>\s*/)[0..1]
+                  options[:inside_yields][key.strip.to_sym] = css_path.strip
+                end
         opts.on("-h", "--help",
                 "Show this help message.") { stdout.puts opts; exit }
         opts.parse!(arguments)
