@@ -17,16 +17,14 @@ describe ConvertTheme do
     describe "becomes a Rails app with html templates" do
       before { @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true}) }
       it { @theme.should be_erb }
-      %w[app/views/layouts/application.html.erb].each do |matching_file|
-        it { File.should be_exist(File.join(@target_application, matching_file)) }
-        it { File.should be_exist(File.join(@expected_application, matching_file)) }
-        it do
-          expected = clean_file(File.join(@expected_application, matching_file))
-          actual   = File.join(@target_application, matching_file)
-          diff = `diff #{expected} #{actual}  2> /dev/null`
-          rputs diff unless diff.strip.empty?
-          diff.strip.should == ""
-        end
+      it { File.should be_exist(File.join(@target_application, "app/views/layouts/application.html.erb")) }
+      it { File.should be_exist(File.join(@expected_application, "app/views/layouts/application.html.erb")) }
+      it "should create app/views/layouts/application.html.erb as a layout file" do
+        expected = clean_file(File.join(@expected_application, "app/views/layouts/application.html.erb"))
+        actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
+        diff = `diff #{expected} #{actual}  2> /dev/null`
+        rputs diff unless diff.strip.empty?
+        diff.strip.should == ""
       end
       
       %w[public/stylesheets/style.css
@@ -57,14 +55,12 @@ describe ConvertTheme do
     describe "becomes a Rails app" do
       before { @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true}) }
       it { @theme.should be_erb }
-      %w[app/views/layouts/application.html.erb].each do |matching_file|
-        it do
-          expected = clean_file(File.join(@expected_application, matching_file))
-          actual   = File.join(@target_application, matching_file)
-          diff = `diff #{expected} #{actual}  2> /dev/null`
-          rputs diff unless diff.strip.empty?
-          diff.strip.should == ""
-        end
+      it "should create app/views/layouts/application.html.erb as a layout file" do
+        expected = clean_file(File.join(@expected_application, "app/views/layouts/application.html.erb"))
+        actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
+        diff = `diff #{expected} #{actual}  2> /dev/null`
+        rputs diff unless diff.strip.empty?
+        diff.strip.should == ""
       end
       
       %w[public/stylesheets/all.css].each do |matching_file|
