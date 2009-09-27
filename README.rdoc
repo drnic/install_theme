@@ -25,9 +25,25 @@ Replace some DOM content with <%= yield :some_label %> with --inside_yields:
       "--inside_yield=header=>#header h2" \
       "--inside_yield=sidebar=>#sidebar"
 
+=== Haml Support:
+
+If your application has Haml installed, the template/theme is automatically converted
+to Haml, and the css files converted to Sass. 
+
+Alternately, you can pass the flag --haml to force it.
+
+Or pass the flag --erb to force erb template generation.
+
 == INSTALL:
 
-* sudo gem install install_theme
+install_theme is distributed as a RubyGem, which installs the command line app automatically:
+
+    sudo gem install install_theme
+    install_theme -h
+
+== AUTHOR:
+
+Dr Nic Williams (http://drnicwilliams.com) wrote install_theme because he wanted a very
 
 == LICENSE:
 

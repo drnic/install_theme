@@ -16,8 +16,12 @@ class InstallTheme
           Options are:
         BANNER
         opts.separator ""
+        opts.on("--erb",
+                "Generate ERb templates.",
+                "Default: auto-detect") { |arg| options[:template_type] = 'erb' }
         opts.on("--haml",
-                "Generate HAML templates.") { |arg| options[:template_type] = 'haml' }
+                "Generate HAML templates.",
+                "Default: auto-detect") { |arg| options[:template_type] = 'haml' }
         opts.on("--index_path=index.html", String,
                 "HTML page to use for application layout.",
                 "Default: index.html") { |arg| options[:index_path] = arg }
