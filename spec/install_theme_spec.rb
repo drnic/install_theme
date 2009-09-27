@@ -25,7 +25,7 @@ describe InstallTheme do
       it { File.should be_exist(File.join(@target_application, "app/views/layouts/application.html.erb")) }
       it { File.should be_exist(File.join(@expected_application, "app/views/layouts/application.html.erb")) }
       it "should create app/views/layouts/application.html.erb as a layout file" do
-        expected = clean_file(File.join(@expected_application, "app/views/layouts/application.html.erb"))
+        expected = clean_html(File.join(@expected_application, "app/views/layouts/application.html.erb"))
         actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
         diff = `diff #{expected} #{actual}  2> /dev/null`
         rputs diff unless diff.strip.empty?
@@ -63,7 +63,7 @@ describe InstallTheme do
     end
     describe "becomes a Rails app" do
       it "should create app/views/layouts/application.html.erb as a layout file" do
-        expected = clean_file(File.join(@expected_application, "app/views/layouts/application.html.erb"))
+        expected = clean_html(File.join(@expected_application, "app/views/layouts/application.html.erb"))
         actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
         diff = `diff #{expected} #{actual}  2> /dev/null`
         rputs diff unless diff.strip.empty?
@@ -102,7 +102,7 @@ describe InstallTheme do
     describe "becomes a Rails app" do
       it { File.should be_exist(File.join(@target_application, "app/views/layouts/application.html.erb")) }
       it "should create app/views/layouts/application.html.erb as a layout file" do
-        expected = clean_file(File.join(@expected_application, "app/views/layouts/application.html.erb"))
+        expected = clean_html(File.join(@expected_application, "app/views/layouts/application.html.erb"))
         actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
         diff = `diff #{expected} #{actual}  2> /dev/null`
         rputs diff unless diff.strip.empty?
@@ -113,8 +113,8 @@ describe InstallTheme do
           it { File.should be_exist(File.join(@target_application, matching_file)) }
           it { File.should be_exist(File.join(@expected_application, matching_file)) }
           it do
-            expected = File.join(@expected_application, matching_file)
-            actual   = File.join(@target_application, matching_file)
+            expected = clean_file File.join(@expected_application, matching_file)
+            actual   = clean_file File.join(@target_application, matching_file)
             diff = `diff #{expected} #{actual}  2> /dev/null`
             rputs diff unless diff.strip.empty?
             diff.strip.should == ""

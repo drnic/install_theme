@@ -18,11 +18,20 @@ module Kernel
   end
 end
 
-def clean_file(orig_file)
+def clean_html(orig_file)
   tmp_dir = ENV['TMPDIR'] || '/tmp'
-  file = File.join(tmp_dir, 'clean_file.html')
+  file = File.join(tmp_dir, 'clean_html.html')
   File.open(file, "w") do |f|
     f << Hpricot(open(orig_file)).to_html
+  end
+  file
+end
+
+def clean_file(orig_file)
+  tmp_dir = ENV['TMPDIR'] || '/tmp'
+  file = File.join(tmp_dir, 'clean_html.html')
+  File.open(file, "w") do |f|
+    f << File.open(orig_file).readlines.join("\n")
   end
   file
 end
