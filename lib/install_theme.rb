@@ -66,7 +66,7 @@ class InstallTheme
   protected
   
   def convert_file_to_layout(html_path, layout_path)
-    File.open(File.join(template_temp_path, layout_path), "w") do |file|
+    File.open(File.join(template_temp_path, layout_path), "w") do |f|
       index_file = File.read(File.join(template_root, html_path)).gsub(/\r/, '')
       doc = Hpricot(index_file)
       doc.search("##{content_id}").each { |elm| elm.inner_html = "<%= yield %>" }
@@ -77,11 +77,25 @@ class InstallTheme
         end
       end
       contents = doc.to_html
-      contents.gsub!(%r{(["'])/?#{image_dir}}, '\1/images')
-      contents.gsub!(%r{(["'])/?#{stylesheet_dir}}, '\1/stylesheets')
-      contents.gsub!(%r{(["'])/?#{javascript_dir}}, '\1/javascripts')
+      template_images.each do |file|
+        image = File.basename(file)
+        contents.gsub!(%r{(["'])/?[\w_\-\/]*#{image}}, '\1/images/' + image)
+      end
+      template_stylesheets.each do |file|
+        stylesheet = File.basename(file)
+        contents.gsub!(%r{(["'])/?[\w_\-\/]*#{stylesheet}}, '\1/stylesheets/' + stylesheet)
+      end
+      template_javascripts.each do |file|
+        javascript = File.basename(file)
+        contents.gsub!(%r{(["'])/?[\w_\-\/]*#{javascript}}, '\1/javascripts/' + javascript)
+      end
+
+      contents.gsub!(%r{(["'])/?#{image_dir}}, '\1/images') unless image_dir.blank?
+      contents.gsub!(%r{(["'])/?#{stylesheet_dir}}, '\1/stylesheets') unless stylesheet_dir.blank?
+      contents.gsub!(%r{(["'])/?#{javascript_dir}}, '\1/javascripts') unless javascript_dir.blank?
+
       contents.sub!(%r{\s*</head>}, "\n  <%= yield(:head) %>\n</head>")
-      file << contents
+      f << contents
     end
   end
 
@@ -139,7 +153,7 @@ class InstallTheme
     if path = Dir[File.join(template_root, '**/*.css')].first
       File.dirname(path).gsub(template_root, '').gsub(%r{^/}, '')
     else
-      'stylescheets'
+      'stylesheets'
     end
   end
   
@@ -160,15 +174,15 @@ class InstallTheme
   end
   
   def template_stylesheets
-    Dir[File.join(template_root, stylesheet_dir, '*')]
+    Dir[File.join(template_root, stylesheet_dir, '*.css')]
   end
   
   def template_javascripts
-    Dir[File.join(template_root, javascript_dir, '*')]
+    Dir[File.join(template_root, javascript_dir, '*.js')]
   end
 
   def template_images
-    Dir[File.join(template_root, image_dir, '*')]
+    Dir[File.join(template_root, image_dir, '*.{jpg,png,gif}')]
   end
   
   def show_readme

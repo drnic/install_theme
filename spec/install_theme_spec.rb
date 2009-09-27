@@ -83,5 +83,44 @@ describe InstallTheme do
         end
     end
   end
+
+  context "djclub theme to ERb" do
+    before do
+      setup_base_rails
+        @stdout = stdout do |stdout|
+          @theme = InstallTheme.new(
+            :template_root => File.dirname(__FILE__) + "/fixtures/djclub",
+            :rails_root    => @target_application,
+            :inside_yields => { :menu => '#header ul' },
+            :content_id    => "content", :stdout => stdout)
+          @theme.apply_to_target(:generator => {:collision => :force, :quiet => true})
+        end
+      @expected_application = File.dirname(__FILE__) + "/expected/rails/djclub"
+    end
+    it { @theme.stylesheet_dir.should == "" }
+    it { @theme.image_dir.should == "images" }
+    describe "becomes a Rails app" do
+      it { File.should be_exist(File.join(@target_application, "app/views/layouts/application.html.erb")) }
+      it "should create app/views/layouts/application.html.erb as a layout file" do
+        expected = clean_file(File.join(@expected_application, "app/views/layouts/application.html.erb"))
+        actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
+        diff = `diff #{expected} #{actual}  2> /dev/null`
+        rputs diff unless diff.strip.empty?
+        diff.strip.should == ""
+      end
+      
+      %w[public/stylesheets/style.css].each do |matching_file|
+          it { File.should be_exist(File.join(@target_application, matching_file)) }
+          it { File.should be_exist(File.join(@expected_application, matching_file)) }
+          it do
+            expected = File.join(@expected_application, matching_file)
+            actual   = File.join(@target_application, matching_file)
+            diff = `diff #{expected} #{actual}  2> /dev/null`
+            rputs diff unless diff.strip.empty?
+            diff.strip.should == ""
+          end
+        end
+    end
+  end
 end
 
