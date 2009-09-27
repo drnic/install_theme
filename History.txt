@@ -1,3 +1,15 @@
+=== 0.3.1 / 2009-09-27
+
+Major:
+* Display sample Ruby for how to use the named yields inserted into the layout.
+
+Minor:
+* Include sample for the automatically included <%= yield(:head) %>
+* passing target rails path into #new instead of #apply_to; which is renamed to #apply_to_target
+* More spec cleanup
+* remove script folder from expected rails apps; not required
+* minor refactoring of specs
+
 === 0.3.0 / 2009-09-27
 
 Major:
