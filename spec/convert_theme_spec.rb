@@ -9,14 +9,14 @@ describe ConvertTheme do
           :content_id => "content",
           :inside_yields => { :header => '#header h2' },
           :stdout => stdout)
-        @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
     end
-    it { @theme.should be_erb }
     it { @theme.stylesheet_dir.should == "css" }
     it { @theme.image_dir.should == "img" }
     describe "becomes a Rails app with html templates" do
+      before { @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true}) }
+      it { @theme.should be_erb }
       %w[app/views/layouts/application.html.erb].each do |matching_file|
         it { File.should be_exist(File.join(@target_application, matching_file)) }
         it { File.should be_exist(File.join(@expected_application, matching_file)) }
@@ -51,12 +51,12 @@ describe ConvertTheme do
           @theme = ConvertTheme.new(
             :template_root => File.dirname(__FILE__) + "/fixtures/webresourcedepot",
             :content_id => "center-column", :stdout => $stdout)
-          @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true})
         end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/webresourcedepot"
     end
-    it { @theme.should be_erb }
     describe "becomes a Rails app" do
+      before { @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true}) }
+      it { @theme.should be_erb }
       %w[app/views/layouts/application.html.erb].each do |matching_file|
         it do
           expected = clean_file(File.join(@expected_application, matching_file))
