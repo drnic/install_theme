@@ -6,10 +6,10 @@ describe ConvertTheme do
       setup_base_rails
       stdout do |stdout|
         @theme = ConvertTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
-          :rails_root => @target_application,
-          :content_id => "content",
-          :inside_yields => { :header => '#header h2' },
-          :stdout => stdout)
+          :rails_root    => @target_application,
+          :content_id    => "content",
+          :inside_yields => { :header => '#header h2', :sidebar => '#sidebar' },
+          :stdout        => stdout)
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
     end
@@ -46,17 +46,18 @@ describe ConvertTheme do
         end
       it { @stdout.should include("<% content_for(:head) { '<script>...</script>' } -%>") }
       it { @stdout.should include("<% content_for(:header) { 'My eCommerce Admin area' } -%>") }
+      it { @stdout.should include("<% content_for(:sidebar) do") }
     end
   end
 
   context "webresourcedepot theme to ERb" do
     before do
       setup_base_rails
-        stdout do |stdout|
+        @stdout = stdout do |stdout|
           @theme = ConvertTheme.new(
             :template_root => File.dirname(__FILE__) + "/fixtures/webresourcedepot",
-            :rails_root => @target_application,
-            :content_id => "center-column", :stdout => stdout)
+            :rails_root    => @target_application,
+            :content_id    => "center-column", :stdout => stdout)
           @theme.apply_to_target(:generator => {:collision => :force, :quiet => true})
         end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/webresourcedepot"
@@ -84,3 +85,4 @@ describe ConvertTheme do
     end
   end
 end
+

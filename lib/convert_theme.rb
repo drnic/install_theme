@@ -1,8 +1,8 @@
 $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
-require "hpricot"
-require "rubigen"
+require 'hpricot'
+require 'rubigen'
 require 'rubigen/scripts/generate'
 
 class ConvertTheme
@@ -72,7 +72,7 @@ class ConvertTheme
       doc.search("##{content_id}").each { |elm| elm.inner_html = "<%= yield %>" }
       inside_yields.to_a.each do |name, css_path|
         doc.search(css_path).each do |elm|
-          inside_yields_originals[name] = elm.inner_html
+          inside_yields_originals[name] = elm.inner_html.strip
           elm.inner_html = "<%= yield(:#{name}) %>"
         end
       end
@@ -178,9 +178,15 @@ class ConvertTheme
     
     README
     stdout.puts "You are using named yields. Here are examples how to use them: "
+    stdout.puts "<% content_for(:head) { '<script>...</script>' } -%>"
     inside_yields_originals.to_a.each do |key, original_contents|
-      stdout.puts "<% content_for(:head) { '<script>...</script>' } -%>"
-      stdout.puts "<% content_for(:#{key}) { '#{original_contents}' } -%>"
+      if original_contents =~ /\n/
+        stdout.puts "<% content_for(:#{key}) do\n<<-EOS"
+        stdout.puts Hpricot(original_contents).to_s
+        stdout.puts "EOS\nend -%>"
+      else
+        stdout.puts "<% content_for(:#{key}) { '#{original_contents}' } -%>"
+      end
     end
   end
 end
