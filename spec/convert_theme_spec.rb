@@ -6,6 +6,7 @@ describe ConvertTheme do
       setup_base_rails
       stdout do |stdout|
         @theme = ConvertTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
+          :rails_root => @target_application,
           :content_id => "content",
           :inside_yields => { :header => '#header h2' },
           :stdout => stdout)
@@ -14,9 +15,9 @@ describe ConvertTheme do
     end
     it { @theme.stylesheet_dir.should == "css" }
     it { @theme.image_dir.should == "img" }
+    it { @theme.should be_erb }
     describe "becomes a Rails app with html templates" do
-      before { @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true}) }
-      it { @theme.should be_erb }
+      before { @theme.apply_to_target(:generator => {:collision => :force, :quiet => true}) }
       it { File.should be_exist(File.join(@target_application, "app/views/layouts/application.html.erb")) }
       it { File.should be_exist(File.join(@expected_application, "app/views/layouts/application.html.erb")) }
       it "should create app/views/layouts/application.html.erb as a layout file" do
@@ -48,13 +49,13 @@ describe ConvertTheme do
         stdout do |stdout|
           @theme = ConvertTheme.new(
             :template_root => File.dirname(__FILE__) + "/fixtures/webresourcedepot",
+            :rails_root => @target_application,
             :content_id => "center-column", :stdout => $stdout)
         end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/webresourcedepot"
     end
     describe "becomes a Rails app" do
-      before { @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true}) }
-      it { @theme.should be_erb }
+      before { @theme.apply_to_target(:generator => {:collision => :force, :quiet => true}) }
       it "should create app/views/layouts/application.html.erb as a layout file" do
         expected = clean_file(File.join(@expected_application, "app/views/layouts/application.html.erb"))
         actual   = File.join(@target_application, "app/views/layouts/application.html.erb")

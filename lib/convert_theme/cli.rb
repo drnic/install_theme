@@ -5,7 +5,7 @@ class ConvertTheme
     def self.execute(stdout, arguments=[])
       options = {}
       options[:template_root] = arguments.shift
-      path_to_rails_app       = arguments.shift
+      options[:rails_root]    = arguments.shift
       options[:content_id]    = arguments.shift
       parser = OptionParser.new do |opts|
         opts.banner = <<-BANNER.gsub(/^          /,'')
@@ -32,10 +32,10 @@ class ConvertTheme
                 "Show this help message.") { stdout.puts opts; exit }
         opts.parse!(arguments)
       end
-      unless options[:template_root] && path_to_rails_app
+      unless options[:template_root] && options[:rails_root]
         stdout.puts parser; exit
       end
-      ConvertTheme.new(options).apply_to(path_to_rails_app)
+      ConvertTheme.new(options).apply_to_target
     end
   end
 end

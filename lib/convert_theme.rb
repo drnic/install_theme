@@ -8,12 +8,14 @@ require 'rubigen/scripts/generate'
 class ConvertTheme
   VERSION = "0.3.0"
   
-  attr_reader :template_root, :index_path, :rails_path, :template_type
+  attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
   attr_reader :content_id, :inside_yields
   
   def initialize(options = {})
     @template_root  = File.expand_path(options[:template_root] || File.dirname('.'))
+    @rails_root     = File.expand_path(options[:rails_root] || File.dirname('.'))
+    @template_type  = (options[:template_type] || detect_template).to_s
     @index_path     = options[:index_path] || "index.html"
     @content_id     = options[:content_id] || "content"
     @inside_yields  = options[:inside_yields] || {}
@@ -25,10 +27,7 @@ class ConvertTheme
     setup_template_temp_path
   end
   
-  def apply_to(rails_path, options = {})
-    @rails_path = rails_path
-    @template_type = (options[:template_type] || detect_template).to_s
-
+  def apply_to_target(options = {})
     convert_file_to_layout(index_path, 'app/views/layouts/application.html.erb')
     prepare_assets
     run_generator(options)
@@ -101,7 +100,7 @@ class ConvertTheme
     RubiGen::Base.prepend_sources(RubiGen::PathSource.new(:internal, File.dirname(__FILE__)))
     generator_options = options[:generator] || {}
     generator_options.merge!(:stdout => @stdout, :no_exit => true,
-      :source => template_temp_path, :destination => rails_path)
+      :source => template_temp_path, :destination => rails_root)
     RubiGen::Scripts::Generate.new.run(["convert_theme"], generator_options)
   end
 
@@ -109,8 +108,8 @@ class ConvertTheme
     FileUtils.chdir(template_root, &block)
   end
   
-  def in_rails_path(&block)
-    FileUtils.chdir(rails_path, &block)
+  def in_rails_root(&block)
+    FileUtils.chdir(rails_root, &block)
   end
 
   def detect_template
@@ -122,7 +121,7 @@ class ConvertTheme
   end
   
   def detect_template_haml
-    in_rails_path do
+    in_rails_root do
       return true if File.exist?('vendor/plugins/haml')
       return true if File.exist?('config/environment.rb') && File.read('config/environment.rb') =~ /haml/
     end
