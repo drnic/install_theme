@@ -6,7 +6,8 @@ describe ConvertTheme do
       setup_base_rails
       stdout do |stdout|
         @theme = ConvertTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
-          :content_id => "content", 
+          :content_id => "content",
+          :inside_yields => { :header => '#header h2' },
           :stdout => stdout)
         @theme.apply_to(@target_application, :generator => {:collision => :force, :quiet => true})
       end

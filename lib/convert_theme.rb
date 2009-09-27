@@ -10,12 +10,13 @@ class ConvertTheme
   
   attr_reader :template_root, :index_path, :rails_path, :template_type
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
-  attr_reader :content_id
+  attr_reader :content_id, :inside_yields
   
   def initialize(options = {})
     @template_root  = File.expand_path(options[:template_root] || File.dirname('.'))
     @index_path     = options[:index_path] || "index.html"
     @content_id     = options[:content_id] || "content"
+    @inside_yields  = options[:inside_yields] || {}
     @stylesheet_dir = options[:stylesheet_dir] || detect_stylesheet_dir
     @javascript_dir = options[:javascript_dir] || detect_javascript_dir
     @image_dir      = options[:image_dir] || detect_image_dir
@@ -64,8 +65,9 @@ class ConvertTheme
     File.open(File.join(template_temp_path, layout_path), "w") do |file|
       index_file = File.read(File.join(template_root, html_path)).gsub(/\r/, '')
       doc = Hpricot(index_file)
-      doc.search("##{content_id}").each do |div|
-        div.inner_html = "<%= yield %>"
+      doc.search("##{content_id}").each { |elm| elm.inner_html = "<%= yield %>" }
+      inside_yields.to_a.each do |name, css_path|
+        doc.search(css_path).each { |elm| elm.inner_html = "<%= yield(:#{name}) %>"}
       end
       contents = doc.to_html
       contents.gsub!(%r{(["'])/?#{image_dir}}, '\1/images')
