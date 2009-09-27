@@ -9,8 +9,6 @@ lib/install_theme/install_theme_generator.rb
 script/console
 script/destroy
 script/generate
-spec/install_theme_cli_spec.rb
-spec/install_theme_spec.rb
 spec/expected/rails/README.md
 spec/expected/rails/base_app/README
 spec/expected/rails/base_app/Rakefile
@@ -316,6 +314,8 @@ spec/fixtures/webresourcedepot/img/tab-left.gif
 spec/fixtures/webresourcedepot/img/tab-right.gif
 spec/fixtures/webresourcedepot/img/tab.gif
 spec/fixtures/webresourcedepot/index.html
+spec/install_theme_cli_spec.rb
+spec/install_theme_spec.rb
 spec/matchers/have_same_contents_as.rb
 spec/spec.opts
 spec/spec_helper.rb

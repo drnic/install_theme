@@ -1,3 +1,7 @@
+=== 0.4.0 / 2009-09-27
+
+* rename gem to install_theme from convert_theme
+
 === 0.3.1 / 2009-09-27
 
 Major:
