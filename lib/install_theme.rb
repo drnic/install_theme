@@ -33,6 +33,7 @@ class InstallTheme
     @stdout = options[:stdout] || @stdout || $stdout
     @inside_yields_originals = {}
     convert_file_to_layout(index_path, 'app/views/layouts/application.html.erb')
+    convert_to_haml('app/views/layouts/application.html.erb') if haml?
     prepare_assets
     run_generator(options)
     show_readme
@@ -42,7 +43,6 @@ class InstallTheme
   # and is accessed via source_root within the generator.
   def template_temp_path
     @template_temp_path ||= begin
-      tmp_dir = ENV['TMPDIR'] || '/tmp'
       template_path = File.join(tmp_dir, "install_theme", "templates")
     end
   end
@@ -98,14 +98,30 @@ class InstallTheme
       f << contents
     end
   end
+  
+  def convert_to_haml(path)
+    from_path = File.join(template_temp_path, path)
+    haml_path = from_path.gsub(/erb$/, "haml")
+    `html2haml "#{from_path}" "#{haml_path}"`
+    FileUtils.rm_rf(from_path)
+  end
+
+  def convert_to_sass(from_path)
+    sass_path = from_path.gsub(/css$/, "sass").gsub(%r{public/stylesheets/}, 'public/stylesheets/sass/')
+    FileUtils.mkdir_p(File.dirname(sass_path))
+    `css2sass "#{from_path}" "#{sass_path}"`
+    FileUtils.rm_rf(from_path)
+  end
 
   def prepare_assets
     template_stylesheets.each do |file|
-      File.open(File.join(template_temp_path, 'public/stylesheets', File.basename(file)), "w") do |f|
+      target_path = File.join(template_temp_path, 'public/stylesheets', File.basename(file))
+      File.open(target_path, "w") do |f|
         contents = File.read(file)
         contents.gsub!(%r{url\((["']?)[./]*#{image_dir}}, 'url(\1/images')
         f << contents
       end
+      convert_to_sass(target_path) if haml?
     end
     template_javascripts.each do |file|
       FileUtils.cp_r(file, File.join(template_temp_path, 'public/javascripts'))
@@ -174,15 +190,15 @@ class InstallTheme
   end
   
   def template_stylesheets
-    Dir[File.join(template_root, stylesheet_dir, '*.css')]
+    Dir[File.join(template_root, stylesheet_dir, '**/*.css')]
   end
   
   def template_javascripts
-    Dir[File.join(template_root, javascript_dir, '*.js')]
+    Dir[File.join(template_root, javascript_dir, '**/*.js')]
   end
 
   def template_images
-    Dir[File.join(template_root, image_dir, '*.{jpg,png,gif}')]
+    Dir[File.join(template_root, image_dir, '**/*.{jpg,png,gif}')]
   end
   
   def show_readme
@@ -192,17 +208,31 @@ class InstallTheme
     
     README
     stdout.puts "You are using named yields. Here are examples how to use them: "
-    stdout.puts <<-EOS.gsub(/^    /, '')
-    <% content_for :head do -%>
-      <script>...</script>
-    <% end -%>
-    EOS
+    stdout.puts show_content_for(:head, '<script></script>')
     inside_yields_originals.to_a.each do |key, original_contents|
-      stdout.puts <<-EOS.gsub(/^      /, '')
+      stdout.puts show_content_for(key, original_contents)
+    end
+  end
+  
+  def show_content_for(key, contents)
+    if haml?
+      contents_file = File.join(tmp_dir, "partial.html")
+      File.open(contents_file, "w") { |f| f << contents }
+      haml_contents = `html2haml #{contents_file}`
+      <<-EOS.gsub(/^      /, '')
+      - content_for :#{key} do
+        #{haml_contents}
+      EOS
+    else
+      <<-EOS.gsub(/^      /, '')
       <% content_for :#{key} do -%>
-        #{original_contents}
+        #{contents}
       <% end -%>
       EOS
     end
+  end
+  
+  def tmp_dir
+    ENV['TMPDIR'] || '/tmp'
   end
 end

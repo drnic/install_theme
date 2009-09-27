@@ -1,0 +1,90 @@
+!!!
+%html{ :xmlns => "http://www.w3.org/1999/xhtml" }
+  %head
+    %meta{ :content => "text/html; charset=utf-8" }
+    %title
+      Dashboard - Admin Template
+    %link{ :href => "/stylesheets/theme.css", :rel => "stylesheet", :type => "text/css" }
+    %link{ :href => "/stylesheets/style.css", :rel => "stylesheet", :type => "text/css" }
+    %script
+      var StyleFile = "theme" + document.cookie.charAt(6) + ".css";
+      document.writeln('<link rel="stylesheet" type="text/css" href="/stylesheets/' + StyleFile + '">');
+    /
+      [if IE]>
+      <link rel="stylesheet" type="text/css" href="/stylesheets/ie-sucks.css" />
+      <![endif]
+    = yield(:head)
+  %body
+    #container
+      #header
+        %h2
+          = yield(:header)
+        #topmenu
+          %ul
+            %li.current
+              %a{ :href => "index.html" }
+                Dashboard
+            %li
+              %a{ :href => "#" }
+                Orders
+            %li
+              %a{ :href => "users.html" }
+                Users
+            %li
+              %a{ :href => "#" }
+                Manage
+            %li
+              %a{ :href => "#" }
+                CMS
+            %li
+              %a{ :href => "#" }
+                Statistics
+            %li
+              %a{ :href => "#" }
+                Settings
+      #top-panel
+        #panel
+          %ul
+            %li
+              %a.report{ :href => "#" }
+                Sales Report
+            %li
+              %a.report_seo{ :href => "#" }
+                SEO Report
+            %li
+              %a.search{ :href => "#" }
+                Search
+            %li
+              %a.feed{ :href => "#" }
+                RSS Feed
+      #wrapper
+        #content
+          = yield
+        #sidebar
+          = yield(:sidebar)
+      #footer
+        #credits
+          Template by
+          %a{ :href => "http://www.bloganje.com" }
+            Bloganje
+        #styleswitcher
+          %ul
+            %li
+              %a#defswitch{ :href => "javascript: document.cookie='theme='; window.location.reload();", :title => "Default" }
+                d
+            %li
+              %a#blueswitch{ :href => "javascript: document.cookie='theme=1'; window.location.reload();", :title => "Blue" }
+                b
+            %li
+              %a#greenswitch{ :href => "javascript: document.cookie='theme=2'; window.location.reload();", :title => "Green" }
+                g
+            %li
+              %a#brownswitch{ :href => "javascript: document.cookie='theme=3'; window.location.reload();", :title => "Brown" }
+                b
+            %li
+              %a#mixswitch{ :href => "javascript: document.cookie='theme=4'; window.location.reload();", :title => "Mix" }
+                m
+            %li
+              %a#defswitch{ :href => "javascript: document.cookie='theme=5'; window.location.reload();", :title => "Mix" }
+                m
+        %br

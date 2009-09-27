@@ -1,21 +1,140 @@
-#content{
-	width:740px;
-}
-#topmenu{
-	margin-top:26px;
-}
-#sidebar{
-	width:160px;
-}
-#sidebar ul{
-	width:150px;
-}
-#sidebar ul li ul{
-	width:140px;
-}
-#sidebar h3{
-	margin-bottom:5px;
-}
-#rightnow .reallynow a {
-	padding:0 0 0 10px;
-}
+body
+  background: #f7f6f0 url(/images/bg.jpg) repeat-x top
+  color: #202020
+
+
+a
+  color: #993300
+
+  &:visited
+    color: #993300
+
+
+input, select
+  border: 1px solid #e8e7e1
+
+
+#header h2
+  color: #FFF
+
+
+#content
+  background: #FFF
+
+
+#sidebar
+  background: #FFF
+
+  h3
+    background: #f7f6f0
+    border-bottom: 1px solid #e8e7e1
+
+
+#topmenu
+  a
+    color: #f7f6f0
+    background: #cc3300
+
+    &:visited
+      color: #f7f6f0
+      background: #cc3300
+
+    &:hover
+      color: #FFF
+
+  .current a
+    color: #993400
+    background: #FFF url(/images/bg_menu_red.jpg) repeat-x top
+    border-left: #FFF 1px solid
+    border-right: #FFF 1px solid
+
+    &:hover, &:visited
+      color: #993400
+      background: #FFF url(/images/bg_menu_red.jpg) repeat-x top
+      border-left: #FFF 1px solid
+      border-right: #FFF 1px solid
+
+
+#top-panel
+  background: #FFF
+
+
+table
+  background: none
+
+
+td, th
+  border: 1px solid #e8e7e1
+
+
+thead
+  background: #f7f6f0
+
+
+#styleswitcher
+  background: #FFFFFF
+
+
+#footer
+  background: #FFF
+
+
+#box
+  border: 1px solid #e8e7e1
+
+  h3
+    background: #f7f6f0
+    border-bottom: 1px solid #e8e7e1
+    color: #993300
+
+
+form#form
+  fieldset
+    border: 1px solid #e8e7e1
+
+  legend
+    border: 1px solid #e8e7e1
+    background: #fff url(/images/form_red.gif) repeat-x center left
+    color: #993300
+
+  input
+    border: 1px solid #e8e7e1
+    background: #fff url(/images/form_red.gif) repeat-x top left
+
+  textarea
+    border: 1px solid #e8e7e1
+    background: #fff url(/images/form_red.gif) repeat-x bottom left
+
+  option
+    background: #FFF
+
+  optgroup
+    background: #e8e7e1
+
+    option
+  #button1, #button2
+    color: #c00
+
+  #button1:hover, #button2:hover
+    color: #000
+
+
+#infobox
+  border: 1px solid #e8e7e1
+
+  h3
+    background: #f7f6f0
+    border-bottom: 1px solid #e8e7e1
+    color: #993300
+
+
+#rightnow
+  border: 1px solid #e8e7e1
+
+  .reallynow
+    background: #f7f6f0
+    color: #993300
+
+  h3
+    background: #f7f6f0
+    border-bottom: 1px solid #e8e7e1
