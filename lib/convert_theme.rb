@@ -178,15 +178,17 @@ class ConvertTheme
     
     README
     stdout.puts "You are using named yields. Here are examples how to use them: "
-    stdout.puts "<% content_for(:head) { '<script>...</script>' } -%>"
+    stdout.puts <<-EOS.gsub(/^    /, '')
+    <% content_for :head do -%>
+      <script>...</script>
+    <% end -%>
+    EOS
     inside_yields_originals.to_a.each do |key, original_contents|
-      if original_contents =~ /\n/
-        stdout.puts "<% content_for(:#{key}) do\n<<-EOS"
-        stdout.puts Hpricot(original_contents).to_s
-        stdout.puts "EOS\nend -%>"
-      else
-        stdout.puts "<% content_for(:#{key}) { '#{original_contents}' } -%>"
-      end
+      stdout.puts <<-EOS.gsub(/^      /, '')
+      <% content_for :#{key} do -%>
+        #{original_contents}
+      <% end -%>
+      EOS
     end
   end
 end
