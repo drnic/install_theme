@@ -11,6 +11,8 @@ class ConvertTheme
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
   attr_reader :content_id, :inside_yields
+  attr_reader :stdout
+  attr_reader :inside_yields_originals
   
   def initialize(options = {})
     @template_root  = File.expand_path(options[:template_root] || File.dirname('.'))
@@ -28,9 +30,12 @@ class ConvertTheme
   end
   
   def apply_to_target(options = {})
+    @stdout = options[:stdout] || @stdout || $stdout
+    @inside_yields_originals = {}
     convert_file_to_layout(index_path, 'app/views/layouts/application.html.erb')
     prepare_assets
     run_generator(options)
+    show_readme
   end
   
   # This generator's templates folder is temporary
@@ -66,7 +71,10 @@ class ConvertTheme
       doc = Hpricot(index_file)
       doc.search("##{content_id}").each { |elm| elm.inner_html = "<%= yield %>" }
       inside_yields.to_a.each do |name, css_path|
-        doc.search(css_path).each { |elm| elm.inner_html = "<%= yield(:#{name}) %>"}
+        doc.search(css_path).each do |elm|
+          inside_yields_originals[name] = elm.inner_html
+          elm.inner_html = "<%= yield(:#{name}) %>"
+        end
       end
       contents = doc.to_html
       contents.gsub!(%r{(["'])/?#{image_dir}}, '\1/images')
@@ -161,5 +169,22 @@ class ConvertTheme
 
   def template_images
     Dir[File.join(template_root, image_dir, '*')]
+  end
+  
+  def show_readme
+    stdout.puts <<-README
+    
+    Your theme has been installed into your app.
+    
+    README
+    unless inside_yields_originals.empty?
+      stdout.puts "You are using named yields. Here are examples how to use them: "
+      inside_yields_originals.to_a.each do |key, original_contents|
+        stdout.puts <<-EOS.gsub(/^        /, '')
+        <% content_for(:#{key}) { '#{original_contents}' } -%>
+        
+        EOS
+      end
+    end
   end
 end

@@ -17,7 +17,11 @@ describe ConvertTheme do
     it { @theme.image_dir.should == "img" }
     it { @theme.should be_erb }
     describe "becomes a Rails app with html templates" do
-      before { @theme.apply_to_target(:generator => {:collision => :force, :quiet => true}) }
+      before do
+        @stdout = stdout do |stdout|
+          @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
+        end
+      end
       it { File.should be_exist(File.join(@target_application, "app/views/layouts/application.html.erb")) }
       it { File.should be_exist(File.join(@expected_application, "app/views/layouts/application.html.erb")) }
       it "should create app/views/layouts/application.html.erb as a layout file" do
@@ -40,6 +44,7 @@ describe ConvertTheme do
             diff.strip.should == ""
           end
         end
+      it { @stdout.should include("<% content_for(:header) { 'My eCommerce Admin area' }") }
     end
   end
 
@@ -50,12 +55,12 @@ describe ConvertTheme do
           @theme = ConvertTheme.new(
             :template_root => File.dirname(__FILE__) + "/fixtures/webresourcedepot",
             :rails_root => @target_application,
-            :content_id => "center-column", :stdout => $stdout)
+            :content_id => "center-column", :stdout => stdout)
+          @theme.apply_to_target(:generator => {:collision => :force, :quiet => true})
         end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/webresourcedepot"
     end
     describe "becomes a Rails app" do
-      before { @theme.apply_to_target(:generator => {:collision => :force, :quiet => true}) }
       it "should create app/views/layouts/application.html.erb as a layout file" do
         expected = clean_file(File.join(@expected_application, "app/views/layouts/application.html.erb"))
         actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
