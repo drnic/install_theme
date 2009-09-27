@@ -4,7 +4,7 @@ Major:
 * content_id is now a required argument of the CLI; instead of --content_id flag
 * Replace some DOM content with <%= yield :some_label %> with --inside_yields:
      convert_theme path/to/app path/to/rails_app content_box \
-      --inside_yield=header=>#header\ h2 \
+      "--inside_yield=header=>#header h2" \
       --inside_yield=sidebar=>#sidebar
 * insert <%= yield(:head) %> at the end of the <head> section of layouts
 
