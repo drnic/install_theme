@@ -69,7 +69,7 @@ class InstallTheme
     File.open(File.join(template_temp_path, layout_path), "w") do |f|
       index_file = File.read(File.join(template_root, html_path)).gsub(/\r/, '')
       doc = Hpricot(index_file)
-      doc.search("##{content_id}").each { |elm| elm.inner_html = "<%= yield %>" }
+      doc.search("##{content_id},.#{content_id}").each { |elm| elm.inner_html = "<%= yield %>" }
       inside_yields.to_a.each do |name, css_path|
         doc.search(css_path).each do |elm|
           inside_yields_originals[name] = elm.inner_html.strip

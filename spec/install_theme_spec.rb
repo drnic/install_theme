@@ -122,5 +122,44 @@ describe InstallTheme do
         end
     end
   end
+
+  context "the-hobbit-website-template theme to ERb" do
+    before do
+      setup_base_rails
+        @stdout = stdout do |stdout|
+          @theme = InstallTheme.new(
+            :template_root => File.dirname(__FILE__) + "/fixtures/the-hobbit-website-template",
+            :rails_root    => @target_application,
+            :inside_yields => { :menu => '.navigation', :subtitle => '.header p' },
+            :content_id    => "content", :stdout => stdout)
+          @theme.apply_to_target(:generator => {:collision => :force, :quiet => true})
+        end
+      @expected_application = File.dirname(__FILE__) + "/expected/rails/the-hobbit-website-template"
+    end
+    it { @theme.stylesheet_dir.should == "" }
+    it { @theme.image_dir.should == "img" }
+    describe "becomes a Rails app" do
+      it { File.should be_exist(File.join(@target_application, "app/views/layouts/application.html.erb")) }
+      it "should create app/views/layouts/application.html.erb as a layout file" do
+        expected = clean_html(File.join(@expected_application, "app/views/layouts/application.html.erb"))
+        actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
+        diff = `diff #{expected} #{actual}  2> /dev/null`
+        rputs diff unless diff.strip.empty?
+        diff.strip.should == ""
+      end
+      
+      %w[public/stylesheets/default.css].each do |matching_file|
+          it { File.should be_exist(File.join(@target_application, matching_file)) }
+          it { File.should be_exist(File.join(@expected_application, matching_file)) }
+          it do
+            expected = clean_file File.join(@expected_application, matching_file)
+            actual   = clean_file File.join(@target_application, matching_file)
+            diff = `diff #{expected} #{actual}  2> /dev/null`
+            rputs diff unless diff.strip.empty?
+            diff.strip.should == ""
+          end
+        end
+    end
+  end
 end
 
