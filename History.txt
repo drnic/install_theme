@@ -1,3 +1,12 @@
+=== 0.4.1 / 2009-09-27
+
+Major:
+* Allow a class name instead of a DOM element id for the content path
+* Templates can have assets in the root of the template folder
+
+Minor:
+* cleaning actual/expected files so EOL characters aren't the cause of diff mismatches
+
 === 0.4.0 / 2009-09-27
 
 * rename gem to install_theme from convert_theme

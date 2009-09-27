@@ -6,7 +6,7 @@ require 'rubigen'
 require 'rubigen/scripts/generate'
 
 class InstallTheme
-  VERSION = "0.4.0"
+  VERSION = "0.4.1"
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
