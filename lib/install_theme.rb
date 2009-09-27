@@ -5,8 +5,8 @@ require 'hpricot'
 require 'rubigen'
 require 'rubigen/scripts/generate'
 
-class ConvertTheme
-  VERSION = "0.3.1"
+class InstallTheme
+  VERSION = "0.4.0"
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
@@ -43,7 +43,7 @@ class ConvertTheme
   def template_temp_path
     @template_temp_path ||= begin
       tmp_dir = ENV['TMPDIR'] || '/tmp'
-      template_path = File.join(tmp_dir, "convert_theme", "templates")
+      template_path = File.join(tmp_dir, "install_theme", "templates")
     end
   end
   
@@ -109,7 +109,7 @@ class ConvertTheme
     generator_options = options[:generator] || {}
     generator_options.merge!(:stdout => @stdout, :no_exit => true,
       :source => template_temp_path, :destination => rails_root)
-    RubiGen::Scripts::Generate.new.run(["convert_theme"], generator_options)
+    RubiGen::Scripts::Generate.new.run(["install_theme"], generator_options)
   end
 
   def in_template_root(&block)

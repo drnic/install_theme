@@ -1,6 +1,6 @@
-= convert_theme
+= install_theme
 
-* http://github.com/drnic/convert_theme
+* http://github.com/drnic/install_theme
 
 == DESCRIPTION:
 
@@ -17,17 +17,17 @@ in action.
 
 Simple case:
 
-    convert_theme path/to/template path/to/rails_app content_id
+    install_theme path/to/template path/to/rails_app content_id
 
 Replace some DOM content with <%= yield :some_label %> with --inside_yields:
 
-    convert_theme path/to/app path/to/rails_app content_box \
+    install_theme path/to/app path/to/rails_app content_box \
       "--inside_yield=header=>#header h2" \
       "--inside_yield=sidebar=>#sidebar"
 
 == INSTALL:
 
-* sudo gem install convert_theme
+* sudo gem install install_theme
 
 == LICENSE:
 

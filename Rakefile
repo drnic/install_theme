@@ -1,14 +1,14 @@
 require 'rubygems'
 require 'hoe'
 require 'fileutils'
-require './lib/convert_theme'
+require './lib/install_theme'
 
 Hoe.plugin :newgem
 Hoe.plugin :git
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.spec 'convert_theme' do
+$hoe = Hoe.spec 'install_theme' do
   developer 'Dr Nic Williams', 'drnicwilliams@gmail.com'
   self.rubyforge_name = "drnicutilities"
   extra_deps << ['hpricot','>= 0.8.1']

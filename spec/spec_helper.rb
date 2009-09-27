@@ -2,7 +2,7 @@ require 'rubygems'
 require 'spec'
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'convert_theme'
+require 'install_theme'
 Dir[File.dirname(__FILE__) + "/matchers/*.rb"].each { |matcher| require matcher }
 
 # When running specs in TextMate, provide an rputs method to cleanly print objects into HTML display

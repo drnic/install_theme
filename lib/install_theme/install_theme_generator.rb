@@ -1,4 +1,4 @@
-class ConvertTheme::ConvertThemeGenerator < RubiGen::Base
+class InstallTheme::InstallThemeGenerator < RubiGen::Base
   # NOTE: runtime_options[:source] needs to be passed in to #new
   
   def manifest

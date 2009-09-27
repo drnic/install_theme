@@ -1,6 +1,6 @@
 require 'optparse'
 
-class ConvertTheme
+class InstallTheme
   class CLI
     def self.execute(stdout, arguments=[])
       options = {}
@@ -35,7 +35,7 @@ class ConvertTheme
       unless options[:template_root] && options[:rails_root]
         stdout.puts parser; exit
       end
-      ConvertTheme.new(options).apply_to_target
+      InstallTheme.new(options).apply_to_target
     end
   end
 end

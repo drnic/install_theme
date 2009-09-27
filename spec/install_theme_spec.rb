@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
-describe ConvertTheme do
+describe InstallTheme do
   context "bloganje theme to ERb" do
     before do
       setup_base_rails
       stdout do |stdout|
-        @theme = ConvertTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
+        @theme = InstallTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
           :rails_root    => @target_application,
           :content_id    => "content",
           :inside_yields => { :header => '#header h2', :sidebar => '#sidebar' },
@@ -53,7 +53,7 @@ describe ConvertTheme do
     before do
       setup_base_rails
         @stdout = stdout do |stdout|
-          @theme = ConvertTheme.new(
+          @theme = InstallTheme.new(
             :template_root => File.dirname(__FILE__) + "/fixtures/webresourcedepot",
             :rails_root    => @target_application,
             :content_id    => "center-column", :stdout => stdout)

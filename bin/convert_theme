@@ -4,7 +4,7 @@
 #  Copyright (c) 2009. All rights reserved.
 
 require 'rubygems'
-require File.expand_path(File.dirname(__FILE__) + "/../lib/convert_theme")
-require "convert_theme/cli"
+require File.expand_path(File.dirname(__FILE__) + "/../lib/install_theme")
+require "install_theme/cli"
 
-ConvertTheme::CLI.execute(STDOUT, ARGV)
+InstallTheme::CLI.execute(STDOUT, ARGV)
