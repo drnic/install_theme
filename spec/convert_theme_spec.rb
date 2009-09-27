@@ -44,7 +44,8 @@ describe ConvertTheme do
             diff.strip.should == ""
           end
         end
-      it { @stdout.should include("<% content_for(:header) { 'My eCommerce Admin area' }") }
+      it { @stdout.should include("<% content_for(:head) { '<script>...</script>' } -%>") }
+      it { @stdout.should include("<% content_for(:header) { 'My eCommerce Admin area' } -%>") }
     end
   end
 

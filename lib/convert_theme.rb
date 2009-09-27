@@ -177,14 +177,10 @@ class ConvertTheme
     Your theme has been installed into your app.
     
     README
-    unless inside_yields_originals.empty?
-      stdout.puts "You are using named yields. Here are examples how to use them: "
-      inside_yields_originals.to_a.each do |key, original_contents|
-        stdout.puts <<-EOS.gsub(/^        /, '')
-        <% content_for(:#{key}) { '#{original_contents}' } -%>
-        
-        EOS
-      end
+    stdout.puts "You are using named yields. Here are examples how to use them: "
+    inside_yields_originals.to_a.each do |key, original_contents|
+      stdout.puts "<% content_for(:head) { '<script>...</script>' } -%>"
+      stdout.puts "<% content_for(:#{key}) { '#{original_contents}' } -%>"
     end
   end
 end
