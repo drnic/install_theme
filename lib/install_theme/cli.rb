@@ -22,14 +22,15 @@ class InstallTheme
         opts.on("--haml",
                 "Generate HAML templates.",
                 "Default: auto-detect") { |arg| options[:template_type] = 'haml' }
-        opts.on("--index_path=index.html", String,
+        opts.on("--index_path index.html", String,
                 "HTML page to use for application layout.",
                 "Default: index.html") { |arg| options[:index_path] = arg }
-        opts.on("--inside_yield=KEY_AND_CSS_PATH", String,
+        opts.on("--inside_yield KEY_AND_CSS_PATH", String,
                 "Replace the inner HTML of an element with <%= yield :key %>",
+                "Example: --inside_yield header:#header",
                 "Default: nil") do |arg|
                   options[:inside_yields] ||= {}
-                  key, css_path = arg.split(/\s*=>\s*/)[0..1]
+                  key, css_path = arg.split(/\s*:\s*/)[0..1]
                   options[:inside_yields][key.strip.to_sym] = css_path.strip
                 end
         opts.on("-h", "--help",

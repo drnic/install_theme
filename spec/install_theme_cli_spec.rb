@@ -18,8 +18,8 @@ describe InstallTheme::CLI, "execute" do
       InstallTheme::CLI.execute(stdout_io, %w[path/to/app path/to/rails_app content_box
         --index_path=root.html
         --haml
-        --inside_yield=header=>#header\ h2
-        --inside_yield=sidebar=>#sidebar
+        --inside_yield header:#header\ h2
+        --inside_yield sidebar:#sidebar
       ])
     end
   end
