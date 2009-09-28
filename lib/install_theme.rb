@@ -106,22 +106,22 @@ class InstallTheme
   
   def convert_to_haml(path)
     from_path = File.join(template_temp_path, path)
+    puts File.read(from_path)
     haml_path = from_path.gsub(/erb$/, "haml")
     html2haml(from_path, haml_path)
-    # `html2haml "#{from_path}" "#{haml_path}"`
+    puts File.read(haml_path)
     # only remove .erb if haml conversion successful
-    if File.size?(haml_path)
-      FileUtils.rm_rf(from_path)
-    else
-      FileUtils.rm_rf(haml_path)
-    end
+    # if File.size?(haml_path)
+    #   FileUtils.rm_rf(from_path)
+    # else
+    #   FileUtils.rm_rf(haml_path)
+    # end
   end
 
   def convert_to_sass(from_path)
     sass_path = from_path.gsub(/css$/, "sass").gsub(%r{public/stylesheets/}, 'public/stylesheets/sass/')
     FileUtils.mkdir_p(File.dirname(sass_path))
     css2sass(from_path, sass_path)
-    # `css2sass "#{from_path}" "#{sass_path}"`
     FileUtils.rm_rf(from_path)
   end
   
@@ -187,8 +187,8 @@ class InstallTheme
     converter = Haml::Exec::HTML2Haml.new([])
     from = File.read(from) if File.exist?(from)
     to   = File.open(to, "w") unless to.respond_to?(:write)
-    options = { :input => from, :output => to, :no_rhtml => false }
-    converter.instance_variable_set("@options", options)
+    converter.instance_variable_set("@options", { :input => from, :output => to })
+    converter.instance_variable_set("@module_opts", { :rhtml => true })
     converter.send(:process_result)
     to.close if to.respond_to?(:close)
   end
@@ -197,8 +197,8 @@ class InstallTheme
     converter = Haml::Exec::CSS2Sass.new([])
     from = File.read(from) if File.exist?(from)
     to   = File.open(to, "w") unless to.respond_to?(:write)
-    options = { :input => from, :output => to, :no_rhtml => false }
-    converter.instance_variable_set("@options", options)
+    converter.instance_variable_set("@options", { :input => from, :output => to })
+    converter.instance_variable_set("@module_opts", { :rhtml => true })
     converter.send(:process_result)
     to.close if to.respond_to?(:close)
   end
@@ -281,9 +281,9 @@ class InstallTheme
     #   EOS
     # else
       <<-EOS.gsub(/^      /, '')
-      <% content_for :#{key} do -%>
+      <% content_for :#{key} do %>
         #{contents}
-      <% end -%>
+      <% end %>
       EOS
     # end
   end
