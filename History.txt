@@ -1,3 +1,11 @@
+=== 0.5.1 / 2009-09-28
+
+Major:
+* Much better options syntax: --inside_yield header:#header
+
+Minor:
+* added Haml instructions to README, and --erb flag to force erb generation
+
 === 0.5.0 / 2009-09-27
 
 * haml support
