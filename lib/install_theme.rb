@@ -104,7 +104,12 @@ class InstallTheme
     from_path = File.join(template_temp_path, path)
     haml_path = from_path.gsub(/erb$/, "haml")
     `html2haml "#{from_path}" "#{haml_path}"`
-    FileUtils.rm_rf(from_path)
+    # only remove .erb if haml conversion successful
+    if File.size?(haml_path)
+      FileUtils.rm_rf(from_path)
+    else
+      FileUtils.rm_rf(haml_path)
+    end
   end
 
   def convert_to_sass(from_path)
@@ -137,7 +142,7 @@ class InstallTheme
         end
       end
     end
-    convert_to_haml(File.join(template_temp_path, 'app/views/original_template/index.html.erb')) if haml?
+    convert_to_haml('app/views/original_template/index.html.erb') if haml?
   end
 
   def prepare_assets
