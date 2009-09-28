@@ -34,6 +34,7 @@ class InstallTheme
     @inside_yields_originals = {}
     convert_file_to_layout(index_path, 'app/views/layouts/application.html.erb')
     convert_to_haml('app/views/layouts/application.html.erb') if haml?
+    prepare_sample_controller_and_view
     prepare_assets
     run_generator(options)
     show_readme
@@ -111,6 +112,32 @@ class InstallTheme
     FileUtils.mkdir_p(File.dirname(sass_path))
     `css2sass "#{from_path}" "#{sass_path}"`
     FileUtils.rm_rf(from_path)
+  end
+  
+  # The extracted chunks of HTML are retained in
+  # app/views/original_template/index.html.erb (or haml)
+  # wrapped in content_for blocks.
+  #
+  # Users can review this file for ideas of what HTML
+  # works best in each section.
+  def prepare_sample_controller_and_view
+    FileUtils.chdir(template_temp_path) do
+      FileUtils.mkdir_p("app/controllers")
+      File.open("app/controllers/original_template_controller.rb", "w") { |f| f << <<-EOS.gsub(/^      /, '') }
+      class OriginalTemplateController < ApplicationController
+      end
+      EOS
+
+      FileUtils.mkdir_p("app/views/original_template")
+      File.open("app/views/original_template/index.html.erb", "w") do |f|
+        f << "<p>You are using named yields. Here are examples how to use them:</p>\n"
+        f << show_content_for(:head, '<script></script>')
+        inside_yields_originals.to_a.each do |key, original_contents|
+          f << show_content_for(key, original_contents)
+        end
+      end
+    end
+    convert_to_haml(File.join(template_temp_path, 'app/views/original_template/index.html.erb')) if haml?
   end
 
   def prepare_assets
@@ -207,29 +234,24 @@ class InstallTheme
     Your theme has been installed into your app.
     
     README
-    stdout.puts "You are using named yields. Here are examples how to use them: "
-    stdout.puts show_content_for(:head, '<script></script>')
-    inside_yields_originals.to_a.each do |key, original_contents|
-      stdout.puts show_content_for(key, original_contents)
-    end
   end
   
   def show_content_for(key, contents)
-    if haml?
-      contents_file = File.join(tmp_dir, "partial.html")
-      File.open(contents_file, "w") { |f| f << contents }
-      haml_contents = `html2haml #{contents_file}`
-      <<-EOS.gsub(/^      /, '')
-      - content_for :#{key} do
-        #{haml_contents}
-      EOS
-    else
+    # if haml?
+    #   contents_file = File.join(tmp_dir, "partial.html")
+    #   File.open(contents_file, "w") { |f| f << contents }
+    #   haml_contents = `html2haml #{contents_file}`
+    #   <<-EOS.gsub(/^      /, '')
+    #   - content_for :#{key} do
+    #     #{haml_contents}
+    #   EOS
+    # else
       <<-EOS.gsub(/^      /, '')
       <% content_for :#{key} do -%>
         #{contents}
       <% end -%>
       EOS
-    end
+    # end
   end
   
   def tmp_dir

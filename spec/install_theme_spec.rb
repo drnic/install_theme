@@ -43,8 +43,13 @@ describe InstallTheme do
             diff.strip.should == ""
           end
         end
-      it { @stdout.should include("<% content_for :head do -%>\n  <script></script>\n<% end -%>") }
-      it { @stdout.should include("<% content_for :header do -%>\n  My eCommerce Admin area\n<% end -%>") }
+      context "sample template /original_template/index.html.erb" do
+        subject do
+          File.read(File.join(@target_application, 'app/views/original_template/index.html.erb'))
+        end
+        it { should include("<% content_for :head do -%>\n  <script></script>\n<% end -%>") }
+        it { should include("<% content_for :header do -%>\n  My eCommerce Admin area\n<% end -%>") }
+      end
     end
   end
 

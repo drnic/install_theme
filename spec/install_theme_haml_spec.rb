@@ -36,8 +36,13 @@ describe InstallTheme do
         rputs diff unless diff.strip.empty?
         diff.strip.should == ""
       end
-      it { @stdout.should include("- content_for :head do\n  %script") }
-      it { @stdout.should include("- content_for :header do\n  My eCommerce Admin area") }
+      context "sample template /original_template/index.html.haml" do
+        subject do
+          File.read(File.join(@target_application, 'app/views/original_template/index.html.haml'))
+        end
+        it { should include("- content_for :head do\n  %script") }
+        it { should include("- content_for :header do\n  My eCommerce Admin area") }
+      end
     end
   end
 end
