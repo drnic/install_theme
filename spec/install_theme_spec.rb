@@ -13,7 +13,6 @@ describe InstallTheme do
         @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
-      puts "before(:all)"
     end
     it { @theme.stylesheet_dir.should == "css" }
     it { @theme.image_dir.should == "img" }

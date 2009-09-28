@@ -1,9 +1,13 @@
 $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
-require 'hpricot'
 require 'rubigen'
 require 'rubigen/scripts/generate'
+require 'haml'
+require 'haml/html'
+require 'sass'
+require 'sass/css'
+require 'haml/exec'
 
 class InstallTheme
   VERSION = "0.5.1"
@@ -103,7 +107,8 @@ class InstallTheme
   def convert_to_haml(path)
     from_path = File.join(template_temp_path, path)
     haml_path = from_path.gsub(/erb$/, "haml")
-    `html2haml "#{from_path}" "#{haml_path}"`
+    html2haml(from_path, haml_path)
+    # `html2haml "#{from_path}" "#{haml_path}"`
     # only remove .erb if haml conversion successful
     if File.size?(haml_path)
       FileUtils.rm_rf(from_path)
@@ -115,7 +120,8 @@ class InstallTheme
   def convert_to_sass(from_path)
     sass_path = from_path.gsub(/css$/, "sass").gsub(%r{public/stylesheets/}, 'public/stylesheets/sass/')
     FileUtils.mkdir_p(File.dirname(sass_path))
-    `css2sass "#{from_path}" "#{sass_path}"`
+    css2sass(from_path, sass_path)
+    # `css2sass "#{from_path}" "#{sass_path}"`
     FileUtils.rm_rf(from_path)
   end
   
@@ -172,6 +178,29 @@ class InstallTheme
     generator_options.merge!(:stdout => @stdout, :no_exit => true,
       :source => template_temp_path, :destination => rails_root)
     RubiGen::Scripts::Generate.new.run(["install_theme"], generator_options)
+  end
+  
+  # converts +from+ HTML into +to+ HAML
+  # +from+ can either be file name, HTML content (String) or an Hpricot::Node
+  # +to+ can either be a file name or an IO object with a #write method
+  def html2haml(from, to)
+    converter = Haml::Exec::HTML2Haml.new([])
+    from = File.read(from) if File.exist?(from)
+    to   = File.open(to, "w") unless to.respond_to?(:write)
+    options = { :input => from, :output => to, :no_rhtml => false }
+    converter.instance_variable_set("@options", options)
+    converter.send(:process_result)
+    to.close if to.respond_to?(:close)
+  end
+
+  def css2sass(from, to)
+    converter = Haml::Exec::CSS2Sass.new([])
+    from = File.read(from) if File.exist?(from)
+    to   = File.open(to, "w") unless to.respond_to?(:write)
+    options = { :input => from, :output => to, :no_rhtml => false }
+    converter.instance_variable_set("@options", options)
+    converter.send(:process_result)
+    to.close if to.respond_to?(:close)
   end
 
   def in_template_root(&block)
