@@ -301,7 +301,6 @@ spec/fixtures/the-hobbit-website-template/license-readme.txt
 spec/install_theme_cli_spec.rb
 spec/install_theme_haml_spec.rb
 spec/install_theme_spec.rb
-spec/matchers/have_same_contents_as.rb
 spec/spec.opts
 spec/spec_helper.rb
 tasks/rspec.rake
