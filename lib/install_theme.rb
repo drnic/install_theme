@@ -106,23 +106,26 @@ class InstallTheme
   
   def convert_to_haml(path)
     from_path = File.join(template_temp_path, path)
-    puts File.read(from_path)
     haml_path = from_path.gsub(/erb$/, "haml")
     html2haml(from_path, haml_path)
-    puts File.read(haml_path)
     # only remove .erb if haml conversion successful
-    # if File.size?(haml_path)
-    #   FileUtils.rm_rf(from_path)
-    # else
-    #   FileUtils.rm_rf(haml_path)
-    # end
+    if File.size?(haml_path)
+      FileUtils.rm_rf(from_path)
+    else
+      FileUtils.rm_rf(haml_path)
+    end
   end
 
   def convert_to_sass(from_path)
     sass_path = from_path.gsub(/css$/, "sass").gsub(%r{public/stylesheets/}, 'public/stylesheets/sass/')
     FileUtils.mkdir_p(File.dirname(sass_path))
     css2sass(from_path, sass_path)
-    FileUtils.rm_rf(from_path)
+    # only remove .erb if haml conversion successful
+    if File.size?(sass_path)
+      FileUtils.rm_rf(from_path)
+    else
+      FileUtils.rm_rf(sass_path)
+    end
   end
   
   # The extracted chunks of HTML are retained in
@@ -189,7 +192,11 @@ class InstallTheme
     to   = File.open(to, "w") unless to.respond_to?(:write)
     converter.instance_variable_set("@options", { :input => from, :output => to })
     converter.instance_variable_set("@module_opts", { :rhtml => true })
-    converter.send(:process_result)
+    begin
+      converter.send(:process_result)
+    rescue Exception => e
+      stdout.puts "Failed to convert #{File.basename(from)} to haml"
+    end
     to.close if to.respond_to?(:close)
   end
 
@@ -199,7 +206,10 @@ class InstallTheme
     to   = File.open(to, "w") unless to.respond_to?(:write)
     converter.instance_variable_set("@options", { :input => from, :output => to })
     converter.instance_variable_set("@module_opts", { :rhtml => true })
-    converter.send(:process_result)
+    begin
+      converter.send(:process_result)
+    rescue Exception => e
+    end
     to.close if to.respond_to?(:close)
   end
 
@@ -271,21 +281,11 @@ class InstallTheme
   end
   
   def show_content_for(key, contents)
-    # if haml?
-    #   contents_file = File.join(tmp_dir, "partial.html")
-    #   File.open(contents_file, "w") { |f| f << contents }
-    #   haml_contents = `html2haml #{contents_file}`
-    #   <<-EOS.gsub(/^      /, '')
-    #   - content_for :#{key} do
-    #     #{haml_contents}
-    #   EOS
-    # else
-      <<-EOS.gsub(/^      /, '')
-      <% content_for :#{key} do %>
-        #{contents}
-      <% end %>
-      EOS
-    # end
+    <<-EOS.gsub(/^      /, '')
+    <% content_for :#{key} do %>
+      #{contents}
+    <% end %>
+    EOS
   end
   
   def tmp_dir
