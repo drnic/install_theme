@@ -281,10 +281,10 @@ class InstallTheme
   end
   
   def show_content_for(key, contents)
-    <<-EOS.gsub(/^      /, '')
-    <% content_for :#{key} do %>
+    <<-EOS.gsub(/^    /, '')
+    <% content_for :#{key} do -%>
       #{contents}
-    <% end %>
+    <% end -%>
     EOS
   end
   
