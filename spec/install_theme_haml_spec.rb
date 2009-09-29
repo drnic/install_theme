@@ -35,7 +35,7 @@ describe InstallTheme do
       rputs diff unless diff.strip.empty?
       diff.strip.should == ""
     end
-    it { File.should be_exist(File.join(@expected_application, "app/views/original_template/index.html.haml")) }
+    it { File.should be_exist(File.join(@target_application, "app/views/original_template/index.html.haml")) }
     context "sample template /original_template/index.html.haml" do
       subject do
         File.read(File.join(@target_application, 'app/views/original_template/index.html.haml'))
