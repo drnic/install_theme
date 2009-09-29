@@ -1,3 +1,22 @@
+=== 0.5.2 / 2009-09-29
+
+NOTE: Haml output can be improved by installing haml from http://github.com/drnic/haml
+to get latest patches. Future History.txt will update when it has been applied to haml gem.
+
+Major:
+* Speed improvements by using html2haml/css2sass internally instead of Ruby shell
+
+Minor/Internal:
+* reverted the content_for erb to have -%> suffixes [Jack Chen and Dr Nic Williams]
+* Fixed the test for generation of the sample haml file of content_for samples [Jack Chen and Dr Nic Williams]
+* removing the matchers we weren't using [Jack Chen and Dr Nic Williams]
+* If html2haml or css2sass throw an error then copy over the original erb/css file instead. [Jack Chen and Dr Nic Williams]
+* rendering html2haml with rhtml enabled [Jack Chen and Dr Nic Williams]
+* using before(:all) around the theme installation calls so they are only run once
+* removed test theme webresourcedepot
+* sample extracted HTML placed into a app/views/original_template/index.html.erb file instead of readme printout
+* removed the djclub test theme as its interesting qualities for testing (assets in root folder) are duplicated by the hobbit theme
+
 === 0.5.1 / 2009-09-28
 
 Major:
