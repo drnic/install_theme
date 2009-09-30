@@ -16,7 +16,7 @@ class InstallTheme
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
   attr_reader :content_id, :inside_yields
   attr_reader :stdout
-  attr_reader :inside_yields_originals
+  attr_reader :original_named_yields, :original_body_content
   
   def initialize(options = {})
     @template_root  = File.expand_path(options[:template_root] || File.dirname('.'))
@@ -35,7 +35,7 @@ class InstallTheme
   
   def apply_to_target(options = {})
     @stdout = options[:stdout] || @stdout || $stdout
-    @inside_yields_originals = {}
+    @original_named_yields = {}
     convert_file_to_layout(index_path, 'app/views/layouts/application.html.erb')
     convert_to_haml('app/views/layouts/application.html.erb') if haml?
     prepare_sample_controller_and_view
@@ -72,16 +72,7 @@ class InstallTheme
   
   def convert_file_to_layout(html_path, layout_path)
     File.open(File.join(template_temp_path, layout_path), "w") do |f|
-      index_file = File.read(File.join(template_root, html_path)).gsub(/\r/, '')
-      doc = Hpricot(index_file)
-      doc.search("##{content_id},.#{content_id}").each { |elm| elm.inner_html = "<%= yield %>" }
-      inside_yields.to_a.each do |name, css_path|
-        doc.search(css_path).each do |elm|
-          inside_yields_originals[name] = elm.inner_html.strip
-          elm.inner_html = "<%= yield(:#{name}) %>"
-        end
-      end
-      contents = doc.to_html
+      contents = File.read(File.join(template_root, html_path)).gsub(/\r/, '')
       template_images.each do |file|
         image = File.basename(file)
         contents.gsub!(%r{(["'])/?[\w_\-\/]*#{image}}, '\1/images/' + image)
@@ -100,6 +91,20 @@ class InstallTheme
       contents.gsub!(%r{(["'])/?#{javascript_dir}}, '\1/javascripts') unless javascript_dir.blank?
 
       contents.sub!(%r{\s*</head>}, "\n  <%= yield(:head) %>\n</head>")
+
+      doc = Hpricot(contents)
+      doc.search("##{content_id},.#{content_id}").each do |elm|
+        @original_body_content = elm.inner_html.strip
+        elm.inner_html = "<%= yield %>"
+      end
+      inside_yields.to_a.each do |name, css_path|
+        doc.search(css_path).each do |elm|
+          original_named_yields[name] = elm.inner_html.strip
+          elm.inner_html = "<%= yield(:#{name}) %>"
+        end
+      end
+      contents = doc.to_html
+
       f << contents
     end
   end
@@ -110,7 +115,7 @@ class InstallTheme
     html2haml(from_path, haml_path)
     # only remove .erb if haml conversion successful
     if File.size?(haml_path)
-      FileUtils.rm_rf(from_path)
+      # FileUtils.rm_rf(from_path)
     else
       FileUtils.rm_rf(haml_path)
     end
@@ -146,8 +151,14 @@ class InstallTheme
       File.open("app/views/original_template/index.html.erb", "w") do |f|
         f << "<p>You are using named yields. Here are examples how to use them:</p>\n"
         f << show_content_for(:head, '<script></script>')
-        inside_yields_originals.to_a.each do |key, original_contents|
+        original_named_yields.to_a.each do |key, original_contents|
           f << show_content_for(key, original_contents)
+          f << "\n"
+        end
+        f << "\n\n"
+        if original_body_content
+          f << "<!-- original body content -->"
+          f << original_body_content
         end
       end
     end

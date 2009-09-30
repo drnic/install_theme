@@ -13,7 +13,7 @@ $hoe = Hoe.spec 'install_theme' do
   self.rubyforge_name = "drnicutilities"
   extra_deps << ['hpricot','>= 0.8.1']
   extra_deps << ['rubigen','>= 1.5.2']
-  extra_deps << ['haml', '>= 2.2.6']
+  extra_deps << ['haml', '>= 2.3.0']
   extra_dev_deps << ['rails', '2.3.4']
 end
 

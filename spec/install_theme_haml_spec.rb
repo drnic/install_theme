@@ -42,6 +42,7 @@ describe InstallTheme do
       end
       it { should include("- content_for :head do\n  %script") }
       it { should include("- content_for :header do\n  My eCommerce Admin area") }
+      it { should include('#rightnow') }
     end
   end
 end
