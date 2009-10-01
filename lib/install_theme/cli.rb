@@ -4,15 +4,12 @@ class InstallTheme
   class CLI
     def self.execute(stdout, arguments=[])
       options = {}
-      options[:template_root] = arguments.shift
-      options[:rails_root]    = arguments.shift
-      options[:content_id]    = arguments.shift
       parser = OptionParser.new do |opts|
         opts.banner = <<-BANNER.gsub(/^          /,'')
           Use any HTML template as a theme generator for your Rails app.
-
+          
           Usage: #{File.basename($0)} path/to/template path/to/rails_app content_id [options]
-
+          
           Options are:
         BANNER
         opts.separator ""
@@ -34,10 +31,17 @@ class InstallTheme
                   options[:inside_yields][key.strip.to_sym] = css_path.strip
                 end
         opts.on("-h", "--help",
-                "Show this help message.") { stdout.puts opts; exit }
+                "Show this help message.") { |arg| stdout.puts opts; exit }
+        opts.on("-v", "--version",
+                "Show the version (which is #{InstallTheme::VERSION})."
+                ) { |arg| stdout.puts InstallTheme::VERSION; exit }
         opts.parse!(arguments)
       end
+      options[:template_root] = arguments.shift
+      options[:rails_root]    = arguments.shift
+      options[:content_id]    = arguments.shift
       unless options[:template_root] && options[:rails_root]
+        stdout.puts "trying"
         stdout.puts parser; exit
       end
       InstallTheme.new(options).apply_to_target
