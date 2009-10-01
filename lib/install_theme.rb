@@ -115,7 +115,7 @@ class InstallTheme
     html2haml(from_path, haml_path)
     # only remove .erb if haml conversion successful
     if File.size?(haml_path)
-      # FileUtils.rm_rf(from_path)
+      FileUtils.rm_rf(from_path)
     else
       FileUtils.rm_rf(haml_path)
     end
