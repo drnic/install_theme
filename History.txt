@@ -1,3 +1,18 @@
+=== 0.6.0 / 2009-10-02
+
+Major:
+
+* the extracted partials are now converted into app/views/layouts/_section.html.erb/haml partials and automatically loaded if not overridden
+* Partials extracted from template become default partial contents using #render_or_default 
+  To override, either use content_for(:label) [as before] or add a _label.html.erb/haml partial 
+  in your controller's app/views/my_controller folder
+* Contents removed for <%= yield %> are now included in the original_templates/index.html.erb/haml file for future reference
+
+Minor:
+
+* remove .erb files if successfully converted to .haml [Jack Chen and Dr Nic Williams]
+* Extract the CLI arguments after doing the options parsing, so that it can find -h + -v helper flags [Jack Chen and Dr Nic Williams]
+
 === 0.5.2 / 2009-09-29
 
 NOTE: Haml output can be improved by installing haml from http://github.com/drnic/haml

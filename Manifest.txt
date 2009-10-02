@@ -6,6 +6,7 @@ bin/install_theme
 lib/install_theme.rb
 lib/install_theme/cli.rb
 lib/install_theme/install_theme_generator.rb
+lib/install_theme/templates/app/helpers/template_helper.rb
 script/console
 script/destroy
 script/generate
@@ -57,6 +58,11 @@ spec/expected/rails/bloganje/README
 spec/expected/rails/bloganje/Rakefile
 spec/expected/rails/bloganje/app/controllers/application_controller.rb
 spec/expected/rails/bloganje/app/helpers/application_helper.rb
+spec/expected/rails/bloganje/app/helpers/template_helper.rb
+spec/expected/rails/bloganje/app/views/layouts/_header.html.erb
+spec/expected/rails/bloganje/app/views/layouts/_header.html.haml
+spec/expected/rails/bloganje/app/views/layouts/_sidebar.html.erb
+spec/expected/rails/bloganje/app/views/layouts/_sidebar.html.haml
 spec/expected/rails/bloganje/app/views/layouts/application.html.erb
 spec/expected/rails/bloganje/app/views/layouts/application.html.haml
 spec/expected/rails/bloganje/config/boot.rb
@@ -160,6 +166,7 @@ spec/expected/rails/the-hobbit-website-template/README
 spec/expected/rails/the-hobbit-website-template/Rakefile
 spec/expected/rails/the-hobbit-website-template/app/controllers/application_controller.rb
 spec/expected/rails/the-hobbit-website-template/app/helpers/application_helper.rb
+spec/expected/rails/the-hobbit-website-template/app/helpers/template_helper.rb
 spec/expected/rails/the-hobbit-website-template/app/views/layouts/application.html.erb
 spec/expected/rails/the-hobbit-website-template/config/boot.rb
 spec/expected/rails/the-hobbit-website-template/config/database.yml
