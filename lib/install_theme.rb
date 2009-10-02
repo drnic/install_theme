@@ -40,6 +40,7 @@ class InstallTheme
     convert_to_haml('app/views/layouts/application.html.erb') if haml?
     prepare_sample_controller_and_view
     prepare_assets
+    prepare_helpers
     run_generator(options)
     show_readme
   end
@@ -100,7 +101,7 @@ class InstallTheme
       inside_yields.to_a.each do |name, css_path|
         doc.search(css_path).each do |elm|
           original_named_yields[name] = elm.inner_html.strip
-          elm.inner_html = "<%= yield(:#{name}) %>"
+          elm.inner_html = "<%= yield(:#{name}) || render_or_default('#{name}') %>"
         end
       end
       contents = doc.to_html
@@ -180,6 +181,14 @@ class InstallTheme
     end
     template_images.each do |file|
       FileUtils.cp_r(file, File.join(template_temp_path, 'public/images'))
+    end
+  end
+  
+  def prepare_helpers
+    root = File.join(File.dirname(__FILE__), "install_theme", "templates")
+    Dir[File.join(root, "**/*")].each do |f|
+      templates_file = f.gsub(root, "").gsub(%r{^/}, '')
+      FileUtils.cp_r(f, File.join(template_temp_path, templates_file))
     end
   end
   

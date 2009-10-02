@@ -18,7 +18,7 @@
     #container
       #header
         %h2
-          = yield(:header)
+          = yield(:header) || render_or_default('header')
         #topmenu
           %ul
             %li.current
@@ -61,7 +61,7 @@
         #content
           = yield
         #sidebar
-          = yield(:sidebar)
+          = yield(:sidebar) || render_or_default('sidebar')
       #footer
         #credits
           Template by

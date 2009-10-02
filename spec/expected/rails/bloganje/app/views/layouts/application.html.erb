@@ -18,7 +18,7 @@
 <body>
 	<div id="container">
     	<div id="header">
-        	<h2><%= yield(:header) %></h2>
+        	<h2><%= yield(:header) || render_or_default('header') %></h2>
     <div id="topmenu">
             	<ul>
                 	<li class="current"><a href="index.html">Dashboard</a></li>
@@ -43,7 +43,7 @@
       </div>
         <div id="wrapper">
             <div id="content"><%= yield %></div>
-            <div id="sidebar"><%= yield(:sidebar) %></div>
+            <div id="sidebar"><%= yield(:sidebar) || render_or_default('sidebar') %></div>
       </div>
         <div id="footer">
         <div id="credits">

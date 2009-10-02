@@ -17,22 +17,14 @@ describe InstallTheme do
     it { @theme.stylesheet_dir.should == "css" }
     it { @theme.image_dir.should == "img" }
     it { @theme.should be_erb }
-    it { File.should be_exist(File.join(@target_application, "app/views/layouts/application.html.erb")) }
-    it { File.should be_exist(File.join(@expected_application, "app/views/layouts/application.html.erb")) }
-    it "should create app/views/layouts/application.html.erb as a layout file" do
-      expected = clean_html(File.join(@expected_application, "app/views/layouts/application.html.erb"))
-      actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
-      diff = `diff #{expected} #{actual}  2> /dev/null`
-      rputs diff unless diff.strip.empty?
-      diff.strip.should == ""
-    end
-    
-    %w[public/stylesheets/style.css
+
+    %w[app/views/layouts/application.html.erb
+      app/helpers/template_helper.rb
+      public/stylesheets/style.css
       public/stylesheets/theme.css].each do |matching_file|
-        it { File.should be_exist(File.join(@target_application, matching_file)) }
         it do
-          expected = File.join(@expected_application, matching_file)
-          actual   = File.join(@target_application, matching_file)
+          expected = clean_file File.join(@expected_application, matching_file), 'expected'
+          actual   = clean_file File.join(@target_application, matching_file), 'actual'
           diff = `diff #{expected} #{actual}  2> /dev/null`
           rputs diff unless diff.strip.empty?
           diff.strip.should == ""
@@ -63,27 +55,20 @@ describe InstallTheme do
     end
     it { @theme.stylesheet_dir.should == "" }
     it { @theme.image_dir.should == "img" }
-    describe "becomes a Rails app" do
-      it { File.should be_exist(File.join(@target_application, "app/views/layouts/application.html.erb")) }
-      it "should create app/views/layouts/application.html.erb as a layout file" do
-        expected = clean_html(File.join(@expected_application, "app/views/layouts/application.html.erb"))
-        actual   = File.join(@target_application, "app/views/layouts/application.html.erb")
-        diff = `diff #{expected} #{actual}  2> /dev/null`
-        rputs diff unless diff.strip.empty?
-        diff.strip.should == ""
-      end
-      
-      %w[public/stylesheets/default.css].each do |matching_file|
-          it { File.should be_exist(File.join(@target_application, matching_file)) }
-          it do
-            expected = clean_file File.join(@expected_application, matching_file)
-            actual   = clean_file File.join(@target_application, matching_file)
-            diff = `diff #{expected} #{actual}  2> /dev/null`
-            rputs diff unless diff.strip.empty?
-            diff.strip.should == ""
-          end
+
+    %w[app/views/layouts/application.html.erb
+      app/helpers/template_helper.rb
+      public/stylesheets/default.css].each do |matching_file|
+        it { File.should be_exist(File.join(@target_application, matching_file)) }
+        it { File.should be_exist(File.join(@expected_application, matching_file)) }
+        it do
+          expected = clean_file File.join(@expected_application, matching_file), 'expected'
+          actual   = clean_file File.join(@target_application, matching_file), 'actual'
+          diff = `diff #{expected} #{actual}  2> /dev/null`
+          rputs diff unless diff.strip.empty?
+          diff.strip.should == ""
         end
-    end
+      end
   end
 end
 
