@@ -39,6 +39,7 @@ class InstallTheme
     convert_file_to_layout(index_path, 'app/views/layouts/application.html.erb')
     convert_to_haml('app/views/layouts/application.html.erb') if haml?
     prepare_sample_controller_and_view
+    prepare_layout_partials
     prepare_assets
     prepare_helpers
     run_generator(options)
@@ -164,6 +165,16 @@ class InstallTheme
       end
     end
     convert_to_haml('app/views/original_template/index.html.erb') if haml?
+  end
+  
+  def prepare_layout_partials
+    original_named_yields.to_a.each do |key, original_contents|
+      partial_file = "app/views/layouts/_#{key}.html.erb"
+      File.open(File.join(template_temp_path, partial_file), "w") do |f|
+        f << original_contents.strip
+      end
+      convert_to_haml(partial_file) if haml?
+    end
   end
 
   def prepare_assets

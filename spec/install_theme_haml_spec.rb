@@ -17,6 +17,8 @@ describe InstallTheme do
     it { @theme.should be_haml }
 
     %w[app/views/layouts/application.html.haml
+      app/views/layouts/_header.html.haml
+      app/views/layouts/_sidebar.html.haml
       app/helpers/template_helper.rb
       public/stylesheets/sass/style.sass].each do |matching_file|
         it do

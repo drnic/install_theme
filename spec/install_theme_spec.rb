@@ -19,6 +19,8 @@ describe InstallTheme do
     it { @theme.should be_erb }
 
     %w[app/views/layouts/application.html.erb
+      app/views/layouts/_header.html.erb
+      app/views/layouts/_sidebar.html.erb
       app/helpers/template_helper.rb
       public/stylesheets/style.css
       public/stylesheets/theme.css].each do |matching_file|
