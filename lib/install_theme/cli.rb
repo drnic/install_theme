@@ -8,7 +8,7 @@ class InstallTheme
         opts.banner = <<-BANNER.gsub(/^          /,'')
           Use any HTML template as a theme generator for your Rails app.
           
-          Usage: #{File.basename($0)} path/to/template path/to/rails_app content_id [options]
+          Usage: #{File.basename($0)} path/to/template path/to/rails_app content_path [options]
           
           Options are:
         BANNER
@@ -22,13 +22,13 @@ class InstallTheme
         opts.on("--index_path index.html", String,
                 "HTML page to use for application layout.",
                 "Default: index.html") { |arg| options[:index_path] = arg }
-        opts.on("--inside_yield KEY_AND_CSS_PATH", String,
+        opts.on("-p", "--partial KEY_AND_PATH", String,
                 "Replace the inner HTML of an element with <%= yield :key %>",
-                "Example: --inside_yield header:#header",
-                "Default: nil") do |arg|
-                  options[:inside_yields] ||= {}
+                "Example using CSS path: --partial header:#header",
+                "Example using XPath: --partial \"header://div[@id='header']\"") do |arg|
+                  options[:partials] ||= {}
                   key, css_path = arg.split(/\s*:\s*/)[0..1]
-                  options[:inside_yields][key.strip.to_sym] = css_path.strip
+                  options[:partials][key.strip.to_sym] = css_path.strip
                 end
         opts.on("-h", "--help",
                 "Show this help message.") { |arg| stdout.puts opts; exit }
@@ -39,7 +39,7 @@ class InstallTheme
       end
       options[:template_root] = arguments.shift
       options[:rails_root]    = arguments.shift
-      options[:content_id]    = arguments.shift
+      options[:content_path]  = arguments.shift
       unless options[:template_root] && options[:rails_root]
         stdout.puts "trying"
         stdout.puts parser; exit

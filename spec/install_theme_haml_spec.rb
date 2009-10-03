@@ -7,8 +7,8 @@ describe InstallTheme do
       @stdout = stdout do |stdout|
         @theme = InstallTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
           :rails_root    => @target_application,
-          :content_id    => "content",
-          :inside_yields => { :header => '#header h2', :sidebar => '#sidebar' },
+          :content_path    => "content",
+          :partials => { :header => '#header h2', :sidebar => '#sidebar' },
           :stdout        => stdout)
         @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
       end

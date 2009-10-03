@@ -14,7 +14,7 @@ class InstallTheme
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
-  attr_reader :content_id, :inside_yields
+  attr_reader :content_path, :partials
   attr_reader :stdout
   attr_reader :original_named_yields, :original_body_content
   
@@ -23,8 +23,8 @@ class InstallTheme
     @rails_root     = File.expand_path(options[:rails_root] || File.dirname('.'))
     @template_type  = (options[:template_type] || detect_template).to_s
     @index_path     = options[:index_path] || "index.html"
-    @content_id     = options[:content_id] || "content"
-    @inside_yields  = options[:inside_yields] || {}
+    @content_path   = options[:content_path] || "content"
+    @partials       = options[:partials] || {}
     @stylesheet_dir = options[:stylesheet_dir] || detect_stylesheet_dir
     @javascript_dir = options[:javascript_dir] || detect_javascript_dir
     @image_dir      = options[:image_dir] || detect_image_dir
@@ -95,11 +95,11 @@ class InstallTheme
       contents.sub!(%r{\s*</head>}, "\n  <%= yield(:head) %>\n</head>")
 
       doc = Hpricot(contents)
-      doc.search("##{content_id},.#{content_id}").each do |elm|
+      doc.search(content_path).each do |elm|
         @original_body_content = elm.inner_html.strip
         elm.inner_html = "<%= yield %>"
       end
-      inside_yields.to_a.each do |name, css_path|
+      partials.to_a.each do |name, css_path|
         doc.search(css_path).each do |elm|
           original_named_yields[name] = elm.inner_html.strip
           elm.inner_html = "<%= yield(:#{name}) || render_or_default('#{name}') %>"

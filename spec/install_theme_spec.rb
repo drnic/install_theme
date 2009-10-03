@@ -1,15 +1,15 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe InstallTheme do
-  context "bloganje theme to ERb" do
+  context "bloganje theme to ERb using CSS path" do
     before(:all) do
       setup_base_rails
       @stdout = stdout do |stdout|
         @theme = InstallTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
-          :rails_root    => @target_application,
-          :content_id    => "content",
-          :inside_yields => { :header => '#header h2', :sidebar => '#sidebar' },
-          :stdout        => stdout)
+          :rails_root   => @target_application,
+          :content_path => "#content",
+          :partials     => { :header => '#header h2', :sidebar => '#sidebar' },
+          :stdout       => stdout)
         @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
@@ -42,15 +42,16 @@ describe InstallTheme do
     end
   end
 
-  context "the-hobbit-website-template theme to ERb" do
+  context "the-hobbit-website-template theme to ERb using xpath" do
     before(:all) do
       setup_base_rails
       @stdout = stdout do |stdout|
         @theme = InstallTheme.new(
           :template_root => File.dirname(__FILE__) + "/fixtures/the-hobbit-website-template",
           :rails_root    => @target_application,
-          :inside_yields => { :menu => '.navigation', :subtitle => '.header p' },
-          :content_id    => "content", :stdout => stdout)
+          :partials      => { :menu => "//div[@class='navigation']", :subtitle => "//div[@class='header']/p" },
+          :content_path  => "//div[@class='content']", 
+          :stdout        => stdout)
         @theme.apply_to_target(:generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/the-hobbit-website-template"

@@ -17,9 +17,9 @@ in action.
 
 Simple case:
 
-    install_theme path/to/template path/to/rails_app content_id
+    install_theme path/to/template path/to/rails_app content_path
 
-Replace some DOM content with <%= yield :some_label %> with --inside_yields:
+Replace some DOM content with <%= yield :some_label %> with --partials:
 
     install_theme path/to/app path/to/rails_app content_box \
       --inside_yield "header:#header h2" \
