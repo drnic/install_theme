@@ -181,9 +181,7 @@ class InstallTheme
     template_stylesheets.each do |file|
       target_path = File.join(template_temp_path, 'public/stylesheets', File.basename(file))
       File.open(target_path, "w") do |f|
-        contents = File.read(file)
-        contents.gsub!(%r{url\((["']?)[./]*#{image_dir}}, 'url(\1/images')
-        f << contents
+        f << clean_stylesheet(File.read(file))
       end
       convert_to_sass(target_path) if haml?
     end
@@ -301,6 +299,10 @@ class InstallTheme
 
   def template_images
     Dir[File.join(template_root, image_dir, '**/*.{jpg,png,gif}')]
+  end
+  
+  def clean_stylesheet(contents)
+    contents.gsub(%r{url\((["']?)[\./]*(?:#{image_dir}|#{stylesheet_dir}|)\/?}, 'url(\1/images/')
   end
   
   def show_readme
