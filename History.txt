@@ -1,3 +1,12 @@
+=== 0.6.1 / 2009-10-06
+
+Major:
+
+* much better algorithm for cleaning up stylesheets
+* The content_id argument is now content_path - it is either a CSSpath or XPath expression. 
+  The --inside_yields flag is renamed to --partial (-p) 
+  Testing for using xpath and csspath in the content_path and --partials arguments.
+
 === 0.6.0 / 2009-10-02
 
 Major:
