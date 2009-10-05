@@ -1,5 +1,6 @@
 = install_theme
 
+* http://drnicwilliams.com/2009/10/06/install-any-html-themetemplate-into-your-rails-app/
 * http://github.com/drnic/install_theme
 
 == DESCRIPTION:
@@ -19,11 +20,11 @@ Simple case:
 
     install_theme path/to/template path/to/rails_app content_path
 
-Replace some DOM content with <%= yield :some_label %> with --partials:
+Replace some DOM content with <%= yield :some_label %> with --partial:
 
-    install_theme path/to/app path/to/rails_app content_box \
-      --inside_yield "header:#header h2" \
-      --inside_yield sidebar:#sidebar"
+    install_theme path/to/app path/to/rails_app #content_box \
+      --partial "header:#header h2" \
+      --partial sidebar:#sidebar"
 
 === Haml Support:
 
