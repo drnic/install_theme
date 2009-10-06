@@ -1,3 +1,13 @@
+=== 0.6.2 / 2009-10-06
+
+Major:
+
+* haml is no longer a dependency for installation, just for development (and you'll need it for the --haml option)
+
+Minor:
+* update README header
+* updated README for changed CLI flags
+
 === 0.6.1 / 2009-10-06
 
 Major:
