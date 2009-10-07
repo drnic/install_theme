@@ -18,13 +18,19 @@ in action.
 
 Simple case:
 
-    install_theme path/to/template path/to/rails_app content_path
+    install_theme path/to/rails_app path/to/template content_path
 
 Replace some DOM content with <%= yield :some_label %> with --partial:
 
-    install_theme path/to/app path/to/rails_app #content_box \
+    install_theme path/to/rails_app path/to/template #content_box \
       --partial "header:#header h2" \
       --partial sidebar:#sidebar"
+
+NOTE: The order of the first two arguments has been reversed since the original
+public release. This is in preparation for path/to/template to be optional.
+
+Similarly, in 0.7.0 the content_path argument is optional after the first time
+you install a specific theme (see 'Theme Reuse' section).
 
 === Haml Support:
 

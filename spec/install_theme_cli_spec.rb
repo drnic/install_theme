@@ -5,7 +5,7 @@ describe InstallTheme::CLI, "execute" do
   it("parses arguments and run generator") do
     theme = stub
     InstallTheme.should_receive(:new).
-      with(:template_root => "path/to/app", 
+      with(:template_root => "path/to/template", 
         :rails_root       => "path/to/rails_app",
         :content_path     => "#content_box",
         :index_path       => "root.html",
@@ -16,7 +16,7 @@ describe InstallTheme::CLI, "execute" do
     theme.should_receive(:valid?).and_return(true)
     theme.should_receive(:apply_to_target)
     @stdout = stdout do |stdout_io|
-      InstallTheme::CLI.execute(stdout_io, %w[path/to/app path/to/rails_app #content_box
+      InstallTheme::CLI.execute(stdout_io, %w[path/to/rails_app path/to/template #content_box
         --index_path=root.html
         --haml
         --partial header:#header\ h2
@@ -28,7 +28,7 @@ describe InstallTheme::CLI, "execute" do
   it("allows for content_path and partials to be derived from defaults file") do
     theme = stub
     InstallTheme.should_receive(:new).
-      with(:template_root => "path/to/app", 
+      with(:template_root => "path/to/template", 
         :rails_root       => "path/to/rails_app",
         :content_path     => nil
       ).
@@ -36,7 +36,7 @@ describe InstallTheme::CLI, "execute" do
     theme.should_receive(:valid?).and_return(true)
     theme.should_receive(:apply_to_target)
     @stdout = stdout do |stdout_io|
-      InstallTheme::CLI.execute(stdout_io, %w[path/to/app path/to/rails_app])
+      InstallTheme::CLI.execute(stdout_io, %w[path/to/rails_app path/to/template])
     end
   end
 end

@@ -37,8 +37,8 @@ class InstallTheme
                 ) { |arg| stdout.puts InstallTheme::VERSION; exit }
         opts.parse!(arguments)
       end
-      options[:template_root] = arguments.shift
       options[:rails_root]    = arguments.shift
+      options[:template_root] = arguments.shift
       options[:content_path]  = arguments.shift
       theme = InstallTheme.new(options)
       unless theme.valid?
