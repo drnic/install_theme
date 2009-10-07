@@ -1,5 +1,5 @@
 --- 
 content_path: "#content"
 partials: 
-  header: "#header h2"
   sidebar: "#sidebar"
+  header: "#header h2"

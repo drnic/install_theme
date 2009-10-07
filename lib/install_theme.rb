@@ -14,6 +14,7 @@ class InstallTheme
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
+  attr_reader :defaults_file
   attr_reader :content_path, :partials
   attr_reader :stdout
   attr_reader :original_named_yields, :original_body_content
@@ -22,13 +23,17 @@ class InstallTheme
     @template_root  = File.expand_path(options[:template_root] || File.dirname('.'))
     @rails_root     = File.expand_path(options[:rails_root] || File.dirname('.'))
     @template_type  = (options[:template_type] || detect_template).to_s
-    @index_path     = options[:index_path] || "index.html"
-    @content_path   = options[:content_path] || "content"
-    @partials       = options[:partials] || {}
+    @defaults_file  = options[:defaults_file] || "install_theme.yml"
     @stylesheet_dir = options[:stylesheet_dir] || detect_stylesheet_dir
     @javascript_dir = options[:javascript_dir] || detect_javascript_dir
     @image_dir      = options[:image_dir] || detect_image_dir
     @stdout         = options[:stdout] || $stdout
+
+    load_template_defaults unless options[:ignore_defaults]
+    @index_path     = options[:index_path] || @index_path || "index.html"
+    @content_path   = options[:content_path] || @content_path || "content"
+    @partials       ||= {}
+    @partials.merge!(options[:partials]) if options[:partials]
     
     create_install_theme_yml
     setup_template_temp_path
@@ -72,6 +77,15 @@ class InstallTheme
   end
   
   protected
+  
+  def load_template_defaults
+    return unless File.exist?(File.join(template_root, defaults_file))
+    require "yaml"
+    defaults = YAML.load_file(File.join(template_root, defaults_file))
+    @content_path = defaults["content_path"]
+    @partials     = defaults["partials"]
+    @index_path   = defaults["index_path"]
+  end
   
   def convert_file_to_layout(html_path, layout_path)
     File.open(File.join(template_temp_path, layout_path), "w") do |f|

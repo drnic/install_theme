@@ -90,5 +90,38 @@ describe InstallTheme do
       diff.strip.should == ""
     end
   end
+
+  context "use install_theme.yml for defaults" do
+    before(:all) do
+      setup_base_rails
+      @template_root = File.dirname(__FILE__) + "/fixtures/bloganje"
+      FileUtils.chdir(@template_root) do
+        FileUtils.cp_r("expected_install_theme.yml", "install_theme.yml")
+      end
+      @stdout = stdout do |stdout|
+        @theme = InstallTheme.new(:template_root => @template_root,
+          :rails_root   => @target_application,
+          :stdout       => stdout)
+        @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
+      end
+      @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
+    end
+    it { File.should be_exist(File.join(@template_root, "install_theme.yml")) }
+    it { @theme.content_path.should == "#content" }
+    %w[app/views/layouts/application.html.erb
+      app/views/layouts/_header.html.erb
+      app/views/layouts/_sidebar.html.erb
+      app/helpers/template_helper.rb
+      public/stylesheets/style.css
+      public/stylesheets/theme.css].each do |matching_file|
+        it "should having matching file #{matching_file}" do
+          expected = clean_file File.join(@expected_application, matching_file), 'expected'
+          actual   = clean_file File.join(@target_application, matching_file), 'actual'
+          diff = `diff #{expected} #{actual}  2> /dev/null`
+          rputs diff unless diff.strip.empty?
+          diff.strip.should == ""
+        end
+      end
+  end
 end
 

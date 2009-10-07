@@ -4,12 +4,14 @@ describe InstallTheme do
   context "bloganje theme to haml" do
     before(:all) do
       setup_base_rails :haml => true
+      @template_root = File.dirname(__FILE__) + "/fixtures/bloganje"
+      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
       @stdout = stdout do |stdout|
-        @theme = InstallTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
-          :rails_root    => @target_application,
-          :content_path    => "content",
-          :partials => { :header => '#header h2', :sidebar => '#sidebar' },
-          :stdout        => stdout)
+        @theme = InstallTheme.new(:template_root => @template_root,
+          :rails_root   => @target_application,
+          :content_path => "content",
+          :partials     => { "header" => '#header h2', "sidebar" => '#sidebar' },
+          :stdout       => stdout)
         @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
