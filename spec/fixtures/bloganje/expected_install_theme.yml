@@ -1,0 +1,5 @@
+--- 
+content_path: "#content"
+partials: 
+  sidebar: "#sidebar"
+  header: "#header h2"

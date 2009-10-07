@@ -30,6 +30,7 @@ class InstallTheme
     @image_dir      = options[:image_dir] || detect_image_dir
     @stdout         = options[:stdout] || $stdout
     
+    create_install_theme_yml
     setup_template_temp_path
   end
   
@@ -248,6 +249,12 @@ class InstallTheme
   
   def in_rails_root(&block)
     FileUtils.chdir(rails_root, &block)
+  end
+  
+  def create_install_theme_yml
+    config = { "content_path" => content_path, "partials" => partials }
+    install_theme_yml = File.join(template_root, 'install_theme.yml')
+    File.open(install_theme_yml, 'w') {|f| f << config.to_yaml}
   end
 
   def detect_template

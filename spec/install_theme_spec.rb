@@ -1,18 +1,26 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe InstallTheme do
+  context "use install_theme.yml for defaults" do
+    
+  end
+  
   context "bloganje theme to ERb using CSS path" do
     before(:all) do
       setup_base_rails
+      @template_root = File.dirname(__FILE__) + "/fixtures/bloganje"
       @stdout = stdout do |stdout|
-        @theme = InstallTheme.new(:template_root => File.dirname(__FILE__) + "/fixtures/bloganje", 
+        @theme = InstallTheme.new(:template_root => @template_root,
           :rails_root   => @target_application,
           :content_path => "#content",
-          :partials     => { :header => '#header h2', :sidebar => '#sidebar' },
+          :partials     => { "header" => '#header h2', "sidebar" => '#sidebar' },
           :stdout       => stdout)
         @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
+    end
+    after(:all) do
+      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
     end
     it { @theme.stylesheet_dir.should == "css" }
     it { @theme.image_dir.should == "img" }
@@ -40,21 +48,31 @@ describe InstallTheme do
       it { should include("<% content_for :header do -%>\n  My eCommerce Admin area\n<% end -%>") }
       it { should include('<div id="rightnow">') }
     end
+    it "should create install_theme.yml containing the partial information" do
+      expected = clean_file File.join(@template_root, "expected_install_theme.yml"), 'expected'
+      actual   = clean_file File.join(@template_root, "install_theme.yml"), 'actual'
+      diff = `diff #{expected} #{actual}  2> /dev/null`
+      rputs diff unless diff.strip.empty?
+      diff.strip.should == ""
+    end
   end
 
   context "the-hobbit-website-template theme to ERb using xpath" do
     before(:all) do
       setup_base_rails
+      @template_root = File.dirname(__FILE__) + "/fixtures/the-hobbit-website-template"
       @stdout = stdout do |stdout|
-        @theme = InstallTheme.new(
-          :template_root => File.dirname(__FILE__) + "/fixtures/the-hobbit-website-template",
+        @theme = InstallTheme.new(:template_root => @template_root,
           :rails_root    => @target_application,
-          :partials      => { :menu => "//div[@class='navigation']", :subtitle => "//div[@class='header']/p" },
+          :partials      => { "menu" => "//div[@class='navigation']", "subtitle" => "//div[@class='header']/p" },
           :content_path  => "//div[@class='content']", 
           :stdout        => stdout)
         @theme.apply_to_target(:generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/the-hobbit-website-template"
+    end
+    after(:all) do
+      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
     end
     it { @theme.stylesheet_dir.should == "" }
     it { @theme.image_dir.should == "img" }
@@ -72,6 +90,13 @@ describe InstallTheme do
           diff.strip.should == ""
         end
       end
+    it "should create install_theme.yml containing the partial information" do
+      expected = clean_file File.join(@template_root, "expected_install_theme.yml"), 'expected'
+      actual   = clean_file File.join(@template_root, "install_theme.yml"), 'actual'
+      diff = `diff #{expected} #{actual}  2> /dev/null`
+      rputs diff unless diff.strip.empty?
+      diff.strip.should == ""
+    end
   end
 end
 

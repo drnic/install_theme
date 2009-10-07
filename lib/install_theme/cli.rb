@@ -28,7 +28,7 @@ class InstallTheme
                 "Example using XPath: --partial \"header://div[@id='header']\"") do |arg|
                   options[:partials] ||= {}
                   key, css_path = arg.split(/\s*:\s*/)[0..1]
-                  options[:partials][key.strip.to_sym] = css_path.strip
+                  options[:partials][key.strip] = css_path.strip
                 end
         opts.on("-h", "--help",
                 "Show this help message.") { |arg| stdout.puts opts; exit }
