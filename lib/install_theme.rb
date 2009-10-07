@@ -31,7 +31,7 @@ class InstallTheme
 
     load_template_defaults unless options[:ignore_defaults]
     @index_path     = options[:index_path] || @index_path || "index.html"
-    @content_path   = options[:content_path] || @content_path || "content"
+    @content_path   = options[:content_path] || @content_path
     @partials       ||= {}
     @partials.merge!(options[:partials]) if options[:partials]
     
@@ -74,6 +74,12 @@ class InstallTheme
   
   def erb?
     template_type == 'erb'
+  end
+  
+  def valid?
+    template_root && File.exist?(template_root) &&
+    rails_root && File.exist?(rails_root) &&
+    content_path
   end
   
   protected

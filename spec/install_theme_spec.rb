@@ -19,6 +19,7 @@ describe InstallTheme do
     it { @theme.stylesheet_dir.should == "css" }
     it { @theme.image_dir.should == "img" }
     it { @theme.should be_erb }
+    it { @theme.should be_valid }
 
     %w[app/views/layouts/application.html.erb
       app/views/layouts/_header.html.erb
@@ -68,6 +69,7 @@ describe InstallTheme do
     end
     it { @theme.stylesheet_dir.should == "" }
     it { @theme.image_dir.should == "img" }
+    it { @theme.should be_valid }
 
     %w[app/views/layouts/application.html.erb
       app/helpers/template_helper.rb
@@ -108,6 +110,7 @@ describe InstallTheme do
     end
     it { File.should be_exist(File.join(@template_root, "install_theme.yml")) }
     it { @theme.content_path.should == "#content" }
+    it { @theme.should be_valid }
     %w[app/views/layouts/application.html.erb
       app/views/layouts/_header.html.erb
       app/views/layouts/_sidebar.html.erb
@@ -122,6 +125,23 @@ describe InstallTheme do
           diff.strip.should == ""
         end
       end
+  end
+
+  context "invalid if no content_path explicitly or via defaults file" do
+    before(:all) do
+      setup_base_rails
+      @template_root = File.dirname(__FILE__) + "/fixtures/bloganje"
+      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
+      @stdout = stdout do |stdout|
+        @theme = InstallTheme.new(:template_root => @template_root,
+          :rails_root   => @target_application,
+          :stdout       => stdout)
+        @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
+      end
+      @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
+    end
+    it { @theme.content_path.should be_nil }
+    it { @theme.should_not be_valid }
   end
 end
 

@@ -1,5 +1,0 @@
---- 
-content_path: //div[@class='content']
-partials: 
-  subtitle: //div[@class='header']/p
-  menu: //div[@class='navigation']

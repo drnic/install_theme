@@ -40,11 +40,11 @@ class InstallTheme
       options[:template_root] = arguments.shift
       options[:rails_root]    = arguments.shift
       options[:content_path]  = arguments.shift
-      unless options[:template_root] && options[:rails_root]
-        stdout.puts "trying"
+      theme = InstallTheme.new(options)
+      unless theme.valid?
         stdout.puts parser; exit
       end
-      InstallTheme.new(options).apply_to_target
+      theme.apply_to_target
     end
   end
 end
