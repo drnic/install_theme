@@ -35,6 +35,18 @@ Alternately, you can pass the flag --haml to force it.
 
 Or pass the flag --erb to force erb template generation.
 
+=== Theme Reuse:
+
+Once you have installed a theme into an application once, that theme remembers the content path
+and partials you selected. You won't have to type them again.
+
+That is, after running the `install_theme` command above, you could apply the same theme
+to another Rails app using just:
+
+    install_theme path/to/app path/to/another_rails_app
+
+The defaults for each theme are stored in a file `install_theme.yml`.
+
 == INSTALL:
 
 install_theme is distributed as a RubyGem, which installs the command line app automatically:
