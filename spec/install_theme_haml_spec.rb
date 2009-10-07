@@ -9,7 +9,7 @@ describe InstallTheme do
       @stdout = stdout do |stdout|
         @theme = InstallTheme.new(:template_root => @template_root,
           :rails_root   => @target_application,
-          :content_path => "content",
+          :content_path => "#content",
           :partials     => { "header" => '#header h2', "sidebar" => '#sidebar' },
           :stdout       => stdout)
         @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
@@ -17,6 +17,7 @@ describe InstallTheme do
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
     end
     it { @theme.should be_haml }
+    it { @theme.should be_valid }
 
     %w[app/views/layouts/application.html.haml
       app/views/layouts/_header.html.haml
