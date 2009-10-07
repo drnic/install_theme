@@ -37,9 +37,9 @@ describe InstallTheme do
       clean_stylesheet(original).should == expected
     end
 
-    it "should convert url(css/iepngfix.htc) to url(/images/iepngfix.htc)" do
+    it "should convert url(css/iepngfix.htc) to url(/stylesheets/iepngfix.htc)" do
       original = "behavior: url(css/iepngfix.htc)"
-      expected = "behavior: url(/images/iepngfix.htc)"
+      expected = "behavior: url(/stylesheets/iepngfix.htc)"
       clean_stylesheet(original).should == expected
     end
   end

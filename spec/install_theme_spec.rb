@@ -1,14 +1,11 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe InstallTheme do
-  context "use install_theme.yml for defaults" do
-    
-  end
-  
   context "bloganje theme to ERb using CSS path" do
     before(:all) do
       setup_base_rails
       @template_root = File.dirname(__FILE__) + "/fixtures/bloganje"
+      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
       @stdout = stdout do |stdout|
         @theme = InstallTheme.new(:template_root => @template_root,
           :rails_root   => @target_application,
@@ -18,9 +15,6 @@ describe InstallTheme do
         @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
-    end
-    after(:all) do
-      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
     end
     it { @theme.stylesheet_dir.should == "css" }
     it { @theme.image_dir.should == "img" }
@@ -32,7 +26,7 @@ describe InstallTheme do
       app/helpers/template_helper.rb
       public/stylesheets/style.css
       public/stylesheets/theme.css].each do |matching_file|
-        it do
+        it "should having matching file #{matching_file}" do
           expected = clean_file File.join(@expected_application, matching_file), 'expected'
           actual   = clean_file File.join(@target_application, matching_file), 'actual'
           diff = `diff #{expected} #{actual}  2> /dev/null`
@@ -61,6 +55,7 @@ describe InstallTheme do
     before(:all) do
       setup_base_rails
       @template_root = File.dirname(__FILE__) + "/fixtures/the-hobbit-website-template"
+      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
       @stdout = stdout do |stdout|
         @theme = InstallTheme.new(:template_root => @template_root,
           :rails_root    => @target_application,
@@ -70,9 +65,6 @@ describe InstallTheme do
         @theme.apply_to_target(:generator => {:collision => :force, :quiet => true})
       end
       @expected_application = File.dirname(__FILE__) + "/expected/rails/the-hobbit-website-template"
-    end
-    after(:all) do
-      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
     end
     it { @theme.stylesheet_dir.should == "" }
     it { @theme.image_dir.should == "img" }
