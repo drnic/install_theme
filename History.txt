@@ -1,3 +1,15 @@
+=== 0.7.0 / 2009-10-07
+
+Major:
+* Reversed the order of the first two CLI arguments (in preparation for path/to/template to be optional)
+* content_path and --partial flags are optional after a template is installed once
+
+Minor:
+* README describes how Theme Reuse works
+* CLI shows help/error message if content_path isn't passed as argument or available from defaults file
+* improved the clean_stylesheet helper and fixed the corresponding test
+* if stylesheet path is root of template folder, then use image path for path substitutions
+
 === 0.6.2 / 2009-10-06
 
 Major:
