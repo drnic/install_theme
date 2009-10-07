@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe InstallTheme do
-  def clean_stylesheet(contents)
-    theme = InstallTheme.new :image_dir => "img", :stylesheet_dir => "css"
+  def clean_stylesheet(contents, options = {})
+    theme = InstallTheme.new({:image_dir => "img", :stylesheet_dir => "css"}.merge(options))
     theme.send(:clean_stylesheet, contents)
   end
 
@@ -11,6 +11,12 @@ describe InstallTheme do
       original = "background-image: url('image.png');"
       expected = "background-image: url('/images/image.png');"
       clean_stylesheet(original).should == expected
+    end
+    
+    it "should convert url('image.png') to url('/images/image.png') if image and css dirs are both root" do
+      original = "background-image: url('image.png');"
+      expected = "background-image: url('/images/image.png');"
+      clean_stylesheet(original, :image_dir => "", :stylesheet_dir => "").should == expected
     end
     
     it "should convert url(image.png) to url(/images/image.png)" do

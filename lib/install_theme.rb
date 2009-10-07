@@ -10,7 +10,7 @@ require 'sass/css'
 require 'haml/exec'
 
 class InstallTheme
-  VERSION = "0.6.2"
+  VERSION = "0.7.0"
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
@@ -330,7 +330,7 @@ class InstallTheme
   
   def clean_stylesheet(contents)
     contents.gsub(%r{url\((["']?)[\./]*(#{image_dir}|#{stylesheet_dir}|)\/?}) do |match|
-      target_path = $2 == stylesheet_dir ? "stylesheets" : "images"
+      target_path = (!stylesheet_dir.blank? && $2 == stylesheet_dir) ? "stylesheets" : "images"
       "url(#{$1}/#{target_path}/"
     end
   end
