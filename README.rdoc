@@ -62,7 +62,7 @@ install_theme is distributed as a RubyGem, which installs the command line app a
 
 == AUTHOR:
 
-Dr Nic Williams (http://drnicwilliams.com) wrote install_theme because he wanted a very
+Dr Nic Williams (http://drnicwilliams.com)
 
 == LICENSE:
 
