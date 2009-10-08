@@ -1,3 +1,16 @@
+=== 0.7.1 / 2009-10-08
+
+Major:
+* CLI has a --layout/-l flag to set the layout file name (still defaults to application[.html.erb])
+* CLI has a --defaults_file flag to select an alternate YAML file containing defaults for the theme.
+* Layout files have 'javascript_include_tag :all' added to the <head> section
+
+Minor:
+* refactor before(:all) blocks into common helper setup_app_with_theme
+* reorder the CLI help Usage message to show new order of arguments
+* reordering the CLI flags in the help display
+* removed the unfinished sentence about Dr Nic
+
 === 0.7.0 / 2009-10-07
 
 Major:

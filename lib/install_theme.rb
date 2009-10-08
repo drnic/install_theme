@@ -10,7 +10,7 @@ require 'sass/css'
 require 'haml/exec'
 
 class InstallTheme
-  VERSION = "0.7.0"
+  VERSION = "0.7.1"
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :layout_name
