@@ -8,7 +8,7 @@ class InstallTheme
         opts.banner = <<-BANNER.gsub(/^          /,'')
           Use any HTML template as a theme generator for your Rails app.
           
-          Usage: #{File.basename($0)} path/to/template path/to/rails_app content_path [options]
+          Usage: #{File.basename($0)} path/to/rails_app path/to/template content_path [options]
           
           Options are:
         BANNER
