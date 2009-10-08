@@ -13,9 +13,14 @@ class InstallTheme
           Options are:
         BANNER
         opts.separator ""
-        opts.on("--defaults_file install_theme.yml", String,
-                "Select an alternate YAML file containing defaults for the theme.",
-                "Default: install_theme.yml") { |arg| options[:defaults_file] = arg }
+        opts.on("-p", "--partial KEY_AND_PATH", String,
+                "Replace the inner HTML of an element with <%= yield :key %>",
+                "Example using CSS path: --partial header:#header",
+                "Example using XPath: --partial \"header://div[@id='header']\"") do |arg|
+                  options[:partials] ||= {}
+                  key, css_path = arg.split(/\s*:\s*/)[0..1]
+                  options[:partials][key.strip] = css_path.strip
+                end
         opts.on("--erb",
                 "Generate ERb templates.",
                 "Default: auto-detect") { |arg| options[:template_type] = 'erb' }
@@ -25,14 +30,9 @@ class InstallTheme
         opts.on("--index_path index.html", String,
                 "HTML page to use for application layout.",
                 "Default: index.html") { |arg| options[:index_path] = arg }
-        opts.on("-p", "--partial KEY_AND_PATH", String,
-                "Replace the inner HTML of an element with <%= yield :key %>",
-                "Example using CSS path: --partial header:#header",
-                "Example using XPath: --partial \"header://div[@id='header']\"") do |arg|
-                  options[:partials] ||= {}
-                  key, css_path = arg.split(/\s*:\s*/)[0..1]
-                  options[:partials][key.strip] = css_path.strip
-                end
+        opts.on("--defaults_file install_theme.yml", String,
+                "Select an alternate YAML file containing defaults for the theme.",
+                "Default: install_theme.yml") { |arg| options[:defaults_file] = arg }
         opts.on("-h", "--help",
                 "Show this help message.") { |arg| stdout.puts opts; exit }
         opts.on("-v", "--version",
