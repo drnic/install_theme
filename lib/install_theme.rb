@@ -113,7 +113,12 @@ class InstallTheme
       contents.gsub!(%r{(["'])/?#{stylesheet_dir}}, '\1/stylesheets') unless stylesheet_dir.blank?
       contents.gsub!(%r{(["'])/?#{javascript_dir}}, '\1/javascripts') unless javascript_dir.blank?
 
-      contents.sub!(%r{\s*</head>}, "\n  <%= yield(:head) %>\n</head>")
+      contents.sub!(%r{\s*</head>}, <<-EOS.gsub(/^      /, '').gsub(/\n$/, ''))
+      
+        <%= javascript_include_tag :all %>
+        <%= yield(:head) %>
+      </head>
+      EOS
 
       doc = Hpricot(contents)
       doc.search(content_path).each do |elm|
