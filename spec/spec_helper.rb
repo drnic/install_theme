@@ -37,16 +37,6 @@ def clean_file(orig_file, scope)
   file
 end
 
-def setup_base_rails(options = {})
-  tmp_path = File.dirname(__FILE__) + "/tmp"
-  FileUtils.rm_rf(tmp_path)
-  FileUtils.mkdir_p(tmp_path  )
-  @target_application = File.join(tmp_path, "my_app")
-  FileUtils.cp_r(File.dirname(__FILE__) + "/expected/rails/base_app", @target_application)
-  `haml --rails #{@target_application}` if options[:haml]
-  @target_application
-end
-
 def stdout(&block)
   stdout_io = StringIO.new
   yield stdout_io
@@ -54,3 +44,47 @@ def stdout(&block)
   stdout_io.read
 end
 
+module SetupThemeHelpers
+  def setup_app_with_theme(theme, theme_options = {})
+    setup_base_rails
+    @template_root = File.join(File.dirname(__FILE__), "fixtures", theme)
+    FileUtils.chdir(@template_root) do
+      if theme_options.delete(:setup_defaults)
+        FileUtils.cp_r("expected_install_theme.yml", "install_theme.yml")
+      else
+        FileUtils.rm_rf("install_theme.yml")
+      end
+    end
+    @stdout = stdout do |stdout|
+      @theme = InstallTheme.new({:template_root => @template_root,
+        :rails_root   => @target_application,
+        :stdout       => stdout}.merge(theme_options))
+      @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
+    end
+    @expected_application = File.join(File.dirname(__FILE__), "expected/rails", theme)
+  end
+
+  def setup_bloganje(theme_options = {})
+    setup_app_with_theme('bloganje', 
+      {:content_path => "#content", :partials => { "header" => '#header h2', "sidebar" => '#sidebar' }}.
+        merge(theme_options))
+  end
+  
+  def setup_hobbit(theme_options = {})
+    setup_app_with_theme('the-hobbit-website-template', 
+      { :content_path  => "//div[@class='content']", 
+        :partials      => { "menu" => "//div[@class='navigation']", "subtitle" => "//div[@class='header']/p" }}.
+      merge(theme_options))
+  end
+
+  def setup_base_rails(options = {})
+    tmp_path = File.dirname(__FILE__) + "/tmp"
+    FileUtils.rm_rf(tmp_path)
+    FileUtils.mkdir_p(tmp_path  )
+    @target_application = File.join(tmp_path, "my_app")
+    FileUtils.cp_r(File.dirname(__FILE__) + "/expected/rails/base_app", @target_application)
+    `haml --rails #{@target_application}` if options[:haml]
+    @target_application
+  end
+end
+  
