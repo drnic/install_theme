@@ -21,6 +21,10 @@ class InstallTheme
                   key, css_path = arg.split(/\s*:\s*/)[0..1]
                   options[:partials][key.strip] = css_path.strip
                 end
+        opts.on("-l", "--layout application", String,
+                "Set the layout file name.",
+                "Layout files are stored in app/views/layouts and will be suffixed by .html.erb or .html.haml",
+                "Default: application") { |arg| options[:layout] = arg }
         opts.on("--erb",
                 "Generate ERb templates.",
                 "Default: auto-detect") { |arg| options[:template_type] = 'erb' }

@@ -127,7 +127,7 @@ describe InstallTheme do
       end
   end
 
-  context "invalid if no content_path explicitly or via defaults file" do
+  context "alternate layout file name" do
     before(:all) do
       setup_base_rails
       @template_root = File.dirname(__FILE__) + "/fixtures/bloganje"
@@ -142,6 +142,33 @@ describe InstallTheme do
     end
     it { @theme.content_path.should be_nil }
     it { @theme.should_not be_valid }
+  end
+
+  context "invalid if no content_path explicitly or via defaults file" do
+    before(:all) do
+      setup_base_rails
+      @template_root = File.dirname(__FILE__) + "/fixtures/bloganje"
+      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
+      @stdout = stdout do |stdout|
+        @theme = InstallTheme.new(:template_root => @template_root,
+          :rails_root   => @target_application,
+          :content_path => "#content",
+          :partials     => { "header" => '#header h2', "sidebar" => '#sidebar' },
+          :layout       => "special",
+          :stdout       => stdout)
+        @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
+      end
+      @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
+    end
+    %w[app/views/layouts/special.html.erb].each do |matching_file|
+      it "should having matching file #{matching_file}" do
+        expected = clean_file File.join(@expected_application, matching_file), 'expected'
+        actual   = clean_file File.join(@target_application, matching_file), 'actual'
+        diff = `diff #{expected} #{actual}  2> /dev/null`
+        rputs diff unless diff.strip.empty?
+        diff.strip.should == ""
+      end
+    end
   end
 end
 

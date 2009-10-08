@@ -11,7 +11,8 @@ describe InstallTheme::CLI, "execute" do
         :index_path       => "root.html",
         :template_type    => "haml",
         :partials         => { "header" => '#header h2', "sidebar" => '#sidebar' },
-        :defaults_file    => "install_theme.yml"
+        :defaults_file    => "install_theme.yml",
+        :layout           => "iphone"
       ).
       and_return(theme)
     theme.should_receive(:valid?).and_return(true)
@@ -23,6 +24,7 @@ describe InstallTheme::CLI, "execute" do
         --partial header:#header\ h2
         -p sidebar:#sidebar
         --defaults_file install_theme.yml
+        --layout iphone
       ])
     end
   end

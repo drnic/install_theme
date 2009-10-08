@@ -13,6 +13,7 @@ class InstallTheme
   VERSION = "0.7.0"
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
+  attr_reader :layout_name
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
   attr_reader :defaults_file
   attr_reader :content_path, :partials
@@ -27,6 +28,9 @@ class InstallTheme
     @stylesheet_dir = options[:stylesheet_dir] || detect_stylesheet_dir
     @javascript_dir = options[:javascript_dir] || detect_javascript_dir
     @image_dir      = options[:image_dir] || detect_image_dir
+    @layout_name    = options[:layout] || "application"
+    @layout_name.gsub!(/\..*/, '') # allow application.html.erb to be passed in, but clean it up to 'application'
+
     @stdout         = options[:stdout] || $stdout
 
     load_template_defaults unless options[:ignore_defaults]
@@ -42,7 +46,7 @@ class InstallTheme
   def apply_to_target(options = {})
     @stdout = options[:stdout] || @stdout || $stdout
     @original_named_yields = {}
-    convert_file_to_layout(index_path, 'app/views/layouts/application.html.erb')
+    convert_file_to_layout(index_path, "app/views/layouts/#{layout_name}.html.erb")
     convert_to_haml('app/views/layouts/application.html.erb') if haml?
     prepare_sample_controller_and_view
     prepare_layout_partials
