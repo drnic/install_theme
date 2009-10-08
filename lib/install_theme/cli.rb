@@ -13,6 +13,9 @@ class InstallTheme
           Options are:
         BANNER
         opts.separator ""
+        opts.on("--defaults_file install_theme.yml", String,
+                "Select an alternate YAML file containing defaults for the theme.",
+                "Default: install_theme.yml") { |arg| options[:defaults_file] = arg }
         opts.on("--erb",
                 "Generate ERb templates.",
                 "Default: auto-detect") { |arg| options[:template_type] = 'erb' }

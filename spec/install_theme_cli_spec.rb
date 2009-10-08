@@ -10,7 +10,8 @@ describe InstallTheme::CLI, "execute" do
         :content_path     => "#content_box",
         :index_path       => "root.html",
         :template_type    => "haml",
-        :partials         => { "header" => '#header h2', "sidebar" => '#sidebar' }
+        :partials         => { "header" => '#header h2', "sidebar" => '#sidebar' },
+        :defaults_file    => "install_theme.yml"
       ).
       and_return(theme)
     theme.should_receive(:valid?).and_return(true)
@@ -21,6 +22,7 @@ describe InstallTheme::CLI, "execute" do
         --haml
         --partial header:#header\ h2
         -p sidebar:#sidebar
+        --defaults_file install_theme.yml
       ])
     end
   end
