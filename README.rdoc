@@ -2,6 +2,7 @@
 
 * http://drnicwilliams.com/2009/10/06/install-any-html-themetemplate-into-your-rails-app/
 * http://github.com/drnic/install_theme
+* http://github.com/drnic/install_theme/raw/master/History.txt
 
 == DESCRIPTION:
 
