@@ -92,24 +92,13 @@ describe InstallTheme do
       end
   end
 
-  context "alternate layout file name" do
-    before(:all) do
-      setup_base_rails
-      @template_root = File.dirname(__FILE__) + "/fixtures/bloganje"
-      FileUtils.rm_rf(File.join(@template_root, "install_theme.yml"))
-      @stdout = stdout do |stdout|
-        @theme = InstallTheme.new(:template_root => @template_root,
-          :rails_root   => @target_application,
-          :stdout       => stdout)
-        @theme.apply_to_target(:stdout => stdout, :generator => {:collision => :force, :quiet => true})
-      end
-      @expected_application = File.dirname(__FILE__) + "/expected/rails/bloganje"
-    end
+  context "invalid if no content_path explicitly or via defaults file" do
+    before(:all) { setup_bloganje(:content_path => nil) }
     it { @theme.content_path.should be_nil }
     it { @theme.should_not be_valid }
   end
 
-  context "invalid if no content_path explicitly or via defaults file" do
+  context "alternate layout file name" do
     before(:all) { setup_bloganje(:layout => "special") }
     %w[app/views/layouts/special.html.erb].each do |matching_file|
       it "should having matching file #{matching_file}" do

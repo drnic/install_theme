@@ -46,7 +46,7 @@ end
 
 module SetupThemeHelpers
   def setup_app_with_theme(theme, theme_options = {})
-    setup_base_rails
+    setup_base_rails(theme_options.delete(:rails) || {})
     @template_root = File.join(File.dirname(__FILE__), "fixtures", theme)
     FileUtils.chdir(@template_root) do
       if theme_options.delete(:setup_defaults)
@@ -77,7 +77,7 @@ module SetupThemeHelpers
       merge(theme_options))
   end
 
-  def setup_base_rails(options = {})
+  def setup_base_rails(options)
     tmp_path = File.dirname(__FILE__) + "/tmp"
     FileUtils.rm_rf(tmp_path)
     FileUtils.mkdir_p(tmp_path  )
