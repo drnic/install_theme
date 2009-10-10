@@ -47,7 +47,7 @@ class InstallTheme
     @stdout = options[:stdout] || @stdout || $stdout
     @original_named_yields = {}
     convert_file_to_layout(index_path, "app/views/layouts/#{layout_name}.html.erb")
-    convert_to_haml('app/views/layouts/application.html.erb') if haml?
+    convert_to_haml("app/views/layouts/#{layout_name}.html.erb") if haml?
     prepare_sample_controller_and_view
     prepare_layout_partials
     prepare_assets
