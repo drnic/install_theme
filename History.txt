@@ -1,3 +1,8 @@
+=== 0.7.2 / 2009-10-10
+
+* CLI shows a useful error message when --partial argument is incorrectly formatted
+* added History link to README
+
 === 0.7.1 / 2009-10-08
 
 Major:
