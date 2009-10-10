@@ -18,8 +18,13 @@ class InstallTheme
                 "Example using CSS path: --partial header:#header",
                 "Example using XPath: --partial \"header://div[@id='header']\"") do |arg|
                   options[:partials] ||= {}
-                  key, css_path = arg.split(/\s*:\s*/)[0..1]
-                  options[:partials][key.strip] = css_path.strip
+                  key, path = arg.split(/\s*:\s*/)[0..1]
+                  if key && path
+                    options[:partials][key.strip] = path.strip
+                  else
+                    stdout.puts partial_format_error(arg)
+                    exit
+                  end
                 end
         opts.on("-l", "--layout application", String,
                 "Set the layout file name.",
@@ -52,6 +57,13 @@ class InstallTheme
         stdout.puts parser; exit
       end
       theme.apply_to_target
+    end
+    
+    def self.partial_format_error(partial_argument)
+      <<-EOS.gsub(/^      /, '')
+      ERROR: Incorrect format for --partial argument "#{partial_argument}".
+      Correct format is: --partial label:path
+      EOS
     end
   end
 end

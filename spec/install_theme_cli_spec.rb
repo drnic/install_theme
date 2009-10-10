@@ -43,4 +43,15 @@ describe InstallTheme::CLI, "execute" do
       InstallTheme::CLI.execute(stdout_io, %w[path/to/rails_app path/to/template])
     end
   end
+  
+  it "shows useful error message for poorly formatted --partial argument" do
+    @stdout = stdout do |stdout_io|
+      lambda do
+        InstallTheme::CLI.execute(stdout_io, %w[path/to/rails_app path/to/template -p .just_dom])
+      end.should raise_error(Exception)
+    end
+    @stdout.should =~ /incorrect format for --partial argument ".just_dom"/i
+    @stdout.should =~ /correct format/i
+    @stdout.should =~ /label:path/i
+  end
 end
