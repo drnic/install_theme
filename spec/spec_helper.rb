@@ -78,16 +78,17 @@ module SetupThemeHelpers
   end
 
   def setup_bloganje(theme_options = {})
-    setup_app_with_theme('bloganje',
-      {:content_path => "#content:text", :partials => { "header" => '#header h2 text()', "sidebar" => '#sidebar' }}.
-        merge(theme_options))
+    setup_app_with_theme('bloganje', {
+      :content_path => "#content:text", 
+      :partials => { "header" => '#header h2 text()', "sidebar" => '#sidebar' }
+    }.merge(theme_options))
   end
   
   def setup_hobbit(theme_options = {})
-    setup_app_with_theme('the-hobbit-website-template',
-      { :content_path  => "//div[@class='content']/text()",
-        :partials      => { "menu" => "//div[@class='navigation']/text()", "subtitle" => "//div[@class='header']/p" }}.
-      merge(theme_options))
+    setup_app_with_theme('the-hobbit-website-template', {
+      :content_path  => "//div[@class='content']/text()",
+      :partials      => { "menu" => "//div[@class='navigation']/text()", "subtitle" => "//div[@class='header']/p" }
+    }.merge(theme_options))
   end
 
   def setup_base_rails(options)
