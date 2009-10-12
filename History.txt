@@ -1,3 +1,16 @@
+=== 0.8.0 / 2009-10-12
+
+Major:
+* Paths (xpath/css path) can specify to replace the internals of a DOM (as it did before) or the entire DOM node itself. Previously --partial "header:#header h2" would have replace the inner HTML of the DOM, but now it replaces the DOM node itself. To replace the inner HTML, use --partial "header:#header h2:text" (css path) or --partial "header://div[@id='header']/h2/text()"
+* CLI option --action/-a added - the extracted content_path contents can be stored in a Rails action template file
+
+Minor:
+* convert layouts to haml regardless of their name
+* Updated CLI Usage help
+
+Internal:
+* Minimized spec suite by extracting a common file diff test into macro method
+
 === 0.7.2 / 2009-10-10
 
 * CLI shows a useful error message when --partial argument is incorrectly formatted

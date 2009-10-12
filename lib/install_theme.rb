@@ -6,7 +6,7 @@ require 'rubigen/scripts/generate'
 require 'nokogiri'
 
 class InstallTheme
-  VERSION = "0.7.2"
+  VERSION = "0.8.0"
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :layout_name, :action
