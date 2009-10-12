@@ -35,12 +35,14 @@ class InstallTheme
                 "Set the layout file name.",
                 "Layout files are stored in app/views/layouts and will be suffixed by .html.erb or .html.haml",
                 "Default: application") { |arg| options[:layout] = arg }
+        opts.on("-a", "--action posts/show", String,
+                "Store content extracted from content_path into Rails action.",
+                "Example, '-a posts/show' will create app/views/posts/show.html.erb file.",
+                "Default: none") { |arg| options[:action] = arg }
         opts.on("--erb",
-                "Generate ERb templates.",
-                "Default: auto-detect") { |arg| options[:template_type] = 'erb' }
+                "Generate ERb templates. Default: Yes, unless it's not.") { |arg| options[:template_type] = 'erb' }
         opts.on("--haml",
-                "Generate HAML templates.",
-                "Default: auto-detect") { |arg| options[:template_type] = 'haml' }
+                "Generate HAML templates. Default: Auto-detect") { |arg| options[:template_type] = 'haml' }
         opts.on("--index_path index.html", String,
                 "HTML page to use for application layout.",
                 "Default: index.html") { |arg| options[:index_path] = arg }

@@ -12,6 +12,7 @@ describe InstallTheme::CLI, "execute" do
         :template_type    => "haml",
         :partials         => { "header" => '#header h2', "sidebar" => '#sidebar' },
         :defaults_file    => "install_theme.yml",
+        :action           => "posts/show",
         :layout           => "iphone"
       ).
       and_return(theme)
@@ -25,6 +26,7 @@ describe InstallTheme::CLI, "execute" do
         -p sidebar:#sidebar
         --defaults_file install_theme.yml
         --layout iphone
+        --action posts/show
       ])
     end
   end

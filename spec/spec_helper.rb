@@ -80,7 +80,8 @@ module SetupThemeHelpers
   def setup_bloganje(theme_options = {})
     setup_app_with_theme('bloganje', {
       :content_path => "#content:text", 
-      :partials => { "header" => '#header h2 text()', "sidebar" => '#sidebar' }
+      :partials => { "header" => '#header h2 text()', "sidebar" => '#sidebar' },
+      :action => "posts/show"
     }.merge(theme_options))
   end
   

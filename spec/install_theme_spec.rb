@@ -14,6 +14,7 @@ describe InstallTheme do
     it_should_have_matching_file "app/views/layouts/application.html.erb"
     it_should_have_matching_file "app/views/layouts/_header.html.erb"
     it_should_have_matching_file "app/views/layouts/_sidebar.html.erb"
+    it_should_have_matching_file "app/views/posts/show.html.erb"
     it_should_have_matching_file "app/helpers/template_helper.rb"
     it_should_have_matching_file "public/stylesheets/style.css"
     it_should_have_matching_file "public/stylesheets/theme.css"

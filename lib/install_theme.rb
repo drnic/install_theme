@@ -9,7 +9,7 @@ class InstallTheme
   VERSION = "0.7.2"
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
-  attr_reader :layout_name
+  attr_reader :layout_name, :action
   attr_reader :stylesheet_dir, :javascript_dir, :image_dir
   attr_reader :defaults_file
   attr_reader :content_path, :partials
@@ -26,6 +26,7 @@ class InstallTheme
     @image_dir      = options[:image_dir] || detect_image_dir
     @layout_name    = options[:layout] || "application"
     @layout_name.gsub!(/\..*/, '') # allow application.html.erb to be passed in, but clean it up to 'application'
+    @action         = options[:action]
 
     @stdout         = options[:stdout] || $stdout
 
@@ -45,6 +46,7 @@ class InstallTheme
     @original_named_yields = {}
     convert_file_to_layout(index_path, "app/views/layouts/#{layout_name}.html.erb")
     convert_to_haml("app/views/layouts/#{layout_name}.html.erb") if haml?
+    prepare_action
     prepare_sample_controller_and_view
     prepare_layout_partials
     prepare_assets
@@ -203,6 +205,17 @@ class InstallTheme
       end
     end
     convert_to_haml('app/views/original_template/index.html.erb') if haml?
+  end
+  
+  def prepare_action
+    return unless action
+    action_path = "app/views/#{action}.html.erb"
+    target_path = File.join(template_temp_path, action_path)
+    FileUtils.mkdir_p(File.dirname(target_path))
+    File.open(target_path, "w") do |f|
+      f << original_body_content
+    end
+    convert_to_haml(action_path) if haml?
   end
   
   def prepare_layout_partials
