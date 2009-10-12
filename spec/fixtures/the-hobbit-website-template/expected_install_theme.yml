@@ -1,5 +1,5 @@
 --- 
-content_path: //div[@class='content']
+content_path: //div[@class='content']/text()
 partials: 
   subtitle: //div[@class='header']/p
-  menu: //div[@class='navigation']
+  menu: //div[@class='navigation']/text()

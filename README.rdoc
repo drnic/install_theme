@@ -24,11 +24,28 @@ Simple case:
 Replace some DOM content with <%= yield :some_label %> with --partial:
 
     install_theme path/to/rails_app path/to/template #content_box \
-      --partial "header:#header h2" \
+      --partial "header:#header h2 text()" \
       --partial sidebar:#sidebar"
 
 NOTE: The order of the first two arguments has been reversed since the original
 public release. This is in preparation for path/to/template to be optional.
+
+NOTE: The default behaviour of the css/xpath selectors has/is changing. Originally it
+replaced the internal content of the selected DOM node. Now, the default is to 
+replace the entire DOM node. To replace the internal content of the DOM node use
+`/text()` (for xpath) or `:text` (for CSS paths) at the end of the selector. 
+
+For example, for CSS paths:
+
+    --partial ".header h2:text" # replaces contents of the h2 element
+    --partial ".header h2"        # replaces the h2 element itself
+
+For Xpaths:
+
+    --partial "//div[@id='header']/h2/text()" # replaces contents of the h2 element
+    --partial "//div[@id='header']/h2"        # replaces the h2 element itself
+
+The same goes for the content_path argument of the executable.
 
 Similarly, in 0.7.0 the content_path argument is optional after the first time
 you install a specific theme (see 'Theme Reuse' section).

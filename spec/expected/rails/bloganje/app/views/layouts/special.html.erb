@@ -44,7 +44,7 @@
       </div>
         <div id="wrapper">
             <div id="content"><%= yield %></div>
-            <div id="sidebar"><%= yield(:sidebar) || render_or_default('sidebar') %></div>
+            <%= yield(:sidebar) || render_or_default('sidebar') %>
       </div>
         <div id="footer">
         <div id="credits">

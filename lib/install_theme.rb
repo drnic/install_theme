@@ -3,11 +3,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'rubigen'
 require 'rubigen/scripts/generate'
-require 'haml'
-require 'haml/html'
-require 'sass'
-require 'sass/css'
-require 'haml/exec'
+require 'nokogiri'
 
 class InstallTheme
   VERSION = "0.7.2"
@@ -44,6 +40,7 @@ class InstallTheme
   end
   
   def apply_to_target(options = {})
+    require_haml if haml?
     @stdout = options[:stdout] || @stdout || $stdout
     @original_named_yields = {}
     convert_file_to_layout(index_path, "app/views/layouts/#{layout_name}.html.erb")
@@ -125,20 +122,31 @@ class InstallTheme
       EOS
 
       doc = Hpricot(contents)
-      doc.search(content_path).each do |elm|
-        @original_body_content = elm.inner_html.strip
-        elm.inner_html = "<%= yield %>"
-      end
+      @original_body_content = replace_by_path(doc, content_path, "<%= yield %>")
       partials.to_a.each do |name, css_path|
-        doc.search(css_path).each do |elm|
-          original_named_yields[name] = elm.inner_html.strip
-          elm.inner_html = "<%= yield(:#{name}) || render_or_default('#{name}') %>"
-        end
+        original_named_yields[name] = 
+          replace_by_path(doc, css_path, "<%= yield(:#{name}) || render_or_default('#{name}') %>")
       end
       contents = doc.to_html
-
       f << contents
     end
+  end
+  
+  # see replace_by_path_spec.rb for examples
+  def replace_by_path(doc, path, replacement)
+    result = ""
+    return "" unless path && path.strip.match(/^(.*?)(|\s*:text|\s*\/?text\(\))$/)
+    outer_path, is_text = $1, !$2.blank?
+    if node = doc.search(outer_path).first
+      if is_text
+        result = node.inner_html
+        node.inner_html = replacement
+      else
+        result = node.to_html
+        node.parent.replace_child(node, Hpricot::Text.new(replacement))
+      end
+    end
+    result
   end
   
   def convert_to_haml(path)
@@ -243,20 +251,22 @@ class InstallTheme
   end
   
   # converts +from+ HTML into +to+ HAML
-  # +from+ can either be file name, HTML content (String) or an Hpricot::Node
+  # +from+ can either be file name, HTML content (String) or an Nokogiri::XML::Node
   # +to+ can either be a file name or an IO object with a #write method
   def html2haml(from, to)
-    converter = Haml::Exec::HTML2Haml.new([])
-    from = File.read(from) if File.exist?(from)
-    to   = File.open(to, "w") unless to.respond_to?(:write)
-    converter.instance_variable_set("@options", { :input => from, :output => to })
-    converter.instance_variable_set("@module_opts", { :rhtml => true })
-    begin
-      converter.send(:process_result)
-    rescue Exception => e
-      stdout.puts "Failed to convert #{File.basename(from)} to haml"
-    end
-    to.close if to.respond_to?(:close)
+    Open3.popen3("html2haml #{from} #{to}") { |stdin, stdout, stderr| stdout.read }
+    # TODO - the following is failing for some reason
+    # converter = Haml::Exec::HTML2Haml.new([])
+    # from = File.read(from) if File.exist?(from)
+    # to   = File.open(to, "w") unless to.respond_to?(:write)
+    # converter.instance_variable_set("@options", { :input => from, :output => to })
+    # converter.instance_variable_set("@module_opts", { :rhtml => true })
+    # begin
+    #   converter.send(:process_result)
+    # rescue Exception => e
+    #   stdout.puts "Failed to convert #{File.basename(from)} to haml"
+    # end
+    # to.close if to.respond_to?(:close)
   end
 
   def css2sass(from, to)
@@ -362,5 +372,14 @@ class InstallTheme
   
   def tmp_dir
     ENV['TMPDIR'] || '/tmp'
+  end
+  
+  def require_haml
+    require 'haml'
+    require 'haml/html'
+    require 'sass'
+    require 'sass/css'
+    require 'haml/exec'
+    require 'open3'
   end
 end

@@ -2,26 +2,18 @@ require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe InstallTheme do
   include SetupThemeHelpers
+  extend FileDiffMatcher
 
   context "bloganje theme to haml" do
     before(:all) { setup_bloganje :rails => {:haml => true} }
     it { @theme.should be_haml }
     it { @theme.should be_valid }
 
-    %w[app/views/layouts/application.html.haml
-      app/views/layouts/_header.html.haml
-      app/views/layouts/_sidebar.html.haml
-      app/helpers/template_helper.rb
-      public/stylesheets/sass/style.sass].each do |matching_file|
-        it do
-          expected = clean_file File.join(@expected_application, matching_file), 'expected'
-          actual   = clean_file File.join(@target_application, matching_file), 'actual'
-          diff = `diff #{expected} #{actual}  2> /dev/null`
-          rputs diff unless diff.strip.empty?
-          diff.strip.should == ""
-        end
-      end
-
+    it_should_have_matching_file "app/views/layouts/application.html.haml"
+    it_should_have_matching_file "app/views/layouts/_header.html.haml"
+    it_should_have_matching_file "app/views/layouts/_sidebar.html.haml"
+    it_should_have_matching_file "app/helpers/template_helper.rb"
+    it_should_have_matching_file "public/stylesheets/sass/style.sass"
 
     it { File.should be_exist(File.join(@target_application, "app/views/original_template/index.html.haml")) }
     context "sample template /original_template/index.html.haml" do

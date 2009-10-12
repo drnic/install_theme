@@ -61,8 +61,7 @@
       #wrapper
         #content
           = yield
-        #sidebar
-          = yield(:sidebar) || render_or_default('sidebar')
+        = yield(:sidebar) || render_or_default('sidebar')
       #footer
         #credits
           Template by
