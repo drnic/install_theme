@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe InstallTheme do
   include SetupThemeHelpers
+  extend FileDiffMatcher
   
   context "bloganje theme to ERb using CSS path" do
     before(:all) { setup_bloganje }
@@ -16,13 +17,7 @@ describe InstallTheme do
       app/helpers/template_helper.rb
       public/stylesheets/style.css
       public/stylesheets/theme.css].each do |matching_file|
-        it "should having matching file #{matching_file}" do
-          expected = clean_file File.join(@expected_application, matching_file), 'expected'
-          actual   = clean_file File.join(@target_application, matching_file), 'actual'
-          diff = `diff #{expected} #{actual}  2> /dev/null`
-          rputs diff unless diff.strip.empty?
-          diff.strip.should == ""
-        end
+        it_should_have_matching_file matching_file
       end
     context "sample template /templates/index.html.erb" do
       subject do
@@ -50,15 +45,7 @@ describe InstallTheme do
     %w[app/views/layouts/application.html.erb
       app/helpers/template_helper.rb
       public/stylesheets/default.css].each do |matching_file|
-        it { File.should be_exist(File.join(@target_application, matching_file)) }
-        it { File.should be_exist(File.join(@expected_application, matching_file)) }
-        it do
-          expected = clean_file File.join(@expected_application, matching_file), 'expected'
-          actual   = clean_file File.join(@target_application, matching_file), 'actual'
-          diff = `diff #{expected} #{actual}  2> /dev/null`
-          rputs diff unless diff.strip.empty?
-          diff.strip.should == ""
-        end
+        it_should_have_matching_file matching_file
       end
     it "should create install_theme.yml containing the partial information" do
       expected = clean_file File.join(@template_root, "expected_install_theme.yml"), 'expected'
@@ -82,13 +69,7 @@ describe InstallTheme do
       app/helpers/template_helper.rb
       public/stylesheets/style.css
       public/stylesheets/theme.css].each do |matching_file|
-        it "should having matching file #{matching_file}" do
-          expected = clean_file File.join(@expected_application, matching_file), 'expected'
-          actual   = clean_file File.join(@target_application, matching_file), 'actual'
-          diff = `diff #{expected} #{actual}  2> /dev/null`
-          rputs diff unless diff.strip.empty?
-          diff.strip.should == ""
-        end
+        it_should_have_matching_file matching_file
       end
   end
 

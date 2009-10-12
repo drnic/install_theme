@@ -44,6 +44,18 @@ def stdout(&block)
   stdout_io.read
 end
 
+module FileDiffMatcher
+  def it_should_have_matching_file(matching_file)
+    it "should having matching file #{matching_file}" do
+      expected = clean_file File.join(@expected_application, matching_file), 'expected'
+      actual   = clean_file File.join(@target_application, matching_file), 'actual'
+      diff = `diff #{expected} #{actual}  2> /dev/null`
+      rputs diff unless diff.strip.empty?
+      diff.strip.should == ""
+    end
+  end
+end
+
 module SetupThemeHelpers
   def setup_app_with_theme(theme, theme_options = {})
     setup_base_rails(theme_options.delete(:rails) || {})
