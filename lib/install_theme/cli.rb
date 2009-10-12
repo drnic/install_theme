@@ -10,13 +10,18 @@ class InstallTheme
           
           Usage: #{File.basename($0)} path/to/rails_app path/to/template content_path [options]
           
+            Examples of paths (CSS or XPath):
+              * #header h2      - replaces the entire h2 element
+              * #header h2:text - replaces the inner HTML of the h2 element
+              * //div[@class='header']/h2        - replaces the entire h2 element
+              * //div[@class='header']/h2/text() - replaces the inner HTML of the h2 element
+          
           Options are:
         BANNER
         opts.separator ""
         opts.on("-p", "--partial KEY_AND_PATH", String,
                 "Replace the inner HTML of an element with <%= yield :key %>",
-                "Example using CSS path: --partial header:#header",
-                "Example using XPath: --partial \"header://div[@id='header']\"") do |arg|
+                "See path examples above.") do |arg|
                   options[:partials] ||= {}
                   key, path = arg.split(/\s*:\s*/)[0..1]
                   if key && path
