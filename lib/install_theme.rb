@@ -3,10 +3,10 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'rubigen'
 require 'rubigen/scripts/generate'
-require 'hrpicot'
+require 'hpricot'
 
 class InstallTheme
-  VERSION = "0.8.0"
+  VERSION = "0.8.1"
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :layout_name, :action
