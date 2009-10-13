@@ -5,7 +5,6 @@ describe InstallTheme do
     InstallTheme.new.send(:replace_by_path, doc, path, replacement)
   end
   before(:each) do
-    # @html = Nokogiri::HTML.parse(<<-HTML)
     @html = Hpricot(<<-HTML.gsub(/^    /, ''))
       <html>
       <body>

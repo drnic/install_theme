@@ -3,7 +3,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'rubigen'
 require 'rubigen/scripts/generate'
-require 'nokogiri'
+require 'hrpicot'
 
 class InstallTheme
   VERSION = "0.8.0"
@@ -264,8 +264,8 @@ class InstallTheme
   end
   
   # converts +from+ HTML into +to+ HAML
-  # +from+ can either be file name, HTML content (String) or an Nokogiri::XML::Node
-  # +to+ can either be a file name or an IO object with a #write method
+  # +from+ is a file name
+  # +to+ is a file name
   def html2haml(from, to)
     Open3.popen3("html2haml #{from} #{to}") { |stdin, stdout, stderr| stdout.read }
     # TODO - the following is failing for some reason
