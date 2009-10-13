@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'spec'
-require 'hpricot'
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'install_theme'
