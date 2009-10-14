@@ -4,6 +4,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 require 'rubigen'
 require 'rubigen/scripts/generate'
 require 'hpricot'
+require 'ostruct'
 
 class InstallTheme
   VERSION = "0.8.1"
@@ -396,3 +397,5 @@ class InstallTheme
     require 'open3'
   end
 end
+
+require "install_theme/parsers"

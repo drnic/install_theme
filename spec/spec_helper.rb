@@ -13,8 +13,12 @@ module Kernel
     def rputs(*args)
       puts( *["<pre>", args.collect {|a| CGI.escapeHTML(a.to_s)}, "</pre>"])
     end
+    def rp(*args)
+      puts( *["<pre>", args.collect {|a| CGI.escapeHTML(a.inspect)}, "</pre>"])
+    end
   else
     alias_method :rputs, :puts
+    alias_method :rp, :p
   end
 end
 
