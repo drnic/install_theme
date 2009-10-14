@@ -20,6 +20,14 @@ class InstallTheme::Parsers::RailsForm
     model
   end
   
+  def render
+    if valid?
+      "TODO"
+    else
+      @form_node.to_html
+    end
+  end
+  
   protected
   def parse_form_info
     if @form_node.attributes['id'] =~ /new_(.*)$/
@@ -34,10 +42,8 @@ class InstallTheme::Parsers::RailsForm
   
   def parse_input(input_node)
     input = OpenStruct.new(:field => nil, :helper => 'text_field', :value => nil, :render => "", :node => input_node)
-    if input_node.attributes['name']
-      if input_node.attributes['name'] =~ /\[(.*?)\]$/
-        input.field = $1
-      end
+    if input_node.attributes['name'] && input_node.attributes['name'] =~ /\[(.*?)\]$/
+      input.field = $1
     end
     input.helper = 'text_area' if input_node.name == 'textarea'
     input.value = input_node.attributes['value']
@@ -46,7 +52,7 @@ class InstallTheme::Parsers::RailsForm
   end
   
   def render_input(input)
-    if valid?
+    if input.field
       options_list = []
       attributes = input.node.attributes.clone
       attributes.delete('id')
@@ -60,5 +66,9 @@ class InstallTheme::Parsers::RailsForm
     else
       input.node.to_html # render normal HTML if form isn't rails form
     end
+  end
+  
+  def render_header
+    "<% form_for @#{model} do |f| %>"
   end
 end
