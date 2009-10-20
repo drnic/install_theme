@@ -362,9 +362,11 @@ class InstallTheme
   end
   
   def clean_stylesheet(contents)
-    contents.gsub(%r{url\((["']?)[\./]*(#{image_dir}|#{stylesheet_dir}|)\/?}) do |match|
-      target_path = (!stylesheet_dir.blank? && $2 == stylesheet_dir) ? "stylesheets" : "images"
-      "url(#{$1}/#{target_path}/"
+    contents.gsub(%r{url\((["']?)[\./]*(#{image_dir}|#{stylesheet_dir}|)\/?(.*?)(["']?)\)}) do |match|
+      quote, path, file_name = $1, $2, $3
+      target_path = "stylesheets" if file_name =~ /css$/
+      target_path ||= (!stylesheet_dir.blank? && path == stylesheet_dir) ? "stylesheets" : "images"
+      "url(#{quote}/#{target_path}/#{file_name}#{quote})"
     end
   end
   

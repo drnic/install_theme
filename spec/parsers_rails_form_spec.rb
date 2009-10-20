@@ -75,7 +75,25 @@ describe InstallTheme::Parsers::RailsForm do
               <a class="cancel" href="#">Cancel</a>
             </div>
           </div>
+        <% end %>
+        HTML
+        @form.render.should == expected
+      end
+    end
+    context "non-default POST route" do
+      before(:all) do
+        html = <<-HTML
+        <form method="post" id="new_message" class="new_message" action="/posts">
         </form>
+        HTML
+        @forms = InstallTheme::Parsers::RailsForm.parse(html)
+        @form = @forms.first
+      end
+      it do
+        expected = <<-HTML
+        <h1>Compose message</h1>
+        <% form_for @message, :url => posts_path do |f| %>
+        <% end %>
         HTML
         @form.render.should == expected
       end
