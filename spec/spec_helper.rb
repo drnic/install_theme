@@ -97,9 +97,12 @@ module SetupThemeHelpers
 
   def setup_boxie(theme_options = {})
     setup_app_with_theme('boxie-admin', {
-      :content_path  => ".inner-container text()",
-      :partials      => { "accounts" => "#userbox text()" },
-      :index_path    => "blue.html"
+      :content_path   => ".inner-container text()",
+      :partials       => { "accounts" => "#userbox text()" },
+      :index_path     => "blue.html",
+      :stylesheet_dir => "css",
+      :image_dir      => "css/img",
+      :javascript_dir => "js"
     }.merge(theme_options))
   end
 

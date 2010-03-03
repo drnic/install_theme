@@ -21,11 +21,11 @@ class InstallTheme
     @template_root  = File.expand_path(options[:template_root] || File.dirname('.'))
     @rails_root     = File.expand_path(options[:rails_root] || File.dirname('.'))
     @template_type  = (options[:template_type] || detect_template).to_s
-    @defaults_file  = options[:defaults_file] || "install_theme.yml"
+    @defaults_file  = options[:defaults_file]  || "install_theme.yml"
     @stylesheet_dir = options[:stylesheet_dir] || detect_stylesheet_dir
     @javascript_dir = options[:javascript_dir] || detect_javascript_dir
-    @image_dir      = options[:image_dir] || detect_image_dir
-    @layout_name    = options[:layout] || "application"
+    @image_dir      = options[:image_dir]      || detect_image_dir
+    @layout_name    = options[:layout]         || "application"
     @layout_name.gsub!(/\..*/, '') # allow application.html.erb to be passed in, but clean it up to 'application'
     @action         = options[:action]
 
@@ -362,7 +362,9 @@ class InstallTheme
   end
   
   def clean_stylesheet(contents)
-    contents.gsub(%r{url\((["']?)[\./]*(#{image_dir}|#{stylesheet_dir}|)\/?(.*?)(["']?)\)}) do |match|
+    relative_image_dir = image_dir.gsub(/#{stylesheet_dir}\//, '')
+    dirs = "#{image_dir}|#{stylesheet_dir}|#{relative_image_dir}|".gsub("/", '\/')
+    contents.gsub(%r{url\((["']?)[\./]*(#{dirs}|)\/?(.*?)(["']?)\)}) do |match|
       quote, path, file_name = $1, $2, $3
       target_path = "stylesheets" if file_name =~ /css$/
       target_path ||= (!stylesheet_dir.blank? && path == stylesheet_dir) ? "stylesheets" : "images"

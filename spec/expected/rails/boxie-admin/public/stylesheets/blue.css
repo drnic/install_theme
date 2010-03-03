@@ -106,7 +106,7 @@ a img {border: none;}
 		#nav #h-wrap.active .inner {-moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;}
 		#nav #h-wrap .h-ico {background: 0 50% no-repeat;}
 		#nav #h-wrap .h-ico span {display: block; padding-left: 50px;}
-		#nav #h-wrap .ico-dashboard {background-image: url("/images/h-ico/dashboard.png");} /* feel free to add/modify your own icons - icons are located in "css//images/h-ico/*" */
+		#nav #h-wrap .ico-dashboard {background-image: url("/images/h-ico/dashboard.png");} /* feel free to add/modify your own icons - icons are located in "css/img/h-ico/*" */
 		#nav #h-wrap .ico-comments {background-image: url("/images/h-ico/comments.png");}
 		#nav #h-wrap .ico-color {background-image: url("/images/h-ico/color.png");}
 		#nav #h-wrap .ico-edit {background-image: url("/images/h-ico/edit.png");}
@@ -116,7 +116,7 @@ a img {border: none;}
 		#nav #h-wrap .ico-users {background-image: url("/images/h-ico/users.png");}
 		#nav #h-wrap .ico-advanced {background-image: url("/images/h-ico/advanced.png");}
 		#nav #h-wrap .ico-send {background-image: url("/images/h-ico/send.png");}
-		/* feel free to add more icons here like above (icon set is included in directory ".//images/h-ico" and is free for commercial use) */
+		/* feel free to add more icons here like above (icon set is included in directory "./img/h-ico" and is free for commercial use) */
 		#nav #h-wrap h2 {background: url("/images/h-wrap-h2.png") 100% 100% no-repeat; position: relative; float: left; height: 51px; line-height: 55px; vertical-align: middle; font-size: 200%; font-weight: bold;}
 		#nav #h-wrap.active h2 {background: none;}
 		#nav #h-wrap h2 .h-ico {display: block; height: 100%; padding-right: 42px;}
