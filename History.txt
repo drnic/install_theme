@@ -1,6 +1,7 @@
 * store the index_path value in the install_theme.yml file
 * install_theme.yml stores the asset paths; useful if they are configured manually
 * allow for image folder to be nested within css folder in theme
+* Support --no-sass flag, no_sass: true option if generated sass is broken
 
 === 0.8.1 / 2009-10-14
 

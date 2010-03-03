@@ -2,6 +2,7 @@
 image_dir: css/img
 index_path: blue.html
 content_path: .inner-container text()
+no_sass: true
 stylesheet_dir: css
 javascript_dir: js
 partials: 

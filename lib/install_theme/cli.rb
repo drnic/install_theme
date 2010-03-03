@@ -43,6 +43,8 @@ class InstallTheme
                 "Generate ERb templates. Default: Yes, unless it's not.") { |arg| options[:template_type] = 'erb' }
         opts.on("--haml",
                 "Generate HAML templates. Default: Auto-detect") { |arg| options[:template_type] = 'haml' }
+        opts.on("--no-sass",
+                "Don't generate sass files, just normal css. Default: false") { |arg| options[:no_sass] = true }
         opts.on("--index_path index.html", String,
                 "HTML page to use for application layout.",
                 "Default: index.html") { |arg| options[:index_path] = arg }

@@ -16,6 +16,7 @@ class InstallTheme
   attr_reader :content_path, :partials
   attr_reader :stdout
   attr_reader :original_named_yields, :original_body_content
+  attr_reader :no_sass
   
   def initialize(options = {})
     @template_root  = File.expand_path(options[:template_root] || File.dirname('.'))
@@ -33,6 +34,7 @@ class InstallTheme
     @stylesheet_dir = options[:stylesheet_dir] || @stylesheet_dir || detect_stylesheet_dir
     @javascript_dir = options[:javascript_dir] || @javascript_dir || detect_javascript_dir
     @image_dir      = options[:image_dir]      || @image_dir || detect_image_dir
+    @no_sass        = options[:no_sass]        || @no_sass || false
 
     @index_path     = options[:index_path] || @index_path || "index.html"
     @content_path   = options[:content_path] || @content_path
@@ -100,6 +102,7 @@ class InstallTheme
     @stylesheet_dir = defaults["stylesheet_dir"]
     @image_dir      = defaults["image_dir"]
     @javascript_dir = defaults["javascript_dir"]
+    @no_sass        = defaults["no_sass"]
   end
   
   def convert_file_to_layout(html_path, layout_path)
@@ -240,7 +243,7 @@ class InstallTheme
       File.open(target_path, "w") do |f|
         f << clean_stylesheet(File.read(file))
       end
-      convert_to_sass(target_path) if haml?
+      convert_to_sass(target_path) if haml? && !no_sass
     end
     template_javascripts.each do |file|
       FileUtils.cp_r(file, File.join(template_temp_path, 'public/javascripts'))
@@ -311,10 +314,12 @@ class InstallTheme
   
   def create_install_theme_yml
     config = { 
-      "content_path" => content_path, "partials" => partials, "index_path" => index_path,
+      "content_path" => content_path, "partials" => partials,
+      "index_path" => index_path,
       "stylesheet_dir" => stylesheet_dir,
       "image_dir" => image_dir,
-      "javascript_dir" => javascript_dir
+      "javascript_dir" => javascript_dir,
+      "no_sass" => no_sass
     }
     install_theme_yml = File.join(template_root, 'install_theme.yml')
     File.open(install_theme_yml, 'w') {|f| f << config.to_yaml}
@@ -405,8 +410,10 @@ class InstallTheme
   def require_haml
     require 'haml'
     require 'haml/html'
-    require 'sass'
-    require 'sass/css'
+    unless no_sass
+      require 'sass'
+      require 'sass/css'
+    end
     require 'haml/exec'
     require 'open3'
   end

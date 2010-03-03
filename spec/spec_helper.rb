@@ -102,7 +102,8 @@ module SetupThemeHelpers
       :index_path     => "blue.html",
       :stylesheet_dir => "css",
       :image_dir      => "css/img",
-      :javascript_dir => "js"
+      :javascript_dir => "js",
+      :no_sass        => true
     }.merge(theme_options))
   end
 
