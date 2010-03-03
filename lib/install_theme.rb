@@ -7,7 +7,7 @@ require 'hpricot'
 require 'ostruct'
 
 class InstallTheme
-  VERSION = "0.8.1"
+  VERSION = "0.8.2"
   
   attr_reader :template_root, :rails_root, :index_path, :template_type
   attr_reader :layout_name, :action

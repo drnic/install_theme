@@ -1,3 +1,5 @@
+=== 0.8.2 / 2010-03-03
+
 * store the index_path value in the install_theme.yml file
 * install_theme.yml stores the asset paths; useful if they are configured manually
 * allow for image folder to be nested within css folder in theme
