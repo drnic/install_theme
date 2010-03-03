@@ -22,9 +22,6 @@ class InstallTheme
     @rails_root     = File.expand_path(options[:rails_root] || File.dirname('.'))
     @template_type  = (options[:template_type] || detect_template).to_s
     @defaults_file  = options[:defaults_file]  || "install_theme.yml"
-    @stylesheet_dir = options[:stylesheet_dir] || detect_stylesheet_dir
-    @javascript_dir = options[:javascript_dir] || detect_javascript_dir
-    @image_dir      = options[:image_dir]      || detect_image_dir
     @layout_name    = options[:layout]         || "application"
     @layout_name.gsub!(/\..*/, '') # allow application.html.erb to be passed in, but clean it up to 'application'
     @action         = options[:action]
@@ -32,6 +29,11 @@ class InstallTheme
     @stdout         = options[:stdout] || $stdout
 
     load_template_defaults unless options[:ignore_defaults]
+
+    @stylesheet_dir = options[:stylesheet_dir] || @stylesheet_dir || detect_stylesheet_dir
+    @javascript_dir = options[:javascript_dir] || @javascript_dir || detect_javascript_dir
+    @image_dir      = options[:image_dir]      || @image_dir || detect_image_dir
+
     @index_path     = options[:index_path] || @index_path || "index.html"
     @content_path   = options[:content_path] || @content_path
     @partials       ||= {}
@@ -92,9 +94,12 @@ class InstallTheme
     return unless File.exist?(File.join(template_root, defaults_file))
     require "yaml"
     defaults = YAML.load_file(File.join(template_root, defaults_file))
-    @content_path = defaults["content_path"]
-    @partials     = defaults["partials"]
-    @index_path   = defaults["index_path"]
+    @content_path   = defaults["content_path"]
+    @partials       = defaults["partials"]
+    @index_path     = defaults["index_path"]
+    @stylesheet_dir = defaults["stylesheet_dir"]
+    @image_dir      = defaults["image_dir"]
+    @javascript_dir = defaults["javascript_dir"]
   end
   
   def convert_file_to_layout(html_path, layout_path)
