@@ -1053,13 +1053,6 @@ spec/fixtures/bloganje/install_theme.yml
 spec/fixtures/bloganje/psd/template.psd
 spec/fixtures/bloganje/users.html
 spec/fixtures/boxie-admin/HOWTO.html
-spec/fixtures/boxie-admin/PSDs/admin-black.psd
-spec/fixtures/boxie-admin/PSDs/admin-brown.psd
-spec/fixtures/boxie-admin/PSDs/admin-green.psd
-spec/fixtures/boxie-admin/PSDs/admin-orange.psd
-spec/fixtures/boxie-admin/PSDs/admin-purple.psd
-spec/fixtures/boxie-admin/PSDs/admin-red.psd
-spec/fixtures/boxie-admin/PSDs/boxie-admin.psd
 spec/fixtures/boxie-admin/assets/blueprint-css/ie.css
 spec/fixtures/boxie-admin/assets/blueprint-css/plugins/buttons/icons/cross.png
 spec/fixtures/boxie-admin/assets/blueprint-css/plugins/buttons/icons/key.png
