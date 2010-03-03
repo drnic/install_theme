@@ -95,6 +95,14 @@ module SetupThemeHelpers
     }.merge(theme_options))
   end
 
+  def setup_boxie(theme_options = {})
+    setup_app_with_theme('boxie-admin', {
+      :content_path  => ".inner-container text()",
+      :partials      => { "accounts" => "#userbox text()" },
+      :index_path    => "blue.html"
+    }.merge(theme_options))
+  end
+
   def setup_base_rails(options)
     tmp_path = File.dirname(__FILE__) + "/tmp"
     FileUtils.rm_rf(tmp_path)

@@ -1,0 +1,5 @@
+--- 
+index_path: blue.html
+content_path: .inner-container text()
+partials: 
+  accounts: "#userbox text()"

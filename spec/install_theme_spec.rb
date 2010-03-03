@@ -55,6 +55,23 @@ describe InstallTheme do
     end
   end
 
+  context "boxie-admin theme to ERb using csspath" do
+    before(:all) { setup_boxie }
+    it { @theme.stylesheet_dir.should == "css" }
+    it { @theme.image_dir.should == "css/img" }
+
+    it_should_have_matching_file "public/stylesheets/ie.css"
+    it_should_have_matching_file "public/stylesheets/blue.css"
+    
+    it "should create install_theme.yml containing the partial information" do
+      expected = clean_file File.join(@template_root, "expected_install_theme.yml"), 'expected'
+      actual   = clean_file File.join(@template_root, "install_theme.yml"), 'actual'
+      diff = `diff #{expected} #{actual}  2> /dev/null`
+      rputs diff unless diff.strip.empty?
+      diff.strip.should == ""
+    end
+  end
+
   context "use install_theme.yml for defaults" do
     before(:all) do
       setup_app_with_theme('bloganje', :setup_defaults => true)
