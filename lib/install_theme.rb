@@ -305,7 +305,7 @@ class InstallTheme
   end
   
   def create_install_theme_yml
-    config = { "content_path" => content_path, "partials" => partials }
+    config = { "content_path" => content_path, "partials" => partials, "index_path" => index_path }
     install_theme_yml = File.join(template_root, 'install_theme.yml')
     File.open(install_theme_yml, 'w') {|f| f << config.to_yaml}
   end

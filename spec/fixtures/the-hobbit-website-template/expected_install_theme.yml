@@ -1,4 +1,5 @@
 --- 
+index_path: index.html
 content_path: //div[@class='content']/text()
 partials: 
   subtitle: //div[@class='header']/p

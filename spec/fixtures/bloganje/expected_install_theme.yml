@@ -1,4 +1,5 @@
 --- 
+index_path: index.html
 content_path: "#content:text"
 partials: 
   header: "#header h2 text()"

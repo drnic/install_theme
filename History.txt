@@ -1,3 +1,5 @@
+* store the index_path value in the install_theme.yml file
+
 === 0.8.1 / 2009-10-14
 
 Minor:
