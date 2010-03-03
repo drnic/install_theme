@@ -1,7 +1,7 @@
 --- 
 image_dir: css/img
 index_path: blue.html
-content_path: .inner-container text()
+content_path: "#container .inner-container text()"
 no_sass: true
 stylesheet_dir: css
 javascript_dir: js

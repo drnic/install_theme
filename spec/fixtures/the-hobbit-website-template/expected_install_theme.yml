@@ -2,6 +2,7 @@
 image_dir: img
 index_path: index.html
 content_path: //div[@class='content']/text()
+no_sass: false
 stylesheet_dir: ""
 javascript_dir: javascripts
 partials: 

@@ -62,6 +62,8 @@ describe InstallTheme do
 
     it_should_have_matching_file "public/stylesheets/ie.css"
     it_should_have_matching_file "public/stylesheets/blue.css"
+    it_should_have_matching_file "public/images/button.gif"
+    it_should_have_matching_file "public/images/brown/button.gif"
     
     it "should create install_theme.yml containing the partial information" do
       expected = clean_file File.join(@template_root, "expected_install_theme.yml"), 'expected'

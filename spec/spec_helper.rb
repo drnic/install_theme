@@ -97,7 +97,7 @@ module SetupThemeHelpers
 
   def setup_boxie(theme_options = {})
     setup_app_with_theme('boxie-admin', {
-      :content_path   => ".inner-container text()",
+      :content_path   => "#container .inner-container text()",
       :partials       => { "accounts" => "#userbox text()" },
       :index_path     => "blue.html",
       :stylesheet_dir => "css",

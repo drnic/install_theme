@@ -239,17 +239,31 @@ class InstallTheme
 
   def prepare_assets
     template_stylesheets.each do |file|
-      target_path = File.join(template_temp_path, 'public/stylesheets', File.basename(file))
+      if !stylesheet_dir.blank? && file =~ /#{stylesheet_dir}\/(.*)$/
+        rel_path = $1
+      else
+        rel_path = File.basename(file)
+      end
+      target_path = File.join(template_temp_path, 'public/stylesheets', rel_path)
+      FileUtils.mkdir_p(File.dirname(target_path))
       File.open(target_path, "w") do |f|
         f << clean_stylesheet(File.read(file))
       end
       convert_to_sass(target_path) if haml? && !no_sass
     end
     template_javascripts.each do |file|
-      FileUtils.cp_r(file, File.join(template_temp_path, 'public/javascripts'))
+      file =~ /#{javascript_dir}\/(.*)$/
+      rel_path = $1
+      target_file = File.join(template_temp_path, 'public/javascripts', rel_path)
+      FileUtils.mkdir_p(File.dirname(target_file))
+      FileUtils.cp_r(file, target_file)
     end
     template_images.each do |file|
-      FileUtils.cp_r(file, File.join(template_temp_path, 'public/images'))
+      file =~ /#{image_dir}\/(.*)$/
+      rel_path = $1
+      target_file = File.join(template_temp_path, 'public/images', rel_path)
+      FileUtils.mkdir_p(File.dirname(target_file))
+      FileUtils.cp_r(file, target_file)
     end
   end
   
