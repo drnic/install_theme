@@ -1,0 +1,367 @@
+/* common - based on Eric Meyer's reset, you shouldn't change this section
+======================================*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {border: 0; margin: 0; padding: 0; vertical-align: baseline; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit;}
+
+body {background: #ddd; font: 75%/1.5 "myriad pro", helvetica, arial, sans-serif; color: #333;}
+
+table {border-collapse: separate; border-spacing: 0;}
+caption, th, td {text-align: left; font-weight: normal;}
+
+blockquote:before, blockquote:after,
+q:before, q:after {content: "";}
+blockquote, q {quotes: "" "";}
+
+li {list-style-type: none;}
+
+hr {display: none;}
+
+strong, b {font-weight: bold;}
+em, i {font-style: italic;}
+
+/* basic links properties */
+a {border-bottom: 1px solid #ccc; text-decoration: none; color: #333;}
+a.alt,
+.altbox .content a {border-color: #f3dece; color: #6a2f00;}
+a:hover, a:active, a:focus,
+a.alt:hover, a.alt:active, a.alt:focus,
+.altbox .content a:hover, .altbox .content a:active, .altbox .content a:focus {border-color: #ebcbb2; color: #b1682e;}
+a img {border: none;}
+
+/* abstract classes
+======================================*/
+/* autocleaning (use for parent of floated element, but take care, it has some limitations) */
+.cw {width: 100%; overflow: hidden;}
+.cw2 {overflow: hidden; height: 1%;}
+/* float helpers */
+.fl {float: left;}
+.fr {float: right;}
+/* classic cleaner */
+.cleaner {clear: both; visibility: hidden; height: 0; overflow: hidden; line-height: 0; font-size: 0;}
+/* safe cleaning, use eg. for parent of floated element */
+.clearfix:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+
+/* image replacement (see <h1 id="logo"> section in index.html for example) */
+.ir {position: absolute; top: 0; left: 0; display: block; width: 100%; height: 100%;}
+
+/* text align helpers */
+.tl {text-align: left !important;}
+.tr {text-align: right !important;}
+.tc {text-align: center !important;}
+.ttop {vertical-align: top !important;}
+
+/* for buttons etc. */
+.hand {cursor: hand; cursor: pointer;}
+
+/* accessible hiding of elements */
+.a-hidden {position: absolute; top: -10000em;}
+
+/* first and last helpers, mainly for table cells */
+.first {border-left: 0 !important;}
+.last {border-right: 0 !important;}
+
+/* layout
+======================================*/
+
+.inner-container {width: 960px; margin: 0 auto;}
+
+#header {border-bottom: 1px solid #a66200; background: #6a2f00 url("img/brown/header.png") repeat-x; min-height: 100px;}
+	#header .inner-container {padding: 20px 0 16px 0;}
+	/* logo: set the width and height of your logo (in px) and margin-top depending on height of your logo */
+	#header #logo {position: relative; float: left; width: 191px; height: 28px; margin-top: 17px;}
+		#header #logo a.home {border: 0; display: block; width: 100%; height: 100%; overflow: hidden; text-shadow: #4e2a00 1px 1px 0; font-size: 180%; font-weight: bold; font-style: italic; color: #fff;}
+		#header #logo a.home .ir {background: url("img/brown/logo.png");}
+		#header #logo a.button {position: absolute; left: 100%; top: 3px; margin-left: 20px; padding: 4px 9px 4px; white-space: nowrap;}
+	/* box for user info, settings and logout */
+	#header #userbox {background: url("img/brown/userbox.png") no-repeat; position: relative; float: right; width: 225px; min-height: 65px; line-height: 1.3;}
+		#header #userbox .inner {padding: 17px 50px 0 55px;}
+		#header #userbox a#logout {border: 0; position: absolute; right: 14px; top: 21px; display: block; width: 23px; height: 24px; overflow: hidden; line-height: 1; font-size: 90%;}
+		#header #userbox a#logout .ir {background: url("img/brown/logout.png");}
+		#header #userbox a#logout:hover .ir,
+		#header #userbox a#logout:focus .ir,
+		#header #userbox a#logout:active .ir {background-position: -23px 0;}
+		#header #userbox strong {font-size: 120%; font-weight: normal; color: #fff;}
+		#header #userbox a {border-color: #9d520f; color: #efc9a4;}
+		#header #userbox a:hover,
+		#header #userbox a:active,
+		#header #userbox a:focus {border-color: #d1a378; color: #fff;}
+		#header #userbox ul {}
+		#header #userbox ul li {display: inline;}
+		#header #userbox ul a {float: left; margin-right: 7px;}
+
+/* navigation stripe */
+#nav {border-top: 1px solid #572f00; border-bottom: 1px solid #999; background: #fff;}
+	#nav .inner-container {position: relative; z-index: 2; padding: 26px 0 25px 0;}
+	/* navigation section switcher */
+	#nav #h-wrap {position: absolute; top: 14px; left: 0; =width: 220px;} /* Set your width for section switcher (only in IE 7 and older, modern browsers will set optimal width automatically) */
+		#nav #h-wrap.active {border: 4px solid rgba(200, 200, 200, 0.5); top: 7px; left: -22px;}
+		#nav #h-wrap.active {-moz-border-radius: 9px; -webkit-border-radius: 9px; border-radius: 9px;}
+		#nav #h-wrap.active .inner {border: 1px solid #999; background: #fff; padding: 2px 0 10px 17px;}
+		#nav #h-wrap.active .inner {-moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;}
+		#nav #h-wrap .h-ico {background: 0 50% no-repeat;}
+		#nav #h-wrap .h-ico span {display: block; padding-left: 50px;}
+		#nav #h-wrap .ico-dashboard {background-image: url("img/h-ico/dashboard.png");} /* feel free to add/modify your own icons - icons are located in "css/img/h-ico/*" */
+		#nav #h-wrap .ico-comments {background-image: url("img/h-ico/comments.png");}
+		#nav #h-wrap .ico-color {background-image: url("img/h-ico/color.png");}
+		#nav #h-wrap .ico-edit {background-image: url("img/h-ico/edit.png");}
+		#nav #h-wrap .ico-media {background-image: url("img/h-ico/media.png");}
+		#nav #h-wrap .ico-syndication {background-image: url("img/h-ico/syndication.png");}
+		#nav #h-wrap .ico-cash {background-image: url("img/h-ico/cash.png");}
+		#nav #h-wrap .ico-users {background-image: url("img/h-ico/users.png");}
+		#nav #h-wrap .ico-advanced {background-image: url("img/h-ico/advanced.png");}
+		#nav #h-wrap .ico-send {background-image: url("img/h-ico/send.png");}
+		/* feel free to add more icons here like above (icon set is included in directory "./img/h-ico" and is free for commercial use) */
+		#nav #h-wrap h2 {background: url("img/h-wrap-h2.png") 100% 100% no-repeat; position: relative; float: left; height: 51px; line-height: 55px; vertical-align: middle; font-size: 200%; font-weight: bold;}
+		#nav #h-wrap.active h2 {background: none;}
+		#nav #h-wrap h2 .h-ico {display: block; height: 100%; padding-right: 42px;}
+		#nav #h-wrap h2 .h-arrow {background: url("img/brown/h-arrow.gif") 0 0 no-repeat; position: absolute; top: 18px; right: 19px; display: block; width: 11px; height: 15px; overflow: hidden;}
+		#nav #h-wrap.active h2 .h-arrow {background-position: 100% 0;}
+		#nav #h-wrap ul {display: none; clear: both;}
+		#nav #h-wrap ul li {display: inline;}
+		#nav #h-wrap ul a {border: 0; display: block; height: 40px; width: 100%; overflow: hidden; line-height: 45px; vertical-align: middle; font-size: 150%;}
+		#nav #h-wrap ul a:hover,
+		#nav #h-wrap ul a:focus,
+		#nav #h-wrap ul a:active {color: #b1682e;}
+	/* search form */
+	#nav form {background: url("img/search-input.png") no-repeat; float: right; width: 227px; height: 28px; padding: 0; overflow: hidden; font-family: inherit;}
+		#nav form input.text {outline: 0; border: 0; background: transparent; width: 194px; height: 14px; vertical-align: middle; margin: 1px 0 1px 1px; padding: 6px 2px; overflow: hidden; font-size: 100%; color: #555;}
+
+/* content wrapper */
+#container {background: url("img/container.gif") repeat-x;}
+	#container .inner-container {position: relative; z-index: 1; left: 10px; width: 980px; padding: 20px 0;}
+
+#footer {clear: both; padding: 20px 0 10px 0; text-align: center;}
+#footer p {margin: 0 0 10px 0; color: #999;}
+#footer a {color: #777;}
+#footer a:hover,
+#footer a:active,
+#footer a:focus {border: none;}
+
+/* content styling
+--------------------------------------*/
+
+/* stylish buttons with rounded corners */
+.button {border: 1px solid #572f00; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; background: #6b3000 url("img/brown/button.gif") repeat-x; padding: 5px 9px 5px; text-shadow: #2f0e00 1px 1px 0; color: #fff; cursor: pointer;}
+	.button:hover,
+	.button:focus,
+	.button:active {border-color: #272727; background: #2a2a2a url("img/altbutton.gif") repeat-x; text-shadow: #000 1px 1px 0; color: #fff;}
+	/* alternative colors */
+	.altbox .button {border: 1px solid #272727; background: #2a2a2a url("img/altbutton.gif") repeat-x; text-shadow: #000 1px 1px 0;}
+	.altbox .button:hover,
+	.altbox .button:focus,
+	.altbox .button:active {border-color: #572f00; background: #6b3000 url("img/brown/button.gif") repeat-x; text-shadow: #2f0e00 1px 1px 0; color: #fff;}
+	.altbutton {border: 1px solid #272727; background: #2a2a2a url("img/altbutton.gif") repeat-x; text-shadow: #000 1px 1px 0;}
+	.altbutton:hover,
+	.altbutton:focus,
+	.altbutton:active {border-color: #572f00; background: #6b3000 url("img/brown/button.gif") repeat-x; text-shadow: #2f0e00 1px 1px 0; color: #fff;}
+	.altbox .altbutton {border: 1px solid #572f00; background: #6b3000 url("img/brown/button.gif") repeat-x; text-shadow: #2f0e00 1px 1px 0;}
+	.altbox .altbutton:hover,
+	.altbox .altbutton:focus,
+	.altbox .altbutton:active {border-color: #272727; background: #2a2a2a url("img/altbutton.gif") repeat-x; text-shadow: #000 1px 1px 0; color: #fff;}
+
+/* icons for content links etc. */
+.ico { border: 0 !important; }
+.ico-a { border: 0 !important; padding-left: 20px !important; }
+
+/* tags, filetypes */
+.tag {
+	padding: 4px 7px; color: #fff !important;
+	border-radius: 3px;
+   -moz-border-radius: 3px;
+   -webkit-border-radius: 3px;
+}
+.tag-gray { /* feel free to add more tag types, just change the colors of gradients/borders */
+	border-bottom: 1px solid #666;
+	background: #999;
+	background: gradient(linear, left top, left bottom, from(#bbb), to(#999));
+	background: -webkit-gradient(linear, left top, left bottom, from(#bbb), to(#999));
+}
+
+/* error/information messages */
+.msg {
+	border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+	border: 1px solid; margin: 0 0 15px 0; padding: 8px 10px 0 10px;
+}
+.msg p {margin: 0 0 8px 0; padding-left: 25px;}
+.msg-ok {border-color: #a6d877; background: #d2ecba url("img/msg-ok.png") repeat-x; color: #336801;}
+.msg-error {border-color: #f3abab; background: #f9c9c9 url("img/msg-error.png") repeat-x; color: #8d0d0d;}
+.msg-warn {border-color: #d7e059; background: #f3f7aa url("img/msg-warn.png") repeat-x; color: #6c6600;}
+.msg-info {border-color: #9fd1f5; background: #c3e6ff url("img/msg-info.png") repeat-x; color: #005898;}
+.msg-ok p {background: url("img/led-ico/accept.png") 0 50% no-repeat;}
+.msg-error p {background: url("img/led-ico/cross_octagon.png") 0 50% no-repeat;}
+.msg-warn p {background: url("img/led-ico/exclamation_octagon_fram.png") 0 50% no-repeat;}
+.msg-info p {background: url("img/led-ico/exclamation.png") 0 50% no-repeat;}
+.error {color: #b70b0b;}
+/* forms */
+form {padding: 18px;}
+form.plain {padding: 0;} /* plain forms - used in tabular and grid data structures, TAKE CARE of it, please */
+form.plain fieldset {border: 0 !important; padding: 0 !important;}
+form.basic dl {width: 100%; overflow: hidden;} /* basic layout for forms */
+form.basic dl dt,
+form.basic dl dd {float: left;}
+form.basic dl dt {padding: 3px 5px 3px 0; width: 20%;}
+form.basic dl dd {padding: 3px 0 3px 5px; width: 76%;}
+
+label.check,
+label.radio {margin-right: 5px;}
+form small {color: #999;}
+input.txt,
+textarea {
+	border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+	border: 1px solid #999; background: url("img/txt.gif") repeat-x; padding: 5px 2px;
+}
+form.basic input.txt,
+form.basic textarea {width: 100%;}
+input.error,
+textarea.error {border-color: #d35757; background-image: url("img/txt-error.gif");}
+span.loading {background: url("img/upload.gif") 0 50% no-repeat; padding: 3px 0 3px 20px;}
+form.fields {} /* plain and clean layout for forms */
+form.fields fieldset {
+	border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+	border: 1px solid #ccc; margin-bottom: 15px; padding: 10px 15px 15px 15px;
+}
+form.fields fieldset.last {margin-bottom: 0; border-right: 1px solid #ccc !important;}
+form.fields fieldset legend {padding: 0 10px; font-size: 110%;}
+form.fields label,
+form.fields div.sep {display: block; margin-top: 6px;}
+form.fields label.check,
+form.fields label.radio {display: inline; margin-top: 0;}
+form.fields span.loading {margin-left: 10px;}
+/* lists for actions (remove, modify) */
+ul.actions {margin: 0;}
+ul.actions li {display: inline; margin-right: 5px;}
+
+/* content boxes */
+.box {float: left; width: 960px; margin: 0 20px 20px 0;}
+	.box-25 {width: 225px;} /* 25% box */
+	.box-50 {width: 470px;} /* 50% box */
+	.box-75 {width: 715px;} /* 75% box */
+	.box-100 {width: 960px;} /* 100% box */
+	.altbox {} /* class for alternative (emphasized) boxes (blue headings and colors) */
+	/* wrap of box's content */
+	.boxin {box-shadow: #aaa 0 0 10px; -webkit-box-shadow: #aaa 0 0 10px; -moz-box-shadow: #aaa 0 0 10px; border: 1px solid #999; border-radius: 6px; -webkit-border-radius: 6px; -moz-border-radius: 6px; background: #fff;}
+	/* boxes' headers */
+	.box .header {
+		background: #3d3d3d url("img/headerbox.png") repeat-x;
+		border-top: 1px solid #444;
+		border-radius: 5px 5px 0 0;
+	   -moz-border-radius-topleft: 5px;
+	   -moz-border-radius-topright: 5px;
+	   -webkit-border-top-left-radius: 5px;
+	   -webkit-border-top-right-radius: 5px;
+		position: relative; margin: -1px -1px 0 -1px; padding: 7px 0 9px 20px;
+	}
+	.altbox .header {border-top-color: #6c3000; background: #6b2f00 url("img/brown/altheaderbox.png") repeat-x;}
+	.box .header h3 {position: relative; top: 2px; display: inline; font-size: 150%; color: #fff; text-shadow: #151515 0 1px 0;}
+	.altbox .header h3 {text-shadow: #2a0b00 0 1px 0;}
+	.box .header .button {margin-left: 15px;}
+	/* tags in the header */
+	.box .header ul {position: absolute; right: 9px; bottom: 0;}
+	.box .header ul li {display: inline;}
+	.box .header ul a {
+		border-radius: 5px 5px 0 0;
+	   -moz-border-radius-topleft: 5px;
+	   -moz-border-radius-topright: 5px;
+	   -webkit-border-top-left-radius: 5px;
+	   -webkit-border-top-right-radius: 5px;
+		background: #777; border: 0; float: left; margin: 0 0 0 5px; padding: 8px 13px 6px; color: #fff;
+	}
+	.box .header ul a.active,
+	.box .header ul a:hover,
+	.box .header ul a:focus,
+	.box .header ul a:active {background: #fff url("img/headertab.png") repeat-x; color: #444;}
+	.altbox .header ul a {background-color: #c97e36;}
+	.altbox .header ul a.active,
+	.altbox .header ul a:hover,
+	.altbox .header ul a:focus,
+	.altbox .header ul a:active {background: #fff url("img/brown/altheadertab.png") repeat-x; color: #6a2f00;}
+	/* boxes' content types – tabular */
+	.box .content {margin-bottom: 5px;}
+	.box .content table {width: 100%;}
+	.box .content table th,
+	.box .content table td {padding: 10px 10px 8px 10px;}
+	.box .content table th {text-align: left; font-weight: normal;}
+	.box .content table tr.even th,
+	.box .content table tr.even td {background: #f5f5f5;}
+	.altbox .content table tr.even th,
+	.altbox .content table tr.even td {background: #f8f2eb;}
+	.box .content table th.first,
+	.box .content table td.first {padding-left: 20px;}
+	.box .content table thead th,
+	.box .content table thead td {border-left: 1px solid #f2f2f2; border-right: 1px solid #d5d5d5; background: #ddd url("img/thead.gif") repeat-x; text-shadow: #fff 0 1px 0;}
+	.box .content table tbody tr.first th,
+	.box .content table tbody tr.first td {border-top: 1px solid #bbb;}
+	.altbox .content table tbody {color: #572f00;}
+	.box .content table a.ico-comms {border: 0; background: url("img/brown/ico-tablecomms.gif") 50% 60% no-repeat; padding: 10px; color: #fff;}
+	.box .content table tfoot th,
+	.box .content table tfoot td {border-top: 1px solid #ccc; background: #fff url("img/tfoot.gif") repeat-x;}
+	/* boxes' content types – simple list */
+	.box .content ul.simple li {clear: both; padding: 10px 20px 8px 20px; overflow: hidden;}
+	.box .content table tr.even th,
+	.box .content ul.simple li.even {background: #f5f5f5;}
+	.altbox .content table tr.even th,
+	.altbox .content ul.simple li.even {background: #f8f2eb;}
+	.box .content ul.simple strong {float: left; font-weight: normal;}
+	.box .content ul.simple span {float: right;}
+	/* boxes' content types – grid */
+	.box .content .grid {}
+	.box .content .grid .line {border-bottom: 1px solid #ddd; width: 100%; overflow: hidden;}
+	.altbox .content .grid .line {border-bottom-color: #ebd6bd;}
+	.box .content .grid .even {background: #f5f5f5;}
+	.altbox .content .grid .even {background: #f8f2eb;}
+	.box .content .grid .item {float: left; width: 50%;}
+	.box .content .grid .item .inner {padding: 17px 15px 12px 20px;}
+	.box .content .grid .firstline {border-top: 0 !important;}
+	.box .content .grid .lastline {border-bottom: 0 !important;}
+	.box .content .grid .item a.thumb {border: 0; float: left;}
+	.box .content .grid .item .data {margin-left: 165px;}
+	.box .content .grid .item h4 {margin: 0 0 10px 0; font-size: 110%; font-weight: bold;}
+	.box .content .grid .item h4 span {margin-right: 5px; font-weight: normal; font-size: 90%;}
+	.box .content .grid .item p {margin: 0 0 5px 0; color: #666;}
+	.box .content .grid ul.actions {margin-top: 8px;}
+	/* boxes' pagination */
+	.pagination {border-top: 1px solid #999; background: #fff url("img/pagination.gif") repeat-x; text-align: center; color: #333 !important;}
+	.pagination ul {position: relative; top: -1px; padding: 12px 10px 6px;}
+	.pagination ul li {display: inline;}
+	.pagination a {
+		border: 0; background: #ebebeb url("img/pagination-item.gif") repeat-x; margin: 0 5px; padding: 6px 10px; color: #333 !important;
+		border-radius: 3px;
+	   -moz-border-radius: 3px;
+	   -webkit-border-radius: 5px;
+	}
+	.pagination a:hover,
+	.pagination a:active,
+	.pagination a:focus {color: #b1682e !important;}
+	.pagination strong {background: url("img/pagination-arrow.gif") 50% 0 no-repeat; padding: 15px 10px 8px;}
+	/* calendar */
+	table.calendar {width: 100%;}
+	table.calendar thead {zoom: 1;}
+	table.calendar thead tr {zoom: 1;}
+	table.calendar thead th.month {border-bottom: 1px solid #bbb; font-weight: bold; font-size: 120%; zoom: 1;}
+	table.calendar thead th.month a {border: none; position: relative; top: 5px; margin: 0 10px; zoom: 1;}
+	table.calendar th,
+	table.calendar td {width: 14.3%; text-align: center;}
+	table.calendar tbody td,
+	table.calendar tbody th {border: 1px solid #ddd; border-top-color: #fff; border-left-color: #fff;}
+	table.calendar strong {font-size: 140%;}
+	table.calendar .inactive {color: #aaa;}
+	table.calendar div.items a {border: 0; margin: 0 1px;}
+	
+/* login page */
+#login {background: #222; padding: 100px;}
+#login .box {float: none; margin: 0 auto;}
+#login .boxin {box-shadow: #111 0 0 10px; -webkit-box-shadow: #111 0 0 10px; -moz-box-shadow: #111 0 0 10px; border: 0;}
+#login .header {padding-top: 20px; padding-bottom: 15px; margin: 0;}
+#login table {width: 75%; margin: 0 auto;}
+#login th,
+#login td {padding: 0 0 5px 0;}
+#login th {width: 60px;}
+#login td.proceed {padding-right: 0;}
+#login td.proceed input {margin: 0;}
+#login input.txt {width: 260px;}

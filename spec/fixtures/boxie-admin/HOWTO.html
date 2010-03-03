@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head lang="en">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<title>Template Documentation Template</title>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<style type="text/css" media="screen">
+		p, table, hr, .box { margin-bottom:25px; }
+		.box p { margin-bottom:10px; }
+		h4 {font-size: 120%; font-variant: small-caps;}
+	</style>
+</head>
+
+
+<body>
+	<div class="container">
+	
+		<h3 class="center alt">&ldquo;boxie admin&rdquo; Documentation by &ldquo;gwaihir&rdquo;</h3>
+		
+		<hr>
+		
+		<h1 class="center">&ldquo;boxie admin&rdquo;</h1>
+		
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 3/12/2009<br>
+					By: gwaihir<br>
+					</strong>
+				</p>
+			</div><!-- end div .span-6 -->		
+	
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing my theme. If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form <a href="http://themeforest.net/user/gwaihir">here</a>. Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+		
+		<hr>
+		
+		<h2 id="toc" class="alt">Table of Contents</h2>
+		<ol class="alpha">
+			<li><a href="#htmlStructure">HTML Structure</a></li>
+			<li><a href="#cssFiles">CSS File and Structure</a></li>
+			<li><a href="#javascript">JavaScript</a></li>
+			<li><a href="#psdFiles">PSD Files</a></li>
+			<li><a href="#credits">Sources and Credits</a></li>
+		</ol>
+		
+		<hr>
+		
+		<h3 id="htmlStructure"><strong>A) HTML Structure</strong> - <a href="index.html">index.html</a> - <a href="#toc">top</a></h3>
+		<h4>Set your color</h4>
+		<p>
+			You can select your color of the boxie admin here. Just change name of the stylesheet to (blue/red/black/green/brown/orange/purple). Or use one of prepared HTML files (red.html, black.html etc.)
+		</p>
+		<pre>
+	&lt;link rel="stylesheet" type="text/css" href="css/blue.css" media="screen, projection, tv" /&gt;&lt;!-- Change name of the stylesheet to change colors (blue/red/black/green/brown/orange/purple) --&gt;
+		</pre>
+		
+		<h4>Layout</h4>
+		<p>
+			This theme is a fixed layout with one, two, three or four columns. It's up to you. In addition, you can combine columns (for example – two column and underneath them four columns).
+			Columns are created by boxes:
+		</p>
+		<img src="assets/images/boxes.png" alt="using boxes" />
+		<p>You can use class box-25 / 50 / 75 / 100 (%). So you can do for example three columns: box-25/box-25/box-50. You can also add the class="altbox" to emphasize the box (box will be blue).</p>
+		
+		<h4>Header &amp; Navigation</h4>
+		<p>Lets go back and explain the header:</p>
+		<img src="assets/images/header.png" alt="header" />
+		<p>The most important part of the header is navigation. Feel free to add more sections with any icon from css/img/h-ico/*</p>
+
+		<h4>Types of content to put into boxes</h4>
+		<p>You can put several types of content into the boxes. First is the table of articles/pages/whatever:</p>
+		<img src="assets/images/articles.png" alt="table of articles/pages/whatever" />
+		<p>Next is the tabular data - for example table with uploaded files:</p>
+		<img src="assets/images/tabular.png" alt="tabular data" />
+		<p>You can also use the pagination for data within boxes. Add it just bellow the content of the box:</p>
+		<img src="assets/images/pagination.png" alt="pagination" />
+		<p>Grid view is perfect for shopping items, files or whatever you want:</p>
+		<img src="assets/images/grid.png" alt="grid view" />
+		<p>Once again, you can add a pagination underneath the grid view.</p>
+		<p>Lets continue to forms. First the basic layout of forms:</p>
+		<img src="assets/images/forms1.png" alt="forms - table layout" />
+		<p>And the fieldset layout of forms:</p>
+		<img src="assets/images/forms2.png" alt="forms - fieldset layout" />
+		<p>Finally, look at the calendar:</p>
+		<img src="assets/images/calendar.png" alt="calendar" />
+		<p>I think boxie admin's HTML code is pretty simple to use, just follow the conventions and get the best results.</p>
+		
+		<h4>Login screen</h4>
+		<p>Login screen is in the login.html. There is no need to edit something. But if you want to modify the login screen, feel free. It's built just like the boxes in the index.html.</p>
+		
+		<hr>
+		
+		<h3 id="cssFiles"><strong>B) CSS File and Structure</strong> - <a href="css/main.css">main.css</a> - <a href="#toc">top</a></h3>
+
+		<p>I'm using two CSS file in this theme. The first one is a main CSS file. The second file contains all of the specific stylings for Internet Explorer 6 &amp; 7.</p> 
+		<p>Look at some important parts of the main CSS file:</p>  
+		<p>If you want to add more items to the navigation, just duplicate this line and modify the class name and URL of background (use any icon from css/img/h-ico/*):</p>
+		<pre>
+	#nav #h-wrap .ico-send {background-image: url("img/h-ico/send.png");}
+		</pre>
+		<p>You can use .button (and alternative .altbutton) for buttons/links/submit inputs in the page:</p>
+		<pre>
+	.button {border: 1px solid #00487a; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; background: #0567ad url("img/button.gif") repeat-x; padding: 5px 9px 5px; text-shadow: #00487a 1px 1px 0; color: #fff; cursor: pointer;}
+		</pre>
+		<p>Here are the styles for icons. .ico is for icons without text and .ico-a for icons with text</p>
+		<pre>
+	/* icons for content links etc. */
+	.ico { border: 0 !important; }
+	.ico-a { border: 0 !important; padding-left: 20px !important; }
+		</pre>
+		<p>You can also use the .tag class for tags, filetypes, badges etc. Feel free to add your own tag class just like the .tag-gray (eg. with different color/background...)</p>
+		<pre>
+	/* tags, filetypes */
+	.tag {
+		padding: 4px 7px; color: #fff !important;
+		border-radius: 3px;
+	   -moz-border-radius: 3px;
+	   -webkit-border-radius: 3px;
+	}
+	.tag-gray { /* feel free to add more tag types, just change the colors of gradients/borders */
+		border-bottom: 1px solid #666;
+		background: #999;
+		background: gradient(linear, left top, left bottom, from(#bbb), to(#999));
+		background: -webkit-gradient(linear, left top, left bottom, from(#bbb), to(#999));
+	}
+		</pre>
+		<p>These styles are used for messages in forms (error, success, etc.). You can change color/backgrounds if you want. Feel free.</p>
+		<pre>
+	.msg p {margin: 0 0 8px 0; padding-left: 25px;}
+	.msg-ok {border-color: #a6d877; background: #d2ecba url("img/msg-ok.png") repeat-x; color: #336801;}
+	.msg-error {border-color: #f3abab; background: #f9c9c9 url("img/msg-error.png") repeat-x; color: #8d0d0d;}
+	.msg-warn {border-color: #d7e059; background: #f3f7aa url("img/msg-warn.png") repeat-x; color: #6c6600;}
+	.msg-info {border-color: #9fd1f5; background: #c3e6ff url("img/msg-info.png") repeat-x; color: #005898;}
+		</pre>
+		<p>These styles are used for messages in forms (error, success, etc.). You can change color/backgrounds if you want. Feel free.</p>
+		<pre>
+	.msg p {margin: 0 0 8px 0; padding-left: 25px;}
+	.msg-ok {border-color: #a6d877; background: #d2ecba url("img/msg-ok.png") repeat-x; color: #336801;}
+	.msg-error {border-color: #f3abab; background: #f9c9c9 url("img/msg-error.png") repeat-x; color: #8d0d0d;}
+	.msg-warn {border-color: #d7e059; background: #f3f7aa url("img/msg-warn.png") repeat-x; color: #6c6600;}
+	.msg-info {border-color: #9fd1f5; background: #c3e6ff url("img/msg-info.png") repeat-x; color: #005898;}
+		</pre>
+		
+		<hr>
+		
+		<h3 id="javascript"><strong>C) JavaScript</strong> - <a href="#toc">top</a></h3>
+		
+		<p>I used jQuery for dynamic adding of some classes and for handling with the navigation. You won't need to edit that javascipt. And if you'll want to add your own JS, just go ahead (it's located in the &lt;head&gt; of the index.html).</p>
+		
+		<hr>
+		
+		<h3 id="psdFiles"><strong>D) PSD Files</strong> - <a href="boxie-admin.psd">boxie-admin.psd</a> - <a href="#toc">top</a></h3>
+		
+		<p>I've included one PSD with the whole boxie admin's design. It's well structured.</p>
+		
+		<hr>
+		
+		<h3 id="credits"><strong>E) Sources and Credits</strong> - <a href="#toc">top</a></h3>
+		
+		<p>I've used the following images, icons or other files as listed.
+		
+		<ul>
+			<li>DRF Icon Set by <a href="http://jonasraskdesign.com/downloads/downloads.html">Jonas Rask</a></li>
+			<li><a href="http://led24.de/iconset/">LED Icon Set</a></li>
+		</ul>
+		
+		<hr>
+		
+		<p>Once again, thank you so much for purchasing this theme. As I said at the beginning, I'd be glad to help you if you have any questions relating to this theme. No guarantees, but I'll do my best to assist. If you have a more general question relating to the themes on ThemeForest, you might consider visiting the forums and asking your question in the "Item Discussion" section.</p> 
+		
+		<p class="append-bottom alt large"><strong>gwaihir</strong></p>
+		<p><a href="#toc">Go To Table of Contents</a></p>
+		
+		<hr class="space">
+	</div><!-- end div .container -->
+</body>
+</html>

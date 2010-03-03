@@ -1,0 +1,26 @@
+/* IE 7 and lower only */
+.ir {cursor: hand;}
+.clearfix:after {zoom: 1;}
+
+* html #nav #h-wrap {top: 10px;}
+#nav #h-wrap.active {=top: 11px; _top: 7px; =left: -18px; height: 1%;}
+#nav #h-wrap.active .inner {width: 100%;}
+#nav #h-wrap h2 {width: 100%;}
+* html #nav #h-wrap h2 .h-arrow {top: 22px;}
+#nav #h-wrap ul li {}
+
+* html #nav form {position: relative;}
+* html #nav form input.hand {position: absolute; right: 0; top: 0;}
+
+* html #container .inner-container {left: 20px;}
+
+.box .header {height: 1%;}
+* html .box .header ul {bottom: -1px;}
+
+.button {cursor: hand;}
+
+.msg {zoom: 1;}
+form.table input.txt,
+form.table textarea {width: 95%;}
+
+* html .box .content ul.simple li {height: 1%;}
