@@ -1,6 +1,9 @@
 --- 
+image_dir: img
 index_path: index.html
 content_path: //div[@class='content']/text()
+stylesheet_dir: ""
+javascript_dir: javascripts
 partials: 
   subtitle: //div[@class='header']/p
   menu: //div[@class='navigation']/text()

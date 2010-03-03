@@ -1,6 +1,9 @@
 --- 
+image_dir: img
 index_path: index.html
 content_path: "#content:text"
+stylesheet_dir: css
+javascript_dir: javascripts
 partials: 
   header: "#header h2 text()"
   sidebar: "#sidebar"
